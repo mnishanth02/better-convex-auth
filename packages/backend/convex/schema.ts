@@ -1,0 +1,41 @@
+import { defineSchema, defineTable } from "convex/server";
+import { v } from "convex/values";
+
+export default defineSchema({
+  // Better Auth User table
+  users: defineTable({
+    id: v.string(),
+    email: v.string(),
+    emailVerified: v.boolean(),
+    name: v.optional(v.string()),
+    image: v.optional(v.string()),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index("byemail", ["email"])
+    .index("byid", ["id"]),
+
+  // Better Auth Session table
+  sessions: defineTable({
+    id: v.string(),
+    expiresAt: v.number(),
+    token: v.string(),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+    userId: v.string(),
+  })
+    .index("byuser", ["userId"])
+    .index("bytoken", ["token"]),
+
+  // Account table for OAuth
+  accounts: defineTable({
+    userId: v.string(),
+    provider: v.string(),
+    providerAccountId: v.string(),
+    accessToken: v.optional(v.string()),
+    refreshToken: v.optional(v.string()),
+    expiresAt: v.optional(v.number()),
+  })
+    .index("byuser", ["userId"])
+    .index("byprovider", ["provider", "providerAccountId"]),
+});
