@@ -150,3 +150,10 @@ Currently no test infrastructure. When adding:
 - Add task to `turbo.json` with `dependsOn: ["^build"]`
 - Follow monorepo pattern: each package tests itself
 - Run via `turbo test` for parallel execution
+
+## Active Technologies
+- TypeScript 5.9.3 with strict mode enabled (001-auth-packages)
+- Convex serverless database (document-oriented, real-time sync) (001-auth-packages)
+
+## Recent Changes
+- 001-auth-packages: Added TypeScript 5.9.3 with strict mode enabled
