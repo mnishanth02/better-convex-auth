@@ -1,0 +1,31 @@
+{
+  "name": "@repo/backend",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Convex Database and Functions for Turborepo app",
+  "scripts": {
+    "dev": "convex dev",
+    "deploy": "convex deploy",
+    "predev": "convex dev --until-success --once",
+    "typecheck": "tsc --noEmit --project convex/tsconfig.json",
+    "lint": "biome lint .",
+    "lint:fix": "biome lint --write .",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "clean": "rm -rf .turbo node_modules"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.0",
+    "typescript": "^5.9.3"
+  },
+  "exports": {
+    "./convex/*": "./convex/*"
+  },
+  "keywords": [],
+  "author": "Nishanth Murugan",
+  "license": "ISC",
+  "packageManager": "pnpm@10.4.1",
+  "dependencies": {
+    "convex": "^1.28.2"
+  }
+}
