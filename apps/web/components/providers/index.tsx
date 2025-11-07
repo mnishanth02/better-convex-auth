@@ -2,11 +2,11 @@
 
 import { Toaster } from "@workspace/ui/components/sonner";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
-import { ConvexClientProvider } from "./convex-client-provider";
+import { AuthProvider } from "@/lib/auth/setup";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <ConvexClientProvider>
+    <AuthProvider>
       <NextThemesProvider
         attribute="class"
         defaultTheme="system"
@@ -17,6 +17,6 @@ export function Providers({ children }: { children: React.ReactNode }) {
         {children}
         <Toaster position="bottom-right" richColors toastOptions={{ style: { textAlign: "center" } }} />
       </NextThemesProvider>
-    </ConvexClientProvider>
+    </AuthProvider>
   );
 }
