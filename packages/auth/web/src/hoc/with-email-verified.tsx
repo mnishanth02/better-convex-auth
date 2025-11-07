@@ -8,9 +8,8 @@
 
 "use client";
 
-import { useRouter } from "next/navigation";
 import { type ComponentType, useEffect } from "react";
-import { useUser } from "../hooks/use-user.js";
+import { useUser } from "../hooks/use-user";
 
 /**
  * Options for withEmailVerified HOC
@@ -59,17 +58,16 @@ export function withEmailVerified<P extends object>(
 
   return function ProtectedComponent(props: P) {
     const { user, isLoading } = useUser();
-    const router = useRouter();
 
     useEffect(() => {
-      if (!isLoading) {
+      if (!isLoading && typeof window !== "undefined") {
         if (!user) {
-          router.push("/login");
+          window.location.href = "/login";
         } else if (!user.emailVerified) {
-          router.push(redirectTo);
+          window.location.href = redirectTo;
         }
       }
-    }, [user, isLoading, router]);
+    }, [user, isLoading]);
 
     if (isLoading) {
       return LoadingComponent ? <LoadingComponent /> : <div>Loading...</div>;

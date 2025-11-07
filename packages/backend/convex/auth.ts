@@ -1,4 +1,4 @@
-import { createConvexAuth } from "@auth/core/convex";
+import { createConvexAuth } from "@auth/core";
 import { createClient, type GenericCtx } from "@convex-dev/better-auth";
 import { requireActionCtx } from "@convex-dev/better-auth/utils";
 import { Resend } from "@convex-dev/resend";
@@ -34,7 +34,7 @@ export const createAuth = (ctx: GenericCtx<DataModel>) => {
       requireEmailVerification: !isDevelopment,
       minPasswordLength: 8,
       maxPasswordLength: 128,
-      autoSignIn: false,
+      autoSignIn: true,
       disableSignUp: false,
     },
 
@@ -130,7 +130,7 @@ export const getCurrentUser = query({
   args: {},
   handler: async (ctx) => {
     // Use authComponent.getAuthUser directly as this is the primary user fetching function
-    // Other functions should use the helper from lib/auth-helpers.ts
+    // Other functions should use the helper from lib/authHelpers.ts
     const user = await authComponent.getAuthUser(ctx);
     if (!user) {
       throw new Error("Unauthorized: Authentication required");

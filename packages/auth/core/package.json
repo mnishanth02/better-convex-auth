@@ -35,14 +35,14 @@
     "@auth/types": "workspace:*",
     "@auth/utils": "workspace:*",
     "@convex-dev/better-auth": "^0.9.7",
-    "better-auth": "^1.3.27"
+    "better-auth": "^1.3.34"
   },
   "peerDependencies": {
     "convex": "^1.28.2"
   },
   "devDependencies": {
+    "@types/node": "^24.10.0",
     "@workspace/typescript-config": "workspace:*",
-    "@types/node": "^22.10.2",
     "typescript": "^5.9.3"
   }
 }

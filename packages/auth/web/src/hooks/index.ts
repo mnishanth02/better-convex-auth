@@ -8,17 +8,17 @@
  * @module hooks
  */
 
-export { useAuth } from "./use-auth.js";
-export { useSession } from "./use-session.js";
+export { useAuth } from "./use-auth";
+export { useSession } from "./use-session";
 export {
   type SignInData,
   type UseSignInReturn,
   useSignIn,
-} from "./use-sign-in.js";
-export { type UseSignOutReturn, useSignOut } from "./use-sign-out.js";
+} from "./use-sign-in";
+export { type UseSignOutReturn, useSignOut } from "./use-sign-out";
 export {
   type SignUpData,
   type UseSignUpReturn,
   useSignUp,
-} from "./use-sign-up.js";
-export { type UseUserReturn, useUser } from "./use-user.js";
+} from "./use-sign-up";
+export { type UseUserReturn, useUser } from "./use-user";

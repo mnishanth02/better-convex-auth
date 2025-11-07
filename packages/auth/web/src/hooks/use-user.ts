@@ -33,7 +33,7 @@
 
 "use client";
 
-import { useSession } from "./use-session.js";
+import { useSession } from "./use-session";
 
 /**
  * User hook return type

@@ -10,7 +10,7 @@
 
 import { convexClient, crossDomainClient } from "@convex-dev/better-auth/client/plugins";
 import { createAuthClient as createBetterAuthClient } from "better-auth/react";
-import type { AuthClient } from "../context/index.js";
+import type { AuthClient } from "../context/index";
 
 /**
  * Options for creating an auth client

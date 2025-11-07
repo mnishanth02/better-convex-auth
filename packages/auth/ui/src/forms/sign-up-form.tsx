@@ -187,10 +187,46 @@ export function SignUpForm({
       router.push(redirectTo);
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : "Sign up failed";
-      setError(errorMessage);
+      const userFriendlyMessage = formatSignUpError(errorMessage);
+      setError(userFriendlyMessage);
       onError?.(err instanceof Error ? err : new Error(errorMessage));
     }
   };
+
+  /**
+   * Format backend error messages to be more user-friendly
+   */
+  function formatSignUpError(error: string): string {
+    const errorLowercase = error.toLowerCase();
+
+    // Map backend errors to user-friendly messages
+    if (
+      errorLowercase.includes("signup disabled") ||
+      errorLowercase.includes("sign up is not enabled") ||
+      errorLowercase.includes("email_and_password_sign_up_is_not_enabled")
+    ) {
+      return "Sign up is currently disabled. Please contact support for more information.";
+    }
+
+    if (errorLowercase.includes("already exists")) {
+      return "An account with this email already exists. Please sign in instead.";
+    }
+
+    if (errorLowercase.includes("invalid email")) {
+      return "Please enter a valid email address.";
+    }
+
+    if (errorLowercase.includes("password")) {
+      return "Password does not meet security requirements. Please try again.";
+    }
+
+    if (errorLowercase.includes("rate limit") || errorLowercase.includes("too many")) {
+      return "Too many sign up attempts. Please try again later.";
+    }
+
+    // Default message for unknown errors
+    return error;
+  }
 
   const displayError = error || signUpError?.message;
 

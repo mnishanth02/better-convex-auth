@@ -3,13 +3,13 @@
  * @module
  */
 
-export { type WithAuthOptions, withAuth } from "./with-auth.js";
+export { type WithAuthOptions, withAuth } from "./with-auth";
 export {
   type WithEmailVerifiedOptions,
   withEmailVerified,
-} from "./with-email-verified.js";
+} from "./with-email-verified";
 export {
   type WithSessionOptions,
   type WithSessionProps,
   withSession,
-} from "./with-session.js";
+} from "./with-session";

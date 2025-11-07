@@ -9,7 +9,7 @@
 "use client";
 
 import type { ComponentType } from "react";
-import { useSession } from "../hooks/use-session.js";
+import { useSession } from "../hooks/use-session";
 
 /**
  * Props injected by withSession HOC

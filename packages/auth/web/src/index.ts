@@ -30,12 +30,12 @@
 // Re-export types from @auth/types
 export type * from "@auth/types";
 // Client Factory
-export * from "./client/index.js";
+export * from "./client/index";
 // Context
-export * from "./context/index.js";
+export * from "./context/index";
 // HOCs
-export * from "./hoc/index.js";
+export * from "./hoc/index";
 // Hooks
-export * from "./hooks/index.js";
+export * from "./hooks/index";
 // Providers
-export * from "./providers/index.js";
+export * from "./providers/index";

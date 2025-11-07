@@ -46,7 +46,7 @@
 
 "use client";
 
-import { useAuthClient } from "../context/index.js";
+import { useAuthClient } from "../context/index";
 
 /**
  * React hook to access user session data

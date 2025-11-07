@@ -1,7 +1,9 @@
 import { v } from "convex/values";
 import { authComponent, createAuth } from "./auth";
-import { getAuthUser, requireVerifiedEmail } from "./lib/auth-helpers";
-import { validatePassword } from "./lib/convex-schemas";
+import { Id } from "./_generated/dataModel";
+import { mutation, query } from "./_generated/server";
+import { getAuthUser, requireVerifiedEmail } from "./lib/authHelpers";
+import { validatePassword } from "./lib/convexSchemas";
 import { mutationWithRLS, queryWithRLS } from "./lib/rls";
 
 /**

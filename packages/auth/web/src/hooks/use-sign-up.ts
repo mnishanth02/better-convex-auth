@@ -9,7 +9,7 @@
 "use client";
 
 import { useState } from "react";
-import { useAuth } from "./use-auth.js";
+import { useAuth } from "./use-auth";
 
 /**
  * Sign-up data interface
@@ -80,13 +80,24 @@ export function useSignUp(): UseSignUpReturn {
     setIsLoading(true);
     setError(null);
     try {
-      await signUp.email({
+      const response = await signUp.email({
         ...data,
         name: data.name || "", // Provide default empty string if name not provided
       });
+
+      // Better Auth returns { data, error } response format
+      // Check if there's an error in the response
+      if (response && typeof response === "object" && "error" in response && response.error) {
+        const errorObj = response.error as { code?: string; message?: string } | string;
+        const errorMessage = typeof errorObj === "string" ? errorObj : errorObj?.message || "Sign up failed";
+        const error = new Error(errorMessage);
+        setError(error);
+        throw error;
+      }
     } catch (err) {
-      setError(err instanceof Error ? err : new Error("Sign up failed"));
-      throw err;
+      const error = err instanceof Error ? err : new Error("Sign up failed");
+      setError(error);
+      throw error;
     } finally {
       setIsLoading(false);
     }

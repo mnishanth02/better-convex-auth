@@ -9,7 +9,7 @@
 "use client";
 
 import { useState } from "react";
-import { useAuth } from "./use-auth.js";
+import { useAuth } from "./use-auth";
 
 /**
  * Sign-out hook return type

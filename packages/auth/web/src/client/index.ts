@@ -6,4 +6,4 @@
 export {
   type CreateAuthClientOptions,
   createAuthClient,
-} from "./create-auth-client.js";
+} from "./create-auth-client";

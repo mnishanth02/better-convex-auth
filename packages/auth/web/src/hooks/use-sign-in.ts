@@ -9,7 +9,7 @@
 "use client";
 
 import { useState } from "react";
-import { useAuth } from "./use-auth.js";
+import { useAuth } from "./use-auth";
 
 /**
  * Sign-in data interface
@@ -84,10 +84,21 @@ export function useSignIn(): UseSignInReturn {
     setIsLoading(true);
     setError(null);
     try {
-      await signIn.email(credentials);
+      const response = await signIn.email(credentials);
+
+      // Better Auth returns { data, error } response format
+      // Check if there's an error in the response
+      if (response && typeof response === "object" && "error" in response && response.error) {
+        const errorObj = response.error as { code?: string; message?: string } | string;
+        const errorMessage = typeof errorObj === "string" ? errorObj : errorObj?.message || "Sign in failed";
+        const error = new Error(errorMessage);
+        setError(error);
+        throw error;
+      }
     } catch (err) {
-      setError(err instanceof Error ? err : new Error("Sign in failed"));
-      throw err;
+      const error = err instanceof Error ? err : new Error("Sign in failed");
+      setError(error);
+      throw error;
     } finally {
       setIsLoading(false);
     }
@@ -97,10 +108,21 @@ export function useSignIn(): UseSignInReturn {
     setIsLoading(true);
     setError(null);
     try {
-      await signIn.social({ provider });
+      const response = await signIn.social({ provider });
+
+      // Better Auth returns { data, error } response format
+      // Check if there's an error in the response
+      if (response && typeof response === "object" && "error" in response && response.error) {
+        const errorObj = response.error as { code?: string; message?: string } | string;
+        const errorMessage = typeof errorObj === "string" ? errorObj : errorObj?.message || "Sign in failed";
+        const error = new Error(errorMessage);
+        setError(error);
+        throw error;
+      }
     } catch (err) {
-      setError(err instanceof Error ? err : new Error("Sign in failed"));
-      throw err;
+      const error = err instanceof Error ? err : new Error("Sign in failed");
+      setError(error);
+      throw error;
     } finally {
       setIsLoading(false);
     }

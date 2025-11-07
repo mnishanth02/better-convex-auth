@@ -221,35 +221,15 @@ export const ERROR_MESSAGES: Record<AuthErrorCode, AuthErrorMessage> = {
  * ```
  */
 export function formatZodError(error: ZodError): string[] {
-  return error.errors.map((err) => {
-    const field = err.path.join(".");
-    const message = err.message;
+  return error.issues.map((issue) => {
+    const field = issue.path.join(".");
+    const message = issue.message;
 
-    // Add remediation hints for common validation errors
-    switch (err.code) {
-      case "invalid_type":
-        return `${field}: ${message}. Expected ${err.expected}, received ${err.received}`;
-      case "invalid_string":
-        if (err.validation === "email") {
-          return `${field}: Please enter a valid email address (e.g., user@example.com)`;
-        }
-        if (err.validation === "url") {
-          return `${field}: Please enter a valid URL (e.g., https://example.com)`;
-        }
-        return `${field}: ${message}`;
-      case "too_small":
-        if (err.type === "string") {
-          return `${field}: Must be at least ${err.minimum} characters long`;
-        }
-        return `${field}: ${message}`;
-      case "too_big":
-        if (err.type === "string") {
-          return `${field}: Must be at most ${err.maximum} characters long`;
-        }
-        return `${field}: ${message}`;
-      default:
-        return `${field}: ${message}`;
-    }
+    // Format field name for better readability
+    const fieldName = field ? `${field}: ` : "";
+
+    // Return formatted message with field context
+    return `${fieldName}${message}`;
   });
 }
 

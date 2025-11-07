@@ -1,3 +1,5 @@
+"use client";
+
 /**
  * Context exports for @auth/web
  * @module
@@ -8,4 +10,4 @@ export {
   AuthClientProvider,
   type AuthClientProviderProps,
   useAuthClient,
-} from "./auth-client-context.js";
+} from "./auth-client-context";

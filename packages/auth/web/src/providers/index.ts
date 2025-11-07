@@ -1,3 +1,5 @@
+"use client";
+
 /**
  * React Providers for Better Auth + Convex Integration
  *
@@ -37,4 +39,4 @@ export { ConvexBetterAuthProvider } from "@convex-dev/better-auth/react";
 export {
   type CreateAuthProviderOptions,
   createAuthProvider,
-} from "./create-auth-provider.js";
+} from "./create-auth-provider";

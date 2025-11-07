@@ -11,8 +11,8 @@
 import { ConvexBetterAuthProvider } from "@convex-dev/better-auth/react";
 import { ConvexReactClient } from "convex/react";
 import type { ReactNode } from "react";
-import type { createAuthClient } from "../client/create-auth-client.js";
-import { AuthClientProvider } from "../context/index.js";
+import type { createAuthClient } from "../client/create-auth-client";
+import { AuthClientProvider } from "../context/index";
 
 /**
  * Options for creating an auth provider

@@ -8,9 +8,8 @@
 
 "use client";
 
-import { useRouter } from "next/navigation";
 import { type ComponentType, useEffect } from "react";
-import { useSession } from "../hooks/use-session.js";
+import { useSession } from "../hooks/use-session";
 
 /**
  * Options for withAuth HOC
@@ -63,13 +62,15 @@ export function withAuth<P extends object>(Component: ComponentType<P>, options:
 
   return function ProtectedComponent(props: P) {
     const { data: session, isPending } = useSession();
-    const router = useRouter();
 
     useEffect(() => {
       if (!isPending && !session) {
-        router.push(redirectTo);
+        // Redirect using client-side navigation
+        if (typeof window !== "undefined") {
+          window.location.href = redirectTo;
+        }
       }
-    }, [session, isPending, router]);
+    }, [session, isPending]);
 
     if (isPending) {
       return LoadingComponent ? <LoadingComponent /> : <div>Loading...</div>;

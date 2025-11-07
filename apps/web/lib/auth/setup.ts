@@ -1,3 +1,5 @@
+"use client";
+
 /**
  * Better Convex Auth - Quickstart Setup
  *
