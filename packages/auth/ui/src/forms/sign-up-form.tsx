@@ -9,7 +9,7 @@
 "use client";
 
 import { EmailSchema, PasswordSchema } from "@auth/utils";
-import { useSignUp } from "@auth/web";
+import { useSession, useSignUp } from "@auth/web";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Alert, AlertDescription } from "@workspace/ui/components/alert";
 import { Button } from "@workspace/ui/components/button";
@@ -17,7 +17,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@workspace/ui/components/input";
 import { Label } from "@workspace/ui/components/label";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { SocialAuthButtons } from "../actions/social-auth-buttons";
@@ -162,7 +162,9 @@ export function SignUpForm({
 }: SignUpFormProps) {
   const router = useRouter();
   const { signUpEmail, isLoading, error: signUpError } = useSignUp();
+  const { data: sessionData, isPending: isSessionLoading } = useSession();
   const [error, setError] = useState<string | null>(null);
+  const [pendingRedirect, setPendingRedirect] = useState(false);
 
   const {
     register,
@@ -175,17 +177,27 @@ export function SignUpForm({
 
   const password = watch("password");
 
+  // Monitor session for redirect after successful sign-up (both email and OAuth)
+  useEffect(() => {
+    if (pendingRedirect && sessionData && !isSessionLoading) {
+      setPendingRedirect(false);
+      onSuccess?.();
+      router.push(redirectTo);
+    }
+  }, [sessionData, isSessionLoading, redirectTo, onSuccess, pendingRedirect, router]);
+
   const onSubmit = async (data: SignUpFormData) => {
     try {
       setError(null);
+      setPendingRedirect(true);
       await signUpEmail({
         email: data.email,
         password: data.password,
         name: data.name,
       });
-      onSuccess?.();
-      router.push(redirectTo);
+      // Don't redirect here - wait for session to be established via useEffect
     } catch (err) {
+      setPendingRedirect(false);
       const errorMessage = err instanceof Error ? err.message : "Sign up failed";
       const userFriendlyMessage = formatSignUpError(errorMessage);
       setError(userFriendlyMessage);

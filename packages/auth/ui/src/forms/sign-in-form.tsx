@@ -9,6 +9,7 @@
 "use client";
 
 import { EmailSchema } from "@auth/utils";
+import { useSession } from "@auth/web";
 import { useSignIn } from "@auth/web";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Alert, AlertDescription } from "@workspace/ui/components/alert";
@@ -17,7 +18,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@workspace/ui/components/input";
 import { Label } from "@workspace/ui/components/label";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { SocialAuthButtons } from "../actions/social-auth-buttons";
@@ -160,7 +161,9 @@ export function SignInForm({
 }: SignInFormProps) {
   const router = useRouter();
   const { signInEmail, isLoading, error: signInError } = useSignIn();
+  const { data: sessionData, isPending: isSessionLoading } = useSession();
   const [error, setError] = useState<string | null>(null);
+  const [pendingRedirect, setPendingRedirect] = useState(false);
 
   const {
     register,
@@ -170,13 +173,23 @@ export function SignInForm({
     resolver: zodResolver(SignInSchema),
   });
 
+  // Monitor session for redirect after successful sign-in (both email and OAuth)
+  useEffect(() => {
+    if (pendingRedirect && sessionData && !isSessionLoading) {
+      setPendingRedirect(false);
+      onSuccess?.();
+      router.push(redirectTo);
+    }
+  }, [sessionData, isSessionLoading, redirectTo, onSuccess, pendingRedirect, router]);
+
   const onSubmit = async (data: SignInFormData) => {
     try {
       setError(null);
+      setPendingRedirect(true);
       await signInEmail(data);
-      onSuccess?.();
-      router.push(redirectTo);
+      // Don't redirect here - wait for session to be established via useEffect
     } catch (err) {
+      setPendingRedirect(false);
       const errorMessage = err instanceof Error ? err.message : "Sign in failed";
       setError(errorMessage);
       onError?.(err instanceof Error ? err : new Error(errorMessage));

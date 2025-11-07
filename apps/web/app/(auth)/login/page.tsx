@@ -6,7 +6,7 @@ export default function LoginPage() {
       <SignInForm
         redirectTo="/dashboard"
         showSocialAuth={true}
-        socialProviders={["github"]}
+        socialProviders={["google"]}
         signUpUrl="/signup"
         className="w-full max-w-md"
       />
