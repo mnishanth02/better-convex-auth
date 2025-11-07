@@ -183,4 +183,4 @@ export default defineSchema({
 - Tailwind CSS v4
 
 ## Recent Changes
-
+- 001-auth-packages: Added auth package structure with Better Auth + Convex integration

@@ -1,0 +1,56 @@
+{
+  "name": "@auth/types",
+  "version": "0.1.0",
+  "description": "Shared TypeScript types for Better Convex Auth",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./user": {
+      "types": "./dist/user.d.ts",
+      "import": "./dist/user.js"
+    },
+    "./session": {
+      "types": "./dist/session.d.ts",
+      "import": "./dist/session.js"
+    },
+    "./auth": {
+      "types": "./dist/auth.d.ts",
+      "import": "./dist/auth.js"
+    },
+    "./organization": {
+      "types": "./dist/organization.d.ts",
+      "import": "./dist/organization.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "auth",
+    "authentication",
+    "types",
+    "typescript",
+    "convex",
+    "better-auth"
+  ],
+  "author": "Better Convex Auth Team",
+  "license": "MIT",
+  "dependencies": {
+    "better-auth": "^1.3.27"
+  },
+  "devDependencies": {
+    "@workspace/typescript-config": "workspace:*",
+    "typescript": "^5.9.3"
+  }
+}

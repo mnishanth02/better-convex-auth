@@ -1,8 +1,8 @@
 "use client";
 
-import { ReactNode } from "react";
 import { ConvexBetterAuthProvider } from "@convex-dev/better-auth/react";
 import { ConvexReactClient } from "convex/react";
+import type { ReactNode } from "react";
 import { authClient } from "@/lib/auth/auth-client";
 
 const convexUrl = process.env.NEXT_PUBLIC_CONVEX_URL || "http://localhost:3000";

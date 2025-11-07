@@ -1,53 +1,66 @@
-import { AuthFunctions, createClient, type GenericCtx } from "@convex-dev/better-auth";
-import { convex, crossDomain } from "@convex-dev/better-auth/plugins";
-import { components, internal } from "./_generated/api";
-import type { DataModel } from "./_generated/dataModel";
+import { createConvexAuth } from "@auth/core/convex";
+import { createClient, type GenericCtx } from "@convex-dev/better-auth";
 import { requireActionCtx } from "@convex-dev/better-auth/utils";
-import { query } from "./_generated/server";
-import { betterAuth } from "better-auth";
 import { Resend } from "@convex-dev/resend";
-import { nextCookies } from "better-auth/next-js";
+import { components } from "./_generated/api";
+import type { DataModel } from "./_generated/dataModel";
+import { query } from "./_generated/server";
 
 const siteUrl = process.env.SITE_URL || "http://localhost:3000";
 const googleClientId = process.env.GOOGLE_CLIENT_ID || "";
 const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET || "";
+const appleClientId = process.env.APPLE_CLIENT_ID || "";
+const appleClientSecret = process.env.APPLE_CLIENT_SECRET || "";
 const isDevelopment = process.env.NODE_ENV !== "production" || siteUrl.includes("localhost");
 
 export const authComponent = createClient<DataModel>(components.betterAuth);
-// const authFunctions: AuthFunctions = internal.api;
 const resend = new Resend(components.resend, {
   testMode: isDevelopment,
 });
 
-export const createAuth = (ctx: GenericCtx<DataModel>, { optionsOnly } = { optionsOnly: false }) => {
-  return betterAuth({
-    logger: {
-      disabled: optionsOnly,
-    },
+/**
+ * Create a Better Auth instance configured for this Convex backend.
+ * Uses the reusable @auth/core package for consistent configuration.
+ */
+export const createAuth = (ctx: GenericCtx<DataModel>) => {
+  return createConvexAuth(ctx, {
+    adapter: authComponent.adapter(ctx),
     baseURL: siteUrl,
     trustedOrigins: [siteUrl],
-    // sendVerificationEmail: async ({ user, url }) => {
-    //   await resend.sendEmail(requireActionCtx(ctx), {
-    //     to: user.email,
-    //     subject: "Verify your email",
-    //     html: `<p>Click <a href="${url}">here</a> to verify your email</p>`,
-    //   });
-    // },
 
-    database: authComponent.adapter(ctx),
-    emailAndPassword: {
+    // Email and password authentication
+    emailPassword: {
       enabled: true,
-      requireEmailVerification: false,
+      requireEmailVerification: !isDevelopment,
       minPasswordLength: 8,
+      maxPasswordLength: 128,
+      autoSignIn: false,
+      disableSignUp: false,
     },
+
+    // Social OAuth providers
     socialProviders: {
-      google: {
-        clientId: googleClientId,
-        clientSecret: googleClientSecret,
-      },
+      google:
+        googleClientId && googleClientSecret
+          ? {
+              clientId: googleClientId,
+              clientSecret: googleClientSecret,
+            }
+          : undefined,
+      apple:
+        appleClientId && appleClientSecret
+          ? {
+              clientId: appleClientId,
+              clientSecret: appleClientSecret,
+            }
+          : undefined,
     },
+
+    // Email verification with Resend
     emailVerification: {
-      sendVerificationEmail: async ({ user, url }, _request) => {
+      sendVerificationEmail: async (params: { user: unknown; url: string }, _request?: Request) => {
+        const user = params.user as { email: string; name?: string };
+        const url = params.url;
         const actionCtx = requireActionCtx(ctx);
         await resend.sendEmail(actionCtx, {
           from: "Techlete <noreply@techlete.app>",
@@ -87,17 +100,41 @@ export const createAuth = (ctx: GenericCtx<DataModel>, { optionsOnly } = { optio
       autoSignInAfterVerification: true,
       expiresIn: 86400, // 24 hours
     },
+
+    // Session configuration
     session: {
       expiresIn: 60 * 60 * 24 * 7, // 7 days
       updateAge: 60 * 60 * 24, // 1 day
     },
-    plugins: [convex(), crossDomain({ siteUrl }), nextCookies()],
+
+    // Rate limiting to prevent brute-force attacks
+    rateLimit: {
+      enabled: true,
+      window: 60, // 60 seconds
+      max: 10, // Max 10 requests per minute per IP
+    },
+
+    // Development mode flag
+    isDevelopment,
   });
 };
 
+/**
+ * Get the currently authenticated user.
+ * Throws an error if the user is not authenticated.
+ *
+ * @returns The current user object with profile information
+ * @throws {Error} If user is not authenticated
+ */
 export const getCurrentUser = query({
   args: {},
   handler: async (ctx) => {
-    return authComponent.getAuthUser(ctx);
+    // Use authComponent.getAuthUser directly as this is the primary user fetching function
+    // Other functions should use the helper from lib/auth-helpers.ts
+    const user = await authComponent.getAuthUser(ctx);
+    if (!user) {
+      throw new Error("Unauthorized: Authentication required");
+    }
+    return user;
   },
 });

@@ -1,0 +1,50 @@
+{
+  "name": "@auth/utils",
+  "version": "0.1.0",
+  "description": "Utility functions, validators, and schemas for Better Convex Auth",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./validators": {
+      "types": "./dist/validators.d.ts",
+      "import": "./dist/validators.js"
+    },
+    "./tokens": {
+      "types": "./dist/tokens.d.ts",
+      "import": "./dist/tokens.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "auth",
+    "validation",
+    "schemas",
+    "utilities",
+    "typescript",
+    "zod"
+  ],
+  "author": "Better Convex Auth Team",
+  "license": "MIT",
+  "dependencies": {
+    "@auth/types": "workspace:*",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "@workspace/typescript-config": "workspace:*",
+    "typescript": "^5.9.3"
+  }
+}
