@@ -10,16 +10,43 @@
 // Actions & Buttons
 export { SignOutButton, type SignOutButtonProps, SocialAuthButtons, type SocialAuthButtonsProps } from "./actions";
 // Display
-export { UserAvatar, type UserAvatarProps } from "./display";
+export {
+  UserAvatar,
+  type UserAvatarProps,
+  UserBadge,
+  type UserBadgeProps,
+  UserMenu,
+  type UserMenuProps,
+} from "./display";
 // Feedback
 export {
   PasswordStrengthIndicator,
   type PasswordStrengthIndicatorProps,
 } from "./feedback";
 // Forms
-export { SignInForm, type SignInFormProps, SignUpForm, type SignUpFormProps } from "./forms";
+export {
+  ChangePasswordForm,
+  type ChangePasswordFormProps,
+  ForgotPasswordForm,
+  type ForgotPasswordFormProps,
+  ResetPasswordForm,
+  type ResetPasswordFormProps,
+  SignInForm,
+  type SignInFormProps,
+  SignUpForm,
+  type SignUpFormProps,
+  UpdateProfileForm,
+  type UpdateProfileFormProps,
+} from "./forms";
 // Guards
-export { SessionGuard, type SessionGuardProps } from "./guards";
+export {
+  EmailVerifiedGuard,
+  type EmailVerifiedGuardProps,
+  RoleGuard,
+  type RoleGuardProps,
+  SessionGuard,
+  type SessionGuardProps,
+} from "./guards";
 
 /**
  * Package version

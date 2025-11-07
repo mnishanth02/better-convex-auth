@@ -68,9 +68,9 @@ export interface SignUpFormProps {
 
   /**
    * OAuth providers to show
-   * @default ["github"]
+   * @default ["google"]
    */
-  socialProviders?: Array<"github" | "google" | "apple">;
+  socialProviders?: Array<"github" | "google" | "apple" | "facebook">;
 
   /**
    * Custom card title
@@ -152,7 +152,7 @@ export function SignUpForm({
   onSuccess,
   onError,
   showSocialAuth = true,
-  socialProviders = ["github"],
+  socialProviders = ["google"],
   title = "Create Account",
   description = "Enter your information to create an account",
   showSignInLink = true,
@@ -232,11 +232,11 @@ export function SignUpForm({
 
   return (
     <Card className={className}>
-      <CardHeader>
-        <CardTitle>{title}</CardTitle>
-        <CardDescription>{description}</CardDescription>
+      <CardHeader className="space-y-1.5">
+        <CardTitle className="text-2xl font-semibold">{title}</CardTitle>
+        <CardDescription className="text-base">{description}</CardDescription>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-6">
         {displayError && (
           <Alert variant="destructive">
             <AlertDescription>{displayError}</AlertDescription>
@@ -257,55 +257,85 @@ export function SignUpForm({
           </>
         )}
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="name">Name</Label>
-            <Input id="name" type="text" placeholder="John Doe" {...register("name")} disabled={isLoading} />
-            {errors.name && <p className="text-sm text-destructive">{errors.name.message}</p>}
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+          <div className="space-y-2.5">
+            <Label htmlFor="name" className="text-sm font-medium">
+              Name
+            </Label>
+            <Input
+              id="name"
+              type="text"
+              placeholder="John Doe"
+              {...register("name")}
+              disabled={isLoading}
+              className="h-11"
+            />
+            {errors.name && <p className="text-sm text-destructive mt-1.5">{errors.name.message}</p>}
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
-            <Input id="email" type="email" placeholder="you@example.com" {...register("email")} disabled={isLoading} />
-            {errors.email && <p className="text-sm text-destructive">{errors.email.message}</p>}
+          <div className="space-y-2.5">
+            <Label htmlFor="email" className="text-sm font-medium">
+              Email
+            </Label>
+            <Input
+              id="email"
+              type="email"
+              placeholder="thezealerzone@gmail.com"
+              {...register("email")}
+              disabled={isLoading}
+              className="h-11"
+            />
+            {errors.email && <p className="text-sm text-destructive mt-1.5">{errors.email.message}</p>}
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
+          <div className="space-y-2.5">
+            <Label htmlFor="password" className="text-sm font-medium">
+              Password
+            </Label>
             <Input
               id="password"
               type="password"
-              placeholder="••••••••"
+              placeholder="••••••••••••"
               {...register("password")}
               disabled={isLoading}
+              className="h-11"
             />
-            {showPasswordStrength && password && <PasswordStrengthIndicator password={password} />}
-            {errors.password && <p className="text-sm text-destructive">{errors.password.message}</p>}
+            {showPasswordStrength && password && (
+              <div className="mt-3">
+                <PasswordStrengthIndicator password={password} />
+              </div>
+            )}
+            {errors.password && <p className="text-sm text-destructive mt-1.5">{errors.password.message}</p>}
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="confirmPassword">Confirm Password</Label>
+          <div className="space-y-2.5">
+            <Label htmlFor="confirmPassword" className="text-sm font-medium">
+              Confirm Password
+            </Label>
             <Input
               id="confirmPassword"
               type="password"
-              placeholder="••••••••"
+              placeholder="••••••••••••"
               {...register("confirmPassword")}
               disabled={isLoading}
+              className="h-11"
             />
-            {errors.confirmPassword && <p className="text-sm text-destructive">{errors.confirmPassword.message}</p>}
+            {errors.confirmPassword && (
+              <p className="text-sm text-destructive mt-1.5">{errors.confirmPassword.message}</p>
+            )}
           </div>
 
-          <Button type="submit" className="w-full" disabled={isLoading}>
+          <Button type="submit" className="w-full h-11 text-base font-medium" disabled={isLoading}>
             {isLoading ? "Creating account..." : "Create Account"}
           </Button>
         </form>
       </CardContent>
 
       {showSignInLink && (
-        <CardFooter className="flex justify-center">
+        <CardFooter className="flex justify-center border-t pt-6">
           <p className="text-sm text-muted-foreground">
             Already have an account?{" "}
-            <a href={signInUrl} className="text-primary hover:underline font-medium">
+            <a href={signInUrl} className="text-primary hover:underline font-semibold transition-colors">
               Sign in
             </a>
           </p>

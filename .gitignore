@@ -28,9 +28,9 @@ build
 dist
 
 
+
 # Debug
 npm-debug.log*
-tsconfig.*
 
 # Misc
 .DS_Store

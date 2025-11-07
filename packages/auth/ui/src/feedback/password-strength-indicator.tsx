@@ -9,7 +9,7 @@
 "use client";
 
 import { Progress } from "@workspace/ui/components/progress";
-import { CheckCircle2, XCircle } from "lucide-react";
+import { XCircle } from "lucide-react";
 import { useMemo } from "react";
 
 /**
@@ -182,6 +182,9 @@ export function PasswordStrengthIndicator({
 
   if (!password) return null;
 
+  // Find the first unmet requirement
+  const firstUnmetRequirement = requirements.find((req) => !req.test(password));
+
   return (
     <div className={className}>
       <div className="space-y-2">
@@ -192,21 +195,12 @@ export function PasswordStrengthIndicator({
         <Progress value={config.value} className={config.color} />
       </div>
 
-      {showRequirements && (
-        <div className="mt-3 space-y-2">
-          {requirements.map((req) => {
-            const passed = req.test(password);
-            return (
-              <div key={req.label} className="flex items-center gap-2 text-sm">
-                {passed ? (
-                  <CheckCircle2 className="h-4 w-4 text-green-500" />
-                ) : (
-                  <XCircle className="h-4 w-4 text-muted-foreground" />
-                )}
-                <span className={passed ? "text-green-500" : "text-muted-foreground"}>{req.label}</span>
-              </div>
-            );
-          })}
+      {showRequirements && firstUnmetRequirement && (
+        <div className="mt-3">
+          <div className="flex items-center gap-2 text-sm">
+            <XCircle className="h-4 w-4 text-destructive" />
+            <span className="text-destructive">{firstUnmetRequirement.label}</span>
+          </div>
         </div>
       )}
     </div>

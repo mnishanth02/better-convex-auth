@@ -60,9 +60,9 @@ export interface SignInFormProps {
 
   /**
    * OAuth providers to show
-   * @default ["github"]
+   * @default ["google"]
    */
-  socialProviders?: Array<"github" | "google" | "apple">;
+  socialProviders?: Array<"github" | "google" | "apple" | "facebook">;
 
   /**
    * Custom card title
@@ -149,7 +149,7 @@ export function SignInForm({
   onSuccess,
   onError,
   showSocialAuth = true,
-  socialProviders = ["github"],
+  socialProviders = ["google"],
   title = "Sign In",
   description = "Enter your credentials to access your account",
   showSignUpLink = true,
@@ -187,11 +187,11 @@ export function SignInForm({
 
   return (
     <Card className={className}>
-      <CardHeader>
-        <CardTitle>{title}</CardTitle>
-        <CardDescription>{description}</CardDescription>
+      <CardHeader className="space-y-1.5">
+        <CardTitle className="text-2xl font-semibold">{title}</CardTitle>
+        <CardDescription className="text-base">{description}</CardDescription>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-6">
         {displayError && (
           <Alert variant="destructive">
             <AlertDescription>{displayError}</AlertDescription>
@@ -212,18 +212,32 @@ export function SignInForm({
           </>
         )}
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
-            <Input id="email" type="email" placeholder="you@example.com" {...register("email")} disabled={isLoading} />
-            {errors.email && <p className="text-sm text-destructive">{errors.email.message}</p>}
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+          <div className="space-y-2.5">
+            <Label htmlFor="email" className="text-sm font-medium">
+              Email
+            </Label>
+            <Input
+              id="email"
+              type="email"
+              placeholder="thezealerzone@gmail.com"
+              {...register("email")}
+              disabled={isLoading}
+              className="h-11"
+            />
+            {errors.email && <p className="text-sm text-destructive mt-1.5">{errors.email.message}</p>}
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-2.5">
             <div className="flex items-center justify-between">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password" className="text-sm font-medium">
+                Password
+              </Label>
               {showForgotPasswordLink && (
-                <a href={forgotPasswordUrl} className="text-sm text-muted-foreground hover:text-primary">
+                <a
+                  href={forgotPasswordUrl}
+                  className="text-sm font-medium text-primary hover:underline transition-colors"
+                >
                   Forgot password?
                 </a>
               )}
@@ -231,24 +245,25 @@ export function SignInForm({
             <Input
               id="password"
               type="password"
-              placeholder="••••••••"
+              placeholder="••••••••••••"
               {...register("password")}
               disabled={isLoading}
+              className="h-11"
             />
-            {errors.password && <p className="text-sm text-destructive">{errors.password.message}</p>}
+            {errors.password && <p className="text-sm text-destructive mt-1.5">{errors.password.message}</p>}
           </div>
 
-          <Button type="submit" className="w-full" disabled={isLoading}>
+          <Button type="submit" className="w-full h-11 text-base font-medium" disabled={isLoading}>
             {isLoading ? "Signing in..." : "Sign In"}
           </Button>
         </form>
       </CardContent>
 
       {showSignUpLink && (
-        <CardFooter className="flex justify-center">
+        <CardFooter className="flex justify-center border-t pt-6">
           <p className="text-sm text-muted-foreground">
             Don't have an account?{" "}
-            <a href={signUpUrl} className="text-primary hover:underline font-medium">
+            <a href={signUpUrl} className="text-primary hover:underline font-semibold transition-colors">
               Sign up
             </a>
           </p>

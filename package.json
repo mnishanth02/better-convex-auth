@@ -4,7 +4,10 @@
    "private": true,
    "scripts": {
       "build": "turbo build",
-      "dev": "turbo dev",
+      "dev": "turbo dev --filter=web --filter=@workspace/backend",
+      "dev:full": "turbo dev",
+      "dev:typecheck": "turbo typecheck --watch",
+      "typecheck": "turbo typecheck",
       "format": "biome format --write .",
       "check": "biome check .",
       "upgrade:all": "pnpm -r up --latest"
