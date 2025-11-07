@@ -9,18 +9,6 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
-    },
-    "./convex": {
-      "types": "./dist/convex/index.d.ts",
-      "import": "./dist/convex/index.js"
-    },
-    "./session": {
-      "types": "./dist/session.d.ts",
-      "import": "./dist/session.js"
-    },
-    "./user": {
-      "types": "./dist/user.d.ts",
-      "import": "./dist/user.js"
     }
   },
   "files": [

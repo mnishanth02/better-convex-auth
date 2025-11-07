@@ -7,26 +7,6 @@
     ".": {
       "types": "./src/index.ts",
       "import": "./src/index.ts"
-    },
-    "./hooks": {
-      "types": "./src/hooks/index.ts",
-      "import": "./src/hooks/index.ts"
-    },
-    "./providers": {
-      "types": "./src/providers/index.ts",
-      "import": "./src/providers/index.ts"
-    },
-    "./context": {
-      "types": "./src/context/index.ts",
-      "import": "./src/context/index.ts"
-    },
-    "./client": {
-      "types": "./src/client/index.ts",
-      "import": "./src/client/index.ts"
-    },
-    "./hoc": {
-      "types": "./src/hoc/index.ts",
-      "import": "./src/hoc/index.ts"
     }
   },
   "scripts": {

@@ -6,7 +6,15 @@
  * @packageDocumentation
  */
 
-// Re-export all token utilities
+export {
+  AuthErrorCode,
+  type AuthErrorMessage,
+  createAuthError,
+  ERROR_MESSAGES,
+  formatZodError,
+  getErrorMessage,
+  isAuthError,
+} from "./errors.js";
 export * from "./tokens.js";
 export type {
   ChangePasswordData,
@@ -19,7 +27,6 @@ export type {
   UpdateOrganizationData,
   UpdateProfileData,
 } from "./validators.js";
-// Re-export all validators
 export * from "./validators.js";
 
 /**

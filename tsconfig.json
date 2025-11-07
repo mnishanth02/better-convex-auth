@@ -1,3 +1,17 @@
 {
-   "extends": "@workspace/typescript-config/base.json"
+  "extends": "@workspace/typescript-config/base.json",
+  "compilerOptions": {
+    "paths": {
+      // Prevent direct imports from internal package paths
+      "@auth/core/src/*": ["@error: Import from @auth/core instead"],
+      "@auth/core/dist/*": ["@error: Import from @auth/core instead"],
+      "@auth/utils/src/*": ["@error: Import from @auth/utils instead"],
+      "@auth/utils/dist/*": ["@error: Import from @auth/utils instead"],
+      "@auth/web/src/*": ["@error: Import from @auth/web instead"],
+      "@auth/types/src/*": ["@error: Import from @auth/types instead"],
+      "@auth/types/dist/*": ["@error: Import from @auth/types instead"],
+      "@auth/ui/src/*": ["@error: Import from @auth/ui instead"],
+      "@auth/quickstart/src/*": ["@error: Import from @auth/quickstart instead"]
+    }
+  }
 }
