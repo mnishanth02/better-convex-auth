@@ -2,9 +2,9 @@
 
 ## Project Overview
 
-This is a **pnpm monorepo** for building full-stack applications with:
+This is a **pnpm monorepo** for building a reusable **Better Auth + Convex authentication system** with:
 - **Frontend**: Next.js 16 (App Router) with React 19 and TurboPack
-- **Backend**: Convex (serverless database and functions)
+- **Backend**: Convex (serverless database and functions) + Better Auth
 - **UI**: Shared shadcn/ui component library using Tailwind CSS v4
 - **Tooling**: Turborepo, Biome (linting/formatting), TypeScript 5.9
 
@@ -12,122 +12,156 @@ This is a **pnpm monorepo** for building full-stack applications with:
 
 ```
 better-convex-auth/
-├── apps/web/              # Next.js application
+├── apps/
+│   └── web/                       # Next.js web application
 ├── packages/
-│   ├── backend/           # Convex backend (database, functions)
-│   ├── ui/                # Shared shadcn/ui components
-│   └── typescript-config/ # Shared TypeScript configurations
+│   ├── auth/                      # Better Auth modules
+│   │   ├── core/                  # Better Auth + Convex integration
+│   │   ├── ui/                    # Auth UI components (SignIn/SignUp forms)
+│   │   ├── hooks/                 # React hooks (useAuth, useSignIn, etc.)
+│   │   ├── types/                 # Shared TypeScript types
+│   │   └── utils/                 # Validators, encryption, rate-limit
+│   ├── backend/                   # Convex backend (database, functions)
+│   ├── ui/                        # Shared shadcn/ui components
+│   └── typescript-config/         # Shared TypeScript configurations
 ```
 
 ### Key Design Decisions
 
-1. **Workspace Package Imports**: Use `@workspace/*` namespace for internal packages
-   - Components: `import { Button } from "@workspace/ui/components/button"`
-   - Styles: `import "@workspace/ui/globals.css"`
-   - Backend exports: `@repo/backend` (not yet integrated in web app)
+1. **Auth Package Structure**: Modular auth packages under `packages/auth/`
+   - `@auth/core`: Better Auth + Convex adapter, email providers (Resend)
+   - `@auth/ui`: Reusable auth components (forms, providers)
+   - `@auth/hooks`: React hooks for auth operations
+   - `@auth/types`: Shared types (User, Session, Organization)
+   - `@auth/utils`: Validation, encryption, token generation
 
-2. **Monorepo Strategy**: 
+2. **Workspace Package Imports**: Use `@workspace/*` and `@auth/*` namespaces
+   - UI: `import { Button } from "@workspace/ui/components/button"`
+   - Auth: `import { useAuth } from "@auth/hooks"`
+   - Core: `import { createAuthInstance } from "@auth/core"`
+
+3. **Better Auth + Convex Integration**: 
+   - Better Auth handles authentication logic and providers
+   - Convex provides database adapter and serverless functions
+   - Auth config in `packages/backend/convex/auth.config.ts`
+   - HTTP routes mounted in `packages/backend/convex/http.ts`
+
+4. **Monorepo Strategy**: 
    - Each package is independently buildable with its own `package.json`
    - Turborepo orchestrates task execution (build, dev, lint) with dependency graph
-   - `pnpm-workspace.yaml` defines workspace structure: `apps/*` and `packages/*`
+   - `pnpm-workspace.yaml` defines workspace structure: `apps/*` and `packages/**`
+## Authentication Features
 
-3. **Convex Backend Isolation**: Backend lives in `packages/backend/convex/`
-   - Has its own dev server (`convex dev`)
-   - Generates TypeScript types in `_generated/` (excluded from Biome linting)
-   - Not yet connected to web app (no ConvexProvider in `apps/web/components/providers.tsx`)
+✅ Email/Password • Social OAuth (Google, GitHub, Apple, Discord) • Magic Links • Email OTP • 2FA/MFA • Passkeys • Organizations • Rate limiting • Session management
 
 ## Critical Developer Workflows
 
 ### Development Commands
 
 ```bash
-# Start all dev servers (Next.js, Convex)
-pnpm dev
-
-# Build all packages
-pnpm build
-
-# Format code (Biome)
-pnpm format
-
-# Lint & auto-fix
-pnpm check
-
-# Upgrade all dependencies
-pnpm upgrade:all
+pnpm dev           # Start all dev servers (Next.js, Convex)
+pnpm build         # Build all packages
+pnpm format        # Format code (Biome)
+pnpm check         # Lint & auto-fix
 ```
+
+### Adding Auth Packages
+
+When creating new auth packages:
+```
+packages/auth/<package-name>/
+  ├── src/
+  │   └── index.ts
+  ├── package.json
+  └── tsconfig.json
+```
+
+Use workspace protocol: `"@auth/types": "workspace:*"`
 
 ### Adding shadcn/ui Components
 
-**Always run from monorepo root**, targeting the `apps/web` directory:
-
-```bash
-pnpm dlx shadcn@latest add <component-name> -c apps/web
-```
+Always run from monorepo root: `pnpm dlx shadcn@latest add <component-name> -c apps/web`
 
 This places components in `packages/ui/src/components/` for workspace-wide reuse.
 
-### Convex Development
+### Convex + Better Auth Setup
 
-```bash
-# From packages/backend/
-pnpm dev         # Starts Convex dev server
-pnpm deploy      # Deploy to production
-pnpm typecheck   # Type-check Convex functions
+**Backend Configuration** (`packages/backend/convex/auth.config.ts`):
+```typescript
+import { betterAuth } from "better-auth";
+import { organization, twoFactor, passkey } from "better-auth/plugins";
+
+export const auth = betterAuth({
+  database: new ConvexAdapter({ url, apiKey }),
+  plugins: [organization(), twoFactor(), passkey()],
+  emailAndPassword: { enabled: true },
+  socialProviders: { google, github, apple },
+});
 ```
 
-**Important**: Convex functions live in `packages/backend/convex/`. The `predev` script ensures Convex codegen runs before dev server starts.
+**HTTP Routes** (`packages/backend/convex/http.ts`):
+```typescript
+http.route({ path: "/auth", method: "GET", handler: auth.handler });
+http.route({ path: "/auth", method: "POST", handler: auth.handler });
+```
 
 ## Code Conventions
 
-### Biome Configuration (Root-Level)
+**Biome**: 120 char line width, double quotes, space indentation, auto-organize imports, excludes `_generated/`
 
-- **Formatter**: 120 char line width, double quotes, space indentation
-- **Linter**: Recommended rules enabled
-- **Auto-organize imports** on save (natural identifier order)
-- **Excludes**: `_generated/` directories (Convex codegen)
-- Configured in `biome.json` at root and `packages/ui/biome.json`
+**TypeScript**: Strict mode, NodeNext modules (base), ESNext (Next.js)
 
-### TypeScript Configuration
+**Path aliases**: `@/*` (web root), `@workspace/ui/*` (UI package), `@auth/*` (auth packages)
 
-- **Base config**: `packages/typescript-config/base.json` (strict mode, NodeNext modules)
-- **Next.js config**: `packages/typescript-config/nextjs.json` (extends base, ESNext modules)
-- **Path aliases** in `apps/web/tsconfig.json`:
-  - `@/*` → Root of web app
-  - `@workspace/ui/*` → `packages/ui/src/*`
-
-### Component Patterns
-
-1. **Theme Support**: All apps use `next-themes` with system default
-   - Provider in `apps/web/components/providers.tsx`
-   - Applied to `<html>` tag with `suppressHydrationWarning`
-
-2. **Font Loading**: Geist fonts (sans + mono) via `next/font/google`
-   - CSS variables: `--font-sans`, `--font-mono`
-   - Applied via className to `<body>`
-
-3. **UI Component Exports**: Granular exports in `packages/ui/package.json`
-   ```json
-   "exports": {
-     "./components/*": "./src/components/*.tsx",
-     "./hooks/*": "./src/hooks/*.ts"
-   }
-   ```
+**File naming**: Auth packages in `packages/auth/<core|ui|hooks|types|utils>/src/`, components `PascalCase.tsx`, hooks `use-kebab-case.ts`, Convex functions `camelCase.ts`
 
 ## Integration Points
 
-### Next.js ↔ UI Package
+### Next.js ↔ Auth Packages
 
-- **Transpilation**: `transpilePackages: ["@workspace/ui"]` in `next.config.mjs`
-- **Global CSS**: Imported in `apps/web/app/layout.tsx`
-- **Tailwind CSS v4**: Uses `@tailwindcss/postcss` (configured in `packages/ui/postcss.config.mjs`)
+**Client Setup** (`apps/web/lib/auth/auth-client.ts`):
+```typescript
+import { createClientAuthInstance } from "@auth/core/client";
 
-### Convex Integration (Pending)
+export const authClient = createClientAuthInstance("/api/auth", {
+  organization: true, twoFactor: true, passkey: true,
+});
+```
 
-**Not yet implemented**: To connect Convex to Next.js:
-1. Add `ConvexProviderWithClerk` or `ConvexReactClient` to `apps/web/components/providers.tsx`
-2. Import Convex API from `@repo/backend/convex/_generated/api`
-3. Use `useQuery`, `useMutation` hooks in React components
+**Provider** (`apps/web/components/providers/index.tsx`):
+```typescript
+export function Providers({ children }) {
+  return (
+    <ConvexProvider client={convex}>
+      <AuthProvider>{children}</AuthProvider>
+    </ConvexProvider>
+  );
+}
+```
+
+### Convex Schema for Auth
+
+```typescript
+export default defineSchema({
+  users: defineTable({
+    email: v.string(),
+    emailVerified: v.boolean(),
+    name: v.optional(v.string()),
+  }).index("by_email", ["email"]),
+  
+  sessions: defineTable({
+    token: v.string(),
+    userId: v.string(),
+    expiresAt: v.number(),
+  }).index("by_token", ["token"]),
+  
+  organizations: defineTable({
+    name: v.string(),
+    slug: v.string(),
+    ownerId: v.string(),
+  }).index("by_slug", ["slug"]),
+});
+```
 
 ## Common Gotchas
 
@@ -135,25 +169,18 @@ pnpm typecheck   # Type-check Convex functions
 2. **Node.js 20+ required** (specified in root `package.json` engines)
 3. **Biome replaces ESLint/Prettier** - don't add them back
 4. **Convex functions must have validators** - use `v` from `convex/values` for args
-5. **Turbo caching**: Dev tasks are `persistent: true` and don't cache; builds cache in `.turbo/`
-
-## File Naming & Location Rules
-
-- **React components**: `PascalCase.tsx` in `packages/ui/src/components/`
-- **Hooks**: `use-kebab-case.ts` in `packages/ui/src/hooks/`
-- **Convex functions**: `camelCase.ts` in `packages/backend/convex/`
-- **Next.js routes**: Follow App Router conventions in `apps/web/app/`
-
-## Testing & Validation
-
-Currently no test infrastructure. When adding:
-- Add task to `turbo.json` with `dependsOn: ["^build"]`
-- Follow monorepo pattern: each package tests itself
-- Run via `turbo test` for parallel execution
+5. **Better Auth environment variables**: `BETTER_AUTH_SECRET`, `BETTER_AUTH_URL` required
+6. **OAuth setup**: Each provider needs client ID/secret in environment variables
+7. **Email service**: Configure Resend with `RESEND_API_KEY` for verification emails
+8. **Auth packages use workspace protocol**: `"@auth/types": "workspace:*"`
 
 ## Active Technologies
-- TypeScript 5.9.3 with strict mode enabled (001-auth-packages)
-- Convex serverless database (document-oriented, real-time sync) (001-auth-packages)
+- TypeScript 5.9.3 with strict mode enabled
+- Convex serverless database (document-oriented, real-time sync)
+- Better Auth 1.2+ (TypeScript authentication framework)
+- Resend (email service for verification/OTP)
+- Next.js 16 (App Router, React 19, TurboPack)
+- Tailwind CSS v4
 
 ## Recent Changes
-- 001-auth-packages: Added TypeScript 5.9.3 with strict mode enabled
+
