@@ -5,31 +5,31 @@
  * with sensible defaults and runtime validation.
  */
 
-export { mergeConfig } from "./auth-config.js";
 export type {
   AuthConfig,
-  RouteConfig,
-  SessionConfig,
-  PasswordConfig,
   EmailConfig,
   OAuthConfig,
   OAuthProvider,
+  PasswordConfig,
   RateLimitConfig,
+  RouteConfig,
+  SessionConfig,
 } from "./auth-config.js";
+export { mergeConfig } from "./auth-config.js";
 
 export { DEFAULT_AUTH_CONFIG, DEV_AUTH_CONFIG, STRICT_AUTH_CONFIG } from "./defaults.js";
 
 export {
-  validateAuthConfig,
-  safeValidateAuthConfig,
-  isAuthConfig,
   authConfigSchema,
+  isAuthConfig,
+  safeValidateAuthConfig,
+  validateAuthConfig,
 } from "./validators.js";
 
+import type { AuthConfig } from "./auth-config.js";
 // Re-export getAuthConfig with defaults injected to avoid circular dependency
 import { mergeConfig } from "./auth-config.js";
 import { DEFAULT_AUTH_CONFIG } from "./defaults.js";
-import type { AuthConfig } from "./auth-config.js";
 
 /**
  * Gets the complete auth configuration by merging custom values with defaults

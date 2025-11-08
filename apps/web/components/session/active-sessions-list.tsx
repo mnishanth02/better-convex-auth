@@ -1,14 +1,14 @@
 "use client";
 
-import { useQuery, useMutation } from "convex/react";
 import { api } from "@workspace/backend/convex/_generated/api";
-import { Button } from "@workspace/ui/components/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@workspace/ui/components/card";
+import type { Id } from "@workspace/backend/convex/_generated/dataModel";
 import { Alert, AlertDescription } from "@workspace/ui/components/alert";
 import { Badge } from "@workspace/ui/components/badge";
-import { Loader2, Monitor, Smartphone, Tablet, X, AlertTriangle } from "lucide-react";
+import { Button } from "@workspace/ui/components/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@workspace/ui/components/card";
+import { useMutation, useQuery } from "convex/react";
+import { AlertTriangle, Loader2, Monitor, Smartphone, Tablet, X } from "lucide-react";
 import { useState } from "react";
-import type { Id } from "@workspace/backend/convex/_generated/dataModel";
 
 interface SessionListProps {
   className?: string;
@@ -119,23 +119,24 @@ export function ActiveSessionsList({ className }: SessionListProps) {
           <CardDescription>This device you're using now</CardDescription>
         </CardHeader>
         <CardContent>
-          {sessions.find((s) => s.isCurrent) ? (
-            <div className="flex items-start justify-between">
-              <div className="flex items-start gap-3">
-                <div className="rounded-lg border p-2">{getDeviceIcon(sessions.find((s) => s.isCurrent)!.token)}</div>
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span className="font-medium">Current Device</span>
-                    <Badge variant="secondary">Active</Badge>
+          {(() => {
+            const currentSession = sessions.find((s) => s.isCurrent);
+            return currentSession ? (
+              <div className="flex items-start justify-between">
+                <div className="flex items-start gap-3">
+                  <div className="rounded-lg border p-2">{getDeviceIcon(currentSession.token)}</div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="font-medium">Current Device</span>
+                      <Badge variant="secondary">Active</Badge>
+                    </div>
+                    <p className="text-sm text-muted-foreground">Signed in {formatDate(currentSession.createdAt)}</p>
+                    <p className="text-xs text-muted-foreground">Token: {currentSession.token}</p>
                   </div>
-                  <p className="text-sm text-muted-foreground">
-                    Signed in {formatDate(sessions.find((s) => s.isCurrent)!.createdAt)}
-                  </p>
-                  <p className="text-xs text-muted-foreground">Token: {sessions.find((s) => s.isCurrent)!.token}</p>
                 </div>
               </div>
-            </div>
-          ) : null}
+            ) : null;
+          })()}
         </CardContent>
       </Card>
 

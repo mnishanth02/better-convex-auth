@@ -9,8 +9,7 @@
 "use client";
 
 import { EmailSchema } from "@auth/utils";
-import { useSession } from "@auth/web";
-import { useSignIn } from "@auth/web";
+import { useSession, useSignIn } from "@auth/web";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Alert, AlertDescription } from "@workspace/ui/components/alert";
 import { Button } from "@workspace/ui/components/button";
