@@ -10,6 +10,8 @@
       "typecheck": "turbo typecheck",
       "format": "biome format --write .",
       "check": "biome check .",
+      "setup": "./scripts/setup-dev.sh",
+      "benchmark": "node scripts/benchmark-build.js",
       "upgrade:all": "pnpm -r up --latest"
    },
    "devDependencies": {
