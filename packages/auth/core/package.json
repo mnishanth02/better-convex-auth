@@ -9,7 +9,12 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
-    }
+    },
+    "./dist/*": null,
+    "./src/*": null,
+    "./internal/*": null,
+    "./convex/*": null,
+    "./*": null
   },
   "files": [
     "dist"

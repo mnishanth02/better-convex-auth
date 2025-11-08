@@ -38,4 +38,14 @@ export default defineSchema({
   })
     .index("byuser", ["userId"])
     .index("byprovider", ["provider", "providerAccountId"]),
+
+  // Password reset tokens
+  passwordResetTokens: defineTable({
+    userId: v.string(), // Better Auth uses string IDs, not Convex IDs
+    token: v.string(), // Hashed token
+    expiresAt: v.number(),
+    used: v.boolean(),
+  })
+    .index("by_token", ["token"])
+    .index("by_userId", ["userId"]),
 });

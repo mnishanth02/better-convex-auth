@@ -31,7 +31,15 @@
     "./layouts": {
       "types": "./src/layouts/index.ts",
       "import": "./src/layouts/index.ts"
-    }
+    },
+    "./src/forms/*": null,
+    "./src/guards/*": null,
+    "./src/display/*": null,
+    "./src/actions/*": null,
+    "./src/feedback/*": null,
+    "./src/layouts/*": null,
+    "./internal/*": null,
+    "./*": null
   },
   "scripts": {
     "build": "tsc --build",

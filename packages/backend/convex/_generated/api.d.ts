@@ -9,10 +9,13 @@
  */
 
 import type * as auth from "../auth.js";
+import type * as crons from "../crons.js";
 import type * as http from "../http.js";
 import type * as lib_authHelpers from "../lib/authHelpers.js";
 import type * as lib_convexSchemas from "../lib/convexSchemas.js";
 import type * as lib_rls from "../lib/rls.js";
+import type * as passwordReset from "../passwordReset.js";
+import type * as sessionManagement from "../sessionManagement.js";
 import type * as users from "../users.js";
 
 import type {
@@ -31,10 +34,13 @@ import type {
  */
 declare const fullApi: ApiFromModules<{
   auth: typeof auth;
+  crons: typeof crons;
   http: typeof http;
   "lib/authHelpers": typeof lib_authHelpers;
   "lib/convexSchemas": typeof lib_convexSchemas;
   "lib/rls": typeof lib_rls;
+  passwordReset: typeof passwordReset;
+  sessionManagement: typeof sessionManagement;
   users: typeof users;
 }>;
 declare const fullApiWithMounts: typeof fullApi;

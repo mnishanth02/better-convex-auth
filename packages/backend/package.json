@@ -27,6 +27,7 @@
   "packageManager": "pnpm@10.4.1",
   "dependencies": {
     "@auth/core": "workspace:*",
+    "@auth/utils": "workspace:^",
     "@convex-dev/better-auth": "^0.9.7",
     "@convex-dev/rate-limiter": "^0.2.14",
     "@convex-dev/resend": "^0.1.13",

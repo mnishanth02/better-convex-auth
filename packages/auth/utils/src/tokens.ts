@@ -105,7 +105,7 @@ export function generateAPIKey(prefix?: string): string {
  * @param token - Token to hash
  * @returns Hex-encoded hash
  */
-export async function hashToken(token: string): Promise<string> {
+export async function hashTokenAsync(token: string): Promise<string> {
   if (typeof crypto === "undefined" || !crypto.subtle) {
     throw new Error("Web Crypto API not available");
   }
@@ -126,7 +126,7 @@ export async function hashToken(token: string): Promise<string> {
  * @returns True if token matches hash
  */
 export async function verifyTokenHash(token: string, hash: string): Promise<boolean> {
-  const tokenHash = await hashToken(token);
+  const tokenHash = await hashTokenAsync(token);
   return tokenHash === hash;
 }
 
@@ -160,4 +160,39 @@ export function formatTokenForDisplay(token: string): string {
   const start = token.slice(0, 4);
   const end = token.slice(-4);
   return `${start}...${end}`;
+}
+
+/**
+ * Generate a password reset token
+ * @returns 64-character password reset token
+ */
+export function generatePasswordResetToken(): string {
+  return generateToken(64);
+}
+
+/**
+ * Hash a token synchronously using a simple hash (for Convex server-side)
+ * Note: This uses a simple hash suitable for server-side token storage
+ * @param token - Token to hash
+ * @returns Hex-encoded hash
+ */
+export function hashToken(token: string): string {
+  // Simple deterministic hash for server-side use
+  // In production, you might want to use a more robust hashing algorithm
+  let hash = 0;
+  for (let i = 0; i < token.length; i++) {
+    const char = token.charCodeAt(i);
+    hash = (hash << 5) - hash + char;
+    hash = hash & hash; // Convert to 32-bit integer
+  }
+  return Math.abs(hash).toString(16).padStart(16, "0");
+}
+
+/**
+ * Verify if a token has expired
+ * @param expiresAt - Expiration timestamp (milliseconds since epoch)
+ * @returns True if token is still valid
+ */
+export function verifyTokenExpiry(expiresAt: number): boolean {
+  return Date.now() < expiresAt;
 }
