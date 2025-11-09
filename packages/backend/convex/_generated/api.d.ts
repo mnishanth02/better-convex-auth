@@ -13,6 +13,7 @@ import type * as crons from "../crons.js";
 import type * as http from "../http.js";
 import type * as lib_authHelpers from "../lib/authHelpers.js";
 import type * as lib_convexSchemas from "../lib/convexSchemas.js";
+import type * as lib_env from "../lib/env.js";
 import type * as lib_rls from "../lib/rls.js";
 import type * as passwordReset from "../passwordReset.js";
 import type * as sessionManagement from "../sessionManagement.js";
@@ -38,6 +39,7 @@ declare const fullApi: ApiFromModules<{
   http: typeof http;
   "lib/authHelpers": typeof lib_authHelpers;
   "lib/convexSchemas": typeof lib_convexSchemas;
+  "lib/env": typeof lib_env;
   "lib/rls": typeof lib_rls;
   passwordReset: typeof passwordReset;
   sessionManagement: typeof sessionManagement;
