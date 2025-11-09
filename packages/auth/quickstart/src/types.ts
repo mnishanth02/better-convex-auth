@@ -84,6 +84,9 @@ export interface SetupAuthResult {
     Feedback: {
       PasswordStrengthIndicator: typeof import("@auth/ui/feedback").PasswordStrengthIndicator;
     };
+    Utils: {
+      OAuthRedirectHandler: typeof import("@auth/ui").OAuthRedirectHandler;
+    };
   };
 
   /**

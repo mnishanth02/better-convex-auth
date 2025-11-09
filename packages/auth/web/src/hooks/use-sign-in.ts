@@ -17,6 +17,7 @@ import { useAuth } from "./use-auth";
 export interface SignInData {
   email: string;
   password: string;
+  callbackURL?: string;
 }
 
 /**

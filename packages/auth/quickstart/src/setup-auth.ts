@@ -2,6 +2,7 @@ import {
   ChangePasswordForm,
   EmailVerifiedGuard,
   ForgotPasswordForm,
+  OAuthRedirectHandler,
   PasswordStrengthIndicator,
   ResetPasswordForm,
   RoleGuard,
@@ -114,6 +115,9 @@ export function setupAuth(config: SetupAuthConfig): SetupAuthResult {
       },
       Feedback: {
         PasswordStrengthIndicator,
+      },
+      Utils: {
+        OAuthRedirectHandler,
       },
     },
     hocs: {

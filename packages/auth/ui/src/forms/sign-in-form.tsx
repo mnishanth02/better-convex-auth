@@ -162,7 +162,7 @@ export function SignInForm({
   const { signInEmail, isLoading, error: signInError } = useSignIn();
   const { data: sessionData, isPending: isSessionLoading } = useSession();
   const [error, setError] = useState<string | null>(null);
-  const [pendingRedirect, setPendingRedirect] = useState(false);
+  const [pendingOAuthRedirect, setPendingOAuthRedirect] = useState(false);
 
   const {
     register,
@@ -172,23 +172,26 @@ export function SignInForm({
     resolver: zodResolver(SignInSchema),
   });
 
-  // Monitor session for redirect after successful sign-in (both email and OAuth)
+  // Monitor session for redirect after successful OAuth sign-in only
   useEffect(() => {
-    if (pendingRedirect && sessionData && !isSessionLoading) {
-      setPendingRedirect(false);
+    if (pendingOAuthRedirect && sessionData && !isSessionLoading) {
+      setPendingOAuthRedirect(false);
       onSuccess?.();
       router.push(redirectTo);
     }
-  }, [sessionData, isSessionLoading, redirectTo, onSuccess, pendingRedirect, router]);
+  }, [sessionData, isSessionLoading, redirectTo, onSuccess, pendingOAuthRedirect, router]);
 
   const onSubmit = async (data: SignInFormData) => {
     try {
       setError(null);
-      setPendingRedirect(true);
-      await signInEmail(data);
-      // Don't redirect here - wait for session to be established via useEffect
+      await signInEmail({
+        email: data.email,
+        password: data.password,
+        callbackURL: redirectTo,
+      });
+      // Call success callback - Better Auth will handle redirect
+      onSuccess?.();
     } catch (err) {
-      setPendingRedirect(false);
       const errorMessage = err instanceof Error ? err.message : "Sign in failed";
       setError(errorMessage);
       onError?.(err instanceof Error ? err : new Error(errorMessage));

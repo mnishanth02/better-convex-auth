@@ -164,7 +164,7 @@ export function SignUpForm({
   const { signUpEmail, isLoading, error: signUpError } = useSignUp();
   const { data: sessionData, isPending: isSessionLoading } = useSession();
   const [error, setError] = useState<string | null>(null);
-  const [pendingRedirect, setPendingRedirect] = useState(false);
+  const [pendingOAuthRedirect, setPendingOAuthRedirect] = useState(false);
 
   const {
     register,
@@ -177,27 +177,27 @@ export function SignUpForm({
 
   const password = watch("password");
 
-  // Monitor session for redirect after successful sign-up (both email and OAuth)
+  // Monitor session for redirect after successful OAuth sign-up only
   useEffect(() => {
-    if (pendingRedirect && sessionData && !isSessionLoading) {
-      setPendingRedirect(false);
+    if (pendingOAuthRedirect && sessionData && !isSessionLoading) {
+      setPendingOAuthRedirect(false);
       onSuccess?.();
       router.push(redirectTo);
     }
-  }, [sessionData, isSessionLoading, redirectTo, onSuccess, pendingRedirect, router]);
+  }, [sessionData, isSessionLoading, redirectTo, onSuccess, pendingOAuthRedirect, router]);
 
   const onSubmit = async (data: SignUpFormData) => {
     try {
       setError(null);
-      setPendingRedirect(true);
       await signUpEmail({
         email: data.email,
         password: data.password,
         name: data.name,
+        callbackURL: redirectTo,
       });
-      // Don't redirect here - wait for session to be established via useEffect
+      // Call success callback - Better Auth will handle redirect
+      onSuccess?.();
     } catch (err) {
-      setPendingRedirect(false);
       const errorMessage = err instanceof Error ? err.message : "Sign up failed";
       const userFriendlyMessage = formatSignUpError(errorMessage);
       setError(userFriendlyMessage);

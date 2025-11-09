@@ -2,11 +2,14 @@
 
 import { Toaster } from "@workspace/ui/components/sonner";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
-import { AuthProvider } from "@/lib/auth/setup";
+import { AuthProvider, components } from "@/lib/auth/setup";
 
 export function Providers({ children }: { children: React.ReactNode }) {
+  const { OAuthRedirectHandler } = components.Utils;
+
   return (
     <AuthProvider>
+      <OAuthRedirectHandler defaultRedirect="/dashboard" />
       <NextThemesProvider
         attribute="class"
         defaultTheme="system"

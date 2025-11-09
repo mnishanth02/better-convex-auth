@@ -47,6 +47,8 @@ export {
   SessionGuard,
   type SessionGuardProps,
 } from "./guards";
+// Utils
+export { OAuthRedirectHandler, type OAuthRedirectHandlerProps } from "./utils/oauth-redirect-handler";
 
 /**
  * Package version

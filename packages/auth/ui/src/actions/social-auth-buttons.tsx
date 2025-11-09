@@ -155,13 +155,21 @@ export function SocialAuthButtons({
     try {
       setLoadingProvider(provider);
       setError(null);
+
+      // Store redirect URL in sessionStorage for OAuth callback
+      if (redirectTo) {
+        sessionStorage.setItem("auth-redirect", redirectTo);
+      }
+
+      // Initiate OAuth flow - this will redirect to provider
       await auth.signIn.social({
         provider,
         callbackURL: redirectTo,
       });
+
+      // Note: Code after this won't execute as user is redirected to OAuth provider
     } catch (err) {
       setError(err instanceof Error ? err.message : `Failed to sign in with ${providerConfig[provider].name}`);
-    } finally {
       setLoadingProvider(null);
     }
   };

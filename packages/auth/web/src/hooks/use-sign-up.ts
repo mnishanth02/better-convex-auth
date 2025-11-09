@@ -17,7 +17,8 @@ import { useAuth } from "./use-auth";
 export interface SignUpData {
   email: string;
   password: string;
-  name?: string;
+  name: string;
+  callbackURL?: string;
 }
 
 /**
@@ -27,7 +28,7 @@ export interface UseSignUpReturn {
   /**
    * Sign up with email and password
    */
-  signUpEmail: (data: SignUpData) => Promise<void>;
+  signUpEmail: (credentials: SignUpData) => Promise<void>;
 
   /**
    * Whether sign-up is in progress

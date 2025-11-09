@@ -39,19 +39,23 @@ export const {
   useSignOut,
 
   // UI Components
-  components: {
-    Forms: { SignInForm, SignUpForm, UpdateProfileForm, ChangePasswordForm, ForgotPasswordForm, ResetPasswordForm },
-    Guards: { SessionGuard, RoleGuard, EmailVerifiedGuard },
-    Display: { UserAvatar, UserBadge, UserMenu },
-    Actions: { SignOutButton, SocialAuthButtons },
-    Feedback: { PasswordStrengthIndicator },
-  },
+  components,
 
   // Higher-order components
   withAuth,
   withSession,
   withEmailVerified,
 } = auth;
+
+// Re-export commonly used components for convenience
+export const {
+  Forms: { SignInForm, SignUpForm, UpdateProfileForm, ChangePasswordForm, ForgotPasswordForm, ResetPasswordForm },
+  Guards: { SessionGuard, RoleGuard, EmailVerifiedGuard },
+  Display: { UserAvatar, UserBadge, UserMenu },
+  Actions: { SignOutButton, SocialAuthButtons },
+  Feedback: { PasswordStrengthIndicator },
+  Utils: { OAuthRedirectHandler },
+} = auth.components;
 
 /*
  * That's it! 🎉
