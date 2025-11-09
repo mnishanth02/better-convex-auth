@@ -8,13 +8,40 @@
 
 import { httpRouter } from "convex/server";
 import { httpAction } from "./_generated/server";
-import { auth } from "./auth";
+import { createAuth } from "./auth";
 import { resend } from "./emailService";
 
 const http = httpRouter();
 
-// Register Better Auth routes (handles /auth/* endpoints)
-auth.addHttpRoutes(http);
+/**
+ * Register authentication routes
+ *
+ * This mounts the Better Auth handler which handles:
+ * - POST /auth/sign-in/email
+ * - POST /auth/sign-up/email
+ * - POST /auth/sign-out
+ * - GET /auth/session
+ * - GET /auth/callback/google (OAuth callbacks)
+ * - GET /auth/callback/github
+ * - And more...
+ */
+http.route({
+  path: "/auth",
+  method: "GET",
+  handler: httpAction(async (ctx, req) => {
+    const auth = createAuth(ctx);
+    return auth.handler(req);
+  }),
+});
+
+http.route({
+  path: "/auth",
+  method: "POST",
+  handler: httpAction(async (ctx, req) => {
+    const auth = createAuth(ctx);
+    return auth.handler(req);
+  }),
+});
 
 // Register Resend webhook for email status updates
 // Set up webhook in Resend dashboard: https://resend.com/webhooks

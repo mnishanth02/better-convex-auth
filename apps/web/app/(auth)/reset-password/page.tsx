@@ -9,7 +9,7 @@ import { useMutation, useQuery } from "convex/react";
 import { AlertTriangle, CheckCircle, Loader2, Lock } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
-import { api } from "@/convex12/_generated/api";
+import { api } from "@/convex/_generated/api";
 
 function ResetPasswordForm() {
   const [password, setPassword] = useState("");

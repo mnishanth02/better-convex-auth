@@ -5,11 +5,11 @@ import { Button } from "@workspace/ui/components/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@workspace/ui/components/card";
 import { Input } from "@workspace/ui/components/input";
 import { Label } from "@workspace/ui/components/label";
-import { useAction } from "convex/react";
+import { useMutation } from "convex/react";
 import { CheckCircle, Loader2, Mail } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { api } from "@/convex12/_generated/api";
+import { api } from "@/convex/_generated/api";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
@@ -17,7 +17,7 @@ export default function ForgotPasswordPage() {
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState("");
 
-  const requestReset = useAction(api.passwordReset.requestPasswordReset);
+  const requestReset = useMutation(api.passwordReset.requestPasswordReset);
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {

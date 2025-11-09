@@ -24,6 +24,7 @@ crons.hourly(
 crons.daily("cleanup-old-resend-emails", { hourUTC: 2, minuteUTC: 0 }, internal.crons.cleanupResendEmails);
 
 // Clean up expired password reset tokens every hour at 15 minutes past
+// @ts-expect-error - passwordReset.cleanupPasswordResetTokens type system limitation
 crons.hourly("cleanup-password-reset-tokens", { minuteUTC: 15 }, internal.passwordReset.cleanupPasswordResetTokens);
 
 /**

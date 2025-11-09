@@ -12,15 +12,15 @@ export default function ExamplesPage() {
     {
       title: "Components Showcase",
       description:
-        "Interactive demonstrations of all 14 @auth/ui components with live previews, code snippets, and props documentation",
+        "Interactive demonstrations of all @workspace/z-auth components with live previews, code snippets, and props documentation",
       href: "/examples/components",
       icon: Palette,
-      badge: "14 Components",
+      badge: "All Components",
       features: [
-        "6 Form components (SignIn, SignUp, Profile, Password, etc.)",
-        "4 Display components (Avatar, Badge, Menu, SignOut)",
-        "3 Guard components (Session, Role, Email verification)",
-        "1 Utility component (Password strength indicator)",
+        "Form components (SignIn, SignUp, Profile, Password, etc.)",
+        "Display components (Avatar, Badge, Menu, SignOut)",
+        "Guard components (Session, Role, Email verification)",
+        "Utility components (Password strength indicator)",
         "Tabbed interface (Preview / Code / Props)",
         "Category filtering and search",
         "Copy-to-clipboard code examples",
@@ -28,10 +28,10 @@ export default function ExamplesPage() {
     },
     {
       title: "Hooks Demo",
-      description: "Live demonstrations of @auth/web hooks with real-time data and interactive examples",
+      description: "Live demonstrations of @workspace/z-auth hooks with real-time data and interactive examples",
       href: "/examples/hooks",
       icon: Zap,
-      badge: "5 Hooks",
+      badge: "All Hooks",
       features: [
         "useSession() - Access current session data",
         "useUser() - Get user profile and verification status",
@@ -44,16 +44,16 @@ export default function ExamplesPage() {
     },
     {
       title: "Utility Functions",
-      description: "Interactive testing of @auth/core utility functions with custom inputs and visual feedback",
+      description: "Interactive testing of @workspace/z-auth utility functions with custom inputs and visual feedback",
       href: "/examples/utilities",
       icon: Calculator,
-      badge: "7 Utilities",
+      badge: "All Utilities",
       features: [
-        "getUserDisplayName() - User-friendly display names",
-        "getUserInitials() - Extract initials for avatars",
-        "hasRole() / isAdmin() / isModerator() - Role checks",
-        "isEmailVerified() - Email verification status",
-        "isSessionExpired() - Session expiry validation",
+        "getUserRole() - Get user role safely",
+        "Helper functions for common tasks",
+        "Guard and permission checking",
+        "User profile utilities",
+        "Session management helpers",
         "Interactive testing with live inputs",
         "Visual feedback and results",
       ],
@@ -170,7 +170,8 @@ export default function ExamplesPage() {
                 <h3 className="font-semibold">Import Components</h3>
               </div>
               <pre className="rounded-lg border bg-muted p-3 text-xs overflow-x-auto">
-                <code>{`import { SignInForm } from "@auth/ui";`}</code>
+                <code>{`import { useAuth } from "@/lib/auth/setup";
+import { SignInForm } from "@workspace/ui/components/sign-in-form";`}</code>
               </pre>
             </div>
             <div className="space-y-2">

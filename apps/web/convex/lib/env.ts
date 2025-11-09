@@ -16,6 +16,9 @@ const backendEnvSchema = z.object({
   // Site configuration
   SITE_URL: z.string().url("SITE_URL must be a valid URL").default("http://localhost:3000"),
 
+  // Better Auth Secret (required)
+  BETTER_AUTH_SECRET: z.string().optional().describe("Secret for signing JWT tokens - required in production"),
+
   // OAuth providers (optional)
   GOOGLE_CLIENT_ID: z.string().optional(),
   GOOGLE_CLIENT_SECRET: z.string().optional(),
@@ -38,6 +41,7 @@ const backendEnvSchema = z.object({
 function validateBackendEnv() {
   const envVars = {
     SITE_URL: process.env.SITE_URL,
+    BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET,
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
     GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,

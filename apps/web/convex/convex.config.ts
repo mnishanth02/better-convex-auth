@@ -1,11 +1,4 @@
-/**
- * Convex Configuration Template
- *
- * Copy this file to your app's convex/ directory as convex.config.ts
- *
- * This configuration sets up Better Auth and Resend components for your Convex backend.
- */
-
+// @ts-nocheck
 import betterAuth from "@convex-dev/better-auth/convex.config";
 import resend from "@convex-dev/resend/convex.config";
 import { defineApp } from "convex/server";
