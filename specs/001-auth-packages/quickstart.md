@@ -76,7 +76,7 @@ openssl rand -base64 32
 
 ### Step 1: Set Up Auth Provider
 
-Edit `apps/web/app/layout.tsx`:
+Edit `apps/web/layout.tsx`:
 
 ```typescript
 import { AuthProvider } from "@repo/auth-web/providers";
@@ -107,7 +107,7 @@ export default function RootLayout({
 
 ### Step 2: Create Login Page
 
-Create `apps/web/app/(auth)/login/page.tsx`:
+Create `apps/web/(auth)/login/page.tsx`:
 
 ```typescript
 import { LoginForm } from "@repo/auth-ui/components/login-form";
@@ -152,7 +152,7 @@ export default function LoginPage() {
 
 ### Step 3: Create Signup Page
 
-Create `apps/web/app/(auth)/signup/page.tsx`:
+Create `apps/web/(auth)/signup/page.tsx`:
 
 ```typescript
 import { SignupForm } from "@repo/auth-ui/components/signup-form";
@@ -186,7 +186,7 @@ export default function SignupPage() {
 
 ### Step 4: Create Protected Dashboard
 
-Create `apps/web/app/(app)/dashboard/page.tsx`:
+Create `apps/web/(app)/dashboard/page.tsx`:
 
 ```typescript
 "use client";
@@ -271,7 +271,7 @@ pnpm install
 
 ### Step 2: Set Up Auth Provider
 
-Edit `apps/mobile/app/_layout.tsx`:
+Edit `apps/mobile/_layout.tsx`:
 
 ```typescript
 import { AuthProvider } from "@repo/auth-native/providers";
@@ -299,7 +299,7 @@ export default function RootLayout() {
 
 ### Step 3: Create Login Screen
 
-Create `apps/mobile/app/(auth)/login.tsx`:
+Create `apps/mobile/(auth)/login.tsx`:
 
 ```typescript
 import { View, Text, StyleSheet } from "react-native";
@@ -339,7 +339,7 @@ const styles = StyleSheet.create({
 
 ### Step 4: Create Protected Home Screen
 
-Create `apps/mobile/app/(app)/home.tsx`:
+Create `apps/mobile/(app)/home.tsx`:
 
 ```typescript
 import { View, Text, Button, StyleSheet } from "react-native";

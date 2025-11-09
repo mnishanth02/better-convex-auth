@@ -33,7 +33,7 @@ export default function ProfilePage() {
           </div>
         </div>
         <Button asChild>
-          <Link href="/app/profile/edit">
+          <Link href="/profile/edit">
             <Edit className="mr-2 h-4 w-4" />
             Edit Profile
           </Link>
@@ -83,25 +83,25 @@ export default function ProfilePage() {
         </CardHeader>
         <CardContent className="space-y-3">
           <Button asChild variant="outline" className="w-full justify-start">
-            <Link href="/app/profile/edit">
+            <Link href="/profile/edit">
               <Edit className="mr-2 h-4 w-4" />
               Edit Profile Information
             </Link>
           </Button>
           <Button asChild variant="outline" className="w-full justify-start">
-            <Link href="/app/profile/password">
+            <Link href="/profile/password">
               <Lock className="mr-2 h-4 w-4" />
               Change Password
             </Link>
           </Button>
           <Button asChild variant="outline" className="w-full justify-start">
-            <Link href="/app/profile/email">
+            <Link href="/profile/email">
               <Mail className="mr-2 h-4 w-4" />
               Change Email Address
             </Link>
           </Button>
           <Button asChild variant="outline" className="w-full justify-start">
-            <Link href="/app/security">
+            <Link href="/security">
               <Shield className="mr-2 h-4 w-4" />
               Security Settings
             </Link>
@@ -117,7 +117,7 @@ export default function ProfilePage() {
         </CardHeader>
         <CardContent>
           <Button asChild variant="destructive" className="w-full justify-start">
-            <Link href="/app/profile/delete">
+            <Link href="/profile/delete">
               <Trash2 className="mr-2 h-4 w-4" />
               Delete Account
             </Link>

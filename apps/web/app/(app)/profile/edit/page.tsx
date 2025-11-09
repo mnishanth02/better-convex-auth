@@ -14,7 +14,7 @@ export default function EditProfilePage() {
     <div className="container mx-auto max-w-2xl p-6 space-y-6">
       {/* Back Button */}
       <Button asChild variant="ghost" size="sm">
-        <Link href="/app/profile">
+        <Link href="/profile">
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Profile
         </Link>
@@ -33,7 +33,7 @@ export default function EditProfilePage() {
           <CardDescription>Update your name and profile picture</CardDescription>
         </CardHeader>
         <CardContent>
-          <UpdateProfileForm onSuccess={() => router.push("/app/profile")} />
+          <UpdateProfileForm onSuccess={() => router.push("/profile")} />
         </CardContent>
       </Card>
     </div>

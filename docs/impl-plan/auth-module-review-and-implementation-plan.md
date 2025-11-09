@@ -695,8 +695,8 @@ export const { auth, getCurrentUser } = createConvexAuthBackend({
 - ✅ `packages/auth/ui/src/forms/reset-password-form.tsx` (UI)
 - ❌ Backend password reset token generation (missing)
 - ❌ Backend password reset handler (missing)
-- ❌ `apps/web/app/(auth)/forgot-password/page.tsx` (missing)
-- ❌ `apps/web/app/(auth)/reset-password/page.tsx` (missing)
+- ❌ `apps/web/(auth)/forgot-password/page.tsx` (missing)
+- ❌ `apps/web/(auth)/reset-password/page.tsx` (missing)
 
 **Current Behavior**:
 ```typescript
@@ -958,7 +958,7 @@ export const {
 
 ---
 
-#### **Root Layout** (`apps/web/app/layout.tsx`)
+#### **Root Layout** (`apps/web/layout.tsx`)
 ```typescript
 import { AuthProvider } from "@/lib/auth/setup";
 
@@ -977,7 +977,7 @@ export default function RootLayout({ children }) {
 
 ---
 
-#### **Login Page** (`apps/web/app/(auth)/login/page.tsx`)
+#### **Login Page** (`apps/web/(auth)/login/page.tsx`)
 ```typescript
 import { SignInForm } from "@/lib/auth/setup";
 
@@ -997,7 +997,7 @@ export default function LoginPage() {
 
 ---
 
-#### **Dashboard Page** (`apps/web/app/(app)/dashboard/page.tsx`)
+#### **Dashboard Page** (`apps/web/(app)/dashboard/page.tsx`)
 ```typescript
 import { SessionGuard, SignOutButton, UserAvatar, useUser } from "@/lib/auth/setup";
 
@@ -1155,8 +1155,8 @@ export const { auth, getCurrentUser } = createConvexAuthBackend({
   - Token expiry set to 1 hour
   - Beautiful HTML email design
 - [x] **Frontend Pages**
-  - Created `apps/web/app/(auth)/forgot-password/page.tsx` - Email request form
-  - Created `apps/web/app/(auth)/reset-password/page.tsx` - Password reset form
+  - Created `apps/web/(auth)/forgot-password/page.tsx` - Email request form
+  - Created `apps/web/(auth)/reset-password/page.tsx` - Password reset form
   - Token validation and password update flow
 - [x] **Testing**
   - Manual E2E testing completed

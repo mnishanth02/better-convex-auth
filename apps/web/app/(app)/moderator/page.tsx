@@ -287,7 +287,7 @@ export default function ModeratorPanelPage() {
   };
 
   return (
-    <RoleGuard roles={["moderator"]} redirectTo="/app/dashboard">
+    <RoleGuard roles={["moderator"]} redirectTo="/dashboard">
       <div className="container mx-auto max-w-7xl p-6 space-y-6">
         {/* Page Header */}
         <div>

@@ -503,7 +503,7 @@ export interface SignUpInput {
 ### Using auth packages in Next.js app
 
 ```typescript
-// apps/web/app/layout.tsx
+// apps/web/layout.tsx
 import { AuthProvider } from "@repo/auth-web/providers";
 import type { AuthConfig } from "@repo/auth-types";
 
@@ -524,7 +524,7 @@ export default function RootLayout({ children }) {
   );
 }
 
-// apps/web/app/dashboard/page.tsx
+// apps/web/dashboard/page.tsx
 import { useUser } from "@repo/auth-web/hooks";
 import { LoginForm } from "@repo/auth-ui/components/login-form";
 
@@ -541,7 +541,7 @@ export default function DashboardPage() {
 ### Using auth packages in Expo app
 
 ```typescript
-// apps/mobile/app/_layout.tsx
+// apps/mobile/_layout.tsx
 import { AuthProvider } from "@repo/auth-native/providers";
 import { SecureStorageAdapter } from "@repo/auth-native/storage";
 
@@ -558,7 +558,7 @@ export default function RootLayout() {
   );
 }
 
-// apps/mobile/app/(auth)/login.tsx
+// apps/mobile/(auth)/login.tsx
 import { useAuth } from "@repo/auth-native/hooks";
 import { LoginForm } from "@repo/auth-ui/components/login-form";
 

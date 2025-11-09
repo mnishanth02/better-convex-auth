@@ -15,7 +15,7 @@ interface ErrorProps {
  * Global error boundary for the application.
  * Catches and handles React rendering errors gracefully.
  *
- * @see https://nextjs.org/docs/app/building-your-application/routing/error-handling
+ * @see https://nextjs.org/docs/building-your-application/routing/error-handling
  */
 export default function ErrorBoundary({ error, reset }: ErrorProps) {
   useEffect(() => {

@@ -71,7 +71,7 @@ export default function AppError({ error, reset }: ErrorProps) {
             <RefreshCw className="mr-2 h-4 w-4" />
             Try Again
           </Button>
-          <Button onClick={() => router.push("/app/dashboard")} variant="outline" className="flex-1">
+          <Button onClick={() => router.push("/dashboard")} variant="outline" className="flex-1">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Dashboard
           </Button>

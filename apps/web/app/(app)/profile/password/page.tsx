@@ -15,7 +15,7 @@ export default function ChangePasswordPage() {
     <div className="container mx-auto max-w-2xl p-6 space-y-6">
       {/* Back Button */}
       <Button asChild variant="ghost" size="sm">
-        <Link href="/app/profile">
+        <Link href="/profile">
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Profile
         </Link>
@@ -42,7 +42,7 @@ export default function ChangePasswordPage() {
           <CardDescription>You'll need to enter your current password to set a new one</CardDescription>
         </CardHeader>
         <CardContent>
-          <ChangePasswordForm onSuccess={() => router.push("/app/profile")} />
+          <ChangePasswordForm onSuccess={() => router.push("/profile")} />
         </CardContent>
       </Card>
 

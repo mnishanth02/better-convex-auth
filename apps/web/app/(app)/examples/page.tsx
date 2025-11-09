@@ -12,7 +12,7 @@ export default function ExamplesPage() {
       title: "Components Showcase",
       description:
         "Interactive demonstrations of all 14 @auth/ui components with live previews, code snippets, and props documentation",
-      href: "/app/examples/components",
+      href: "/examples/components",
       icon: Palette,
       badge: "14 Components",
       features: [
@@ -28,7 +28,7 @@ export default function ExamplesPage() {
     {
       title: "Hooks Demo",
       description: "Live demonstrations of @auth/web hooks with real-time data and interactive examples",
-      href: "/app/examples/hooks",
+      href: "/examples/hooks",
       icon: Zap,
       badge: "5 Hooks",
       features: [
@@ -44,7 +44,7 @@ export default function ExamplesPage() {
     {
       title: "Utility Functions",
       description: "Interactive testing of @auth/core utility functions with custom inputs and visual feedback",
-      href: "/app/examples/utilities",
+      href: "/examples/utilities",
       icon: Calculator,
       badge: "7 Utilities",
       features: [

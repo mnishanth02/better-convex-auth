@@ -163,8 +163,8 @@ New functions in @auth/utils:
 - packages/backend/convex/passwordReset.ts
 - packages/backend/convex/sessionManagement.ts
 - packages/backend/convex/crons.ts
-- apps/web/app/(auth)/forgot-password/page.tsx
-- apps/web/app/(auth)/reset-password/page.tsx
+- apps/web/(auth)/forgot-password/page.tsx
+- apps/web/(auth)/reset-password/page.tsx
 - apps/web/components/session/active-sessions-list.tsx
 - vitest.config.ts
 - packages/auth/__tests__/exports.test.ts

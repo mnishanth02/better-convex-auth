@@ -14,7 +14,7 @@ interface GlobalErrorProps {
  * Note: This file must include its own <html> and <body> tags
  * because it replaces the root layout when an error occurs.
  *
- * @see https://nextjs.org/docs/app/building-your-application/routing/error-handling#handling-errors-in-root-layouts
+ * @see https://nextjs.org/docs/building-your-application/routing/error-handling#handling-errors-in-root-layouts
  */
 export default function GlobalError({ error, reset }: GlobalErrorProps) {
   useEffect(() => {

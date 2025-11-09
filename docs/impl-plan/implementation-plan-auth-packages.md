@@ -1747,7 +1747,7 @@ Even simpler - just use the factory!
 
 ### 3.4 Update Login Page
 
-**File**: `apps/web/app/(auth)/login/page.tsx`
+**File**: `apps/web/(auth)/login/page.tsx`
 
 **Before** (143 lines of custom form):
 ```typescript
@@ -1791,7 +1791,7 @@ export default function LoginPage() {
 
 ### 3.5 Update Signup Page
 
-**File**: `apps/web/app/(auth)/signup/page.tsx`
+**File**: `apps/web/(auth)/signup/page.tsx`
 
 **Before** (180 lines of custom form with validation):
 ```typescript
@@ -1837,7 +1837,7 @@ export default function SignupPage() {
 
 ### 3.6 Update Dashboard Page
 
-**File**: `apps/web/app/(app)/dashboard/page.tsx`
+**File**: `apps/web/(app)/dashboard/page.tsx`
 
 **Before**:
 ```typescript
@@ -1929,7 +1929,7 @@ function DashboardContent() {
 
 **Current Issue**: Signup page has inline validation
 
-**File**: `apps/web/app/(auth)/signup/page.tsx` (if keeping custom form)
+**File**: `apps/web/(auth)/signup/page.tsx` (if keeping custom form)
 
 **Before**:
 ```typescript

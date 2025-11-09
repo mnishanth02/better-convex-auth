@@ -47,8 +47,8 @@ FORBIDDEN_PATTERNS=(
 FILE_PATTERNS=(
   "packages/auth/*/src/**/*.ts"
   "packages/auth/*/src/**/*.tsx"
-  "apps/*/app/**/*.ts"
-  "apps/*/app/**/*.tsx"
+  "apps/*/**/*.ts"
+  "apps/*/**/*.tsx"
   "apps/*/components/**/*.ts"
   "apps/*/components/**/*.tsx"
   "apps/*/lib/**/*.ts"

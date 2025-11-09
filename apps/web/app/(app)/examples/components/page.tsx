@@ -55,19 +55,18 @@ export default function ComponentsShowcasePage() {
       category: "forms",
       component: (
         <div className="max-w-md mx-auto">
-          <SignInForm redirectTo="/app/dashboard" />
+          <SignInForm redirectTo="/dashboard" />
         </div>
       ),
       code: `import { SignInForm } from "@auth/ui";
-
-export default function SignInPage() {
-  return (
-    <SignInForm 
-      redirectTo="/app/dashboard"
-      showSocialProviders={true}
-    />
-  );
-}`,
+          export default function SignInPage() {
+            return (
+              <SignInForm 
+                redirectTo="/dashboard"
+                showSocialProviders={true}
+              />
+            );
+          }`,
       props: [
         { name: "redirectTo", type: "string", description: "URL to redirect after successful sign in", default: "/" },
         {
@@ -85,19 +84,18 @@ export default function SignInPage() {
       category: "forms",
       component: (
         <div className="max-w-md mx-auto">
-          <SignUpForm redirectTo="/app/dashboard" />
+          <SignUpForm redirectTo="/dashboard" />
         </div>
       ),
       code: `import { SignUpForm } from "@auth/ui";
-
-export default function SignUpPage() {
-  return (
-    <SignUpForm 
-      redirectTo="/app/dashboard"
-      requireEmailVerification={true}
-    />
-  );
-}`,
+        export default function SignUpPage() {
+          return (
+            <SignUpForm 
+              redirectTo="/dashboard"
+              requireEmailVerification={true}
+            />
+          );
+        }`,
       props: [
         { name: "redirectTo", type: "string", description: "URL after successful sign up", default: "/" },
         {
@@ -126,7 +124,7 @@ export default function EditProfilePage() {
   
   return (
     <UpdateProfileForm 
-      onSuccess={() => router.push("/app/profile")}
+      onSuccess={() => router.push("/profile")}
       allowImageUpload={true}
     />
   );
@@ -154,7 +152,7 @@ export default function SecurityPage() {
   
   return (
     <ChangePasswordForm 
-      onSuccess={() => router.push("/app/security")}
+      onSuccess={() => router.push("/security")}
       showRevokeSessionsOption={true}
     />
   );
@@ -382,7 +380,7 @@ export default function DashboardLayout({ children }) {
       category: "guards",
       component: (
         <div className="space-y-4">
-          <RoleGuard roles={["admin"]} redirectTo="/app/dashboard">
+          <RoleGuard roles={["admin"]} redirectTo="/dashboard">
             <div className="rounded-lg border p-4 bg-purple-50">
               <div className="flex items-center gap-2 mb-2">
                 <Shield className="h-4 w-4 text-purple-600" />
@@ -391,7 +389,7 @@ export default function DashboardLayout({ children }) {
               <p className="text-xs text-muted-foreground">Only admins can see this</p>
             </div>
           </RoleGuard>
-          <RoleGuard roles={["moderator"]} redirectTo="/app/dashboard">
+          <RoleGuard roles={["moderator"]} redirectTo="/dashboard">
             <div className="rounded-lg border p-4 bg-blue-50">
               <div className="flex items-center gap-2 mb-2">
                 <Shield className="h-4 w-4 text-blue-600" />
@@ -406,7 +404,7 @@ export default function DashboardLayout({ children }) {
 
 export default function AdminPage() {
   return (
-    <RoleGuard roles={["admin"]} redirectTo="/app/dashboard">
+    <RoleGuard roles={["admin"]} redirectTo="/dashboard">
       <h1>Admin Dashboard</h1>
       {/* Admin-only content */}
     </RoleGuard>
@@ -685,7 +683,7 @@ export default function PasswordForm() {
           <div>
             <h3 className="font-semibold mb-2">Role-Based Content</h3>
             <pre className="rounded-lg border bg-muted p-3 text-sm overflow-x-auto">
-              <code>{`<RoleGuard roles={["admin"]} redirectTo="/app/dashboard">
+              <code>{`<RoleGuard roles={["admin"]} redirectTo="/dashboard">
   <AdminDashboard />
 </RoleGuard>`}</code>
             </pre>

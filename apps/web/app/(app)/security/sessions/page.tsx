@@ -114,7 +114,7 @@ export default function SessionsPage() {
     <div className="container mx-auto max-w-4xl p-6 space-y-6">
       {/* Back Button */}
       <Button asChild variant="ghost" size="sm">
-        <Link href="/app/security">
+        <Link href="/security">
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Security
         </Link>

@@ -254,12 +254,12 @@ Based on review of:
   - Token expiration settings
   - Email templates configured
 
-- [ ] **T103** Create password reset page at apps/web/app/(auth)/reset-password/page.tsx
+- [ ] **T103** Create password reset page at apps/web/(auth)/reset-password/page.tsx
   - Use ResetPasswordForm component
   - Handle token from URL
   - Redirect on success
 
-- [ ] **T104** Create forgot password page at apps/web/app/(auth)/forgot-password/page.tsx
+- [ ] **T104** Create forgot password page at apps/web/(auth)/forgot-password/page.tsx
   - Use ForgotPasswordForm component
   - Success message
   - Link back to login
@@ -278,7 +278,7 @@ Based on review of:
 
 #### 7.2 Profile Management (3 tasks)
 
-- [ ] **T107** Create profile page at apps/web/app/(app)/profile/page.tsx with UpdateProfileForm
+- [ ] **T107** Create profile page at apps/web/(app)/profile/page.tsx with UpdateProfileForm
   - Use UpdateProfileForm component
   - Show current values
   - Update on submit
@@ -288,7 +288,7 @@ Based on review of:
   - Confirm before updating
   - Keep old email until verified
 
-- [ ] **T109** Create settings page at apps/web/app/(app)/settings/page.tsx with ChangePasswordForm
+- [ ] **T109** Create settings page at apps/web/(app)/settings/page.tsx with ChangePasswordForm
   - Use ChangePasswordForm component
   - Require current password
   - Show success message
@@ -302,7 +302,7 @@ Based on review of:
   - Image preview
   - Convex file storage integration
 
-- [ ] **T111** Create email verification page at apps/web/app/(auth)/verify-email/page.tsx
+- [ ] **T111** Create email verification page at apps/web/(auth)/verify-email/page.tsx
   - Handle verification token from URL
   - Show success/error message
   - Auto-redirect on success
@@ -676,9 +676,9 @@ Based on review of:
 ### New Files (23)
 
 **Auth Pages:**
-- `apps/web/app/(app)/dashboard/page.tsx` - Protected dashboard
-- `apps/web/app/(auth)/login/page.tsx` - Login with SignInForm
-- `apps/web/app/(auth)/signup/page.tsx` - Signup with SignUpForm
+- `apps/web/(app)/dashboard/page.tsx` - Protected dashboard
+- `apps/web/(auth)/login/page.tsx` - Login with SignInForm
+- `apps/web/(auth)/signup/page.tsx` - Signup with SignUpForm
 
 **Setup:**
 - `apps/web/lib/auth/setup.ts` - One-function auth setup
@@ -713,7 +713,7 @@ Based on review of:
 
 ### Modified Files (6)
 
-- `apps/web/app/page.tsx` - Updated imports
+- `apps/web/page.tsx` - Updated imports
 - `apps/web/components/providers/index.tsx` - Simplified provider setup
 - `apps/web/package.json` - Added @auth/quickstart dependency
 - `packages/auth/core/tsconfig.tsbuildinfo` - Build info

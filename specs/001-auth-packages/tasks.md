@@ -294,11 +294,11 @@
 ### Web App Integration (US1) ✅ COMPLETE
 
 - [x] T061 [US1] Update apps/web/package.json with @auth/types, @auth/web dependencies
-- [x] T062 [US1] Wrap apps/web/app/layout.tsx with AuthProvider (ConvexBetterAuthProvider)
-- [x] T063 [US1] Create (auth) route group at apps/web/app/(auth)/
-- [x] T064 [US1] Create login page at apps/web/app/(auth)/login/page.tsx
-- [x] T065 [US1] Create signup page at apps/web/app/(auth)/signup/page.tsx
-- [x] T066 [US1] Create protected dashboard at apps/web/app/(app)/dashboard/page.tsx
+- [x] T062 [US1] Wrap apps/web/layout.tsx with AuthProvider (ConvexBetterAuthProvider)
+- [x] T063 [US1] Create (auth) route group at apps/web/(auth)/
+- [x] T064 [US1] Create login page at apps/web/(auth)/login/page.tsx
+- [x] T065 [US1] Create signup page at apps/web/(auth)/signup/page.tsx
+- [x] T066 [US1] Create protected dashboard at apps/web/(app)/dashboard/page.tsx
 - [x] T067 [US1] Test integration: pnpm typecheck (passed with zero errors ✅)
 
 **Checkpoint**: ✅ MVP complete - Full authentication system functional in web app
@@ -325,9 +325,9 @@
 - [x] T074 Update apps/web/package.json to use @auth/quickstart
 - [x] T075 Create apps/web/lib/auth/setup.ts using setupAuth()
 - [x] T076 Update apps/web/components/providers/index.tsx to use AuthProvider from setup
-- [x] T077 Update apps/web/app/(auth)/login/page.tsx to use SignInForm from setup
-- [x] T078 Update apps/web/app/(auth)/signup/page.tsx to use SignUpForm from setup
-- [x] T079 Update apps/web/app/(app)/dashboard/page.tsx to use SessionGuard, UserAvatar
+- [x] T077 Update apps/web/(auth)/login/page.tsx to use SignInForm from setup
+- [x] T078 Update apps/web/(auth)/signup/page.tsx to use SignUpForm from setup
+- [x] T079 Update apps/web/(app)/dashboard/page.tsx to use SessionGuard, UserAvatar
 - [x] T080 Remove old auth files: auth-client.ts, convex-client-provider.tsx
 - [x] T081 Run validation: pnpm install, pnpm typecheck, pnpm check (all passed ✅)
 
@@ -449,11 +449,11 @@
   - Implemented: `createPasswordResetToken()` internalMutation
   - Features: 1-hour expiry, secure token hashing, database storage
 
-- [x] T103 Create password reset page at apps/web/app/(auth)/reset-password/page.tsx
+- [x] T103 Create password reset page at apps/web/(auth)/reset-password/page.tsx
   - Implemented: Full password reset form with token validation
   - Features: Token verification, strength validation, success states
 
-- [x] T104 Create forgot password page at apps/web/app/(auth)/forgot-password/page.tsx
+- [x] T104 Create forgot password page at apps/web/(auth)/forgot-password/page.tsx
   - Implemented: Email request form for password reset
   - Features: Email validation, confirmation messaging, resend option
 
@@ -485,7 +485,7 @@
   - Implemented: Verification token generation and validation
   - Features: Resend integration for verification emails
 
-- [x] T108 Create email verification page at apps/web/app/(auth)/verify-email/page.tsx
+- [x] T108 Create email verification page at apps/web/(auth)/verify-email/page.tsx
   - Implemented: Email verification form with resend option
   - Features: Token handling, status updates, guidance
 

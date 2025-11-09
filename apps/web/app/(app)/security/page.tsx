@@ -18,7 +18,7 @@ export default function SecurityPage() {
       icon: Activity,
       status: "1 session",
       statusColor: "text-blue-600",
-      href: "/app/security/sessions",
+      href: "/security/sessions",
       action: "Manage",
     },
     {
@@ -27,7 +27,7 @@ export default function SecurityPage() {
       icon: Smartphone,
       status: "Not enabled",
       statusColor: "text-yellow-600",
-      href: "/app/security/two-factor",
+      href: "/security/two-factor",
       action: "Enable",
     },
     {
@@ -36,7 +36,7 @@ export default function SecurityPage() {
       icon: Key,
       status: "No passkeys",
       statusColor: "text-gray-600",
-      href: "/app/security/passkeys",
+      href: "/security/passkeys",
       action: "Add Passkey",
     },
     {
@@ -45,7 +45,7 @@ export default function SecurityPage() {
       icon: Lock,
       status: "View history",
       statusColor: "text-green-600",
-      href: "/app/security/activity",
+      href: "/security/activity",
       action: "View",
     },
   ];
@@ -194,7 +194,7 @@ export default function SecurityPage() {
                 </p>
               </div>
               <Button size="sm" asChild>
-                <Link href="/app/security/two-factor">Enable</Link>
+                <Link href="/security/two-factor">Enable</Link>
               </Button>
             </div>
 
@@ -207,7 +207,7 @@ export default function SecurityPage() {
                 </p>
               </div>
               <Button size="sm" asChild variant="outline">
-                <Link href="/app/security/passkeys">Add</Link>
+                <Link href="/security/passkeys">Add</Link>
               </Button>
             </div>
           </div>
@@ -222,13 +222,13 @@ export default function SecurityPage() {
         <CardContent>
           <div className="grid gap-3 sm:grid-cols-2">
             <Button asChild variant="outline" className="justify-start">
-              <Link href="/app/profile/password">
+              <Link href="/profile/password">
                 <Lock className="mr-2 h-4 w-4" />
                 Change Password
               </Link>
             </Button>
             <Button asChild variant="outline" className="justify-start">
-              <Link href="/app/security/sessions">
+              <Link href="/security/sessions">
                 <Activity className="mr-2 h-4 w-4" />
                 View All Sessions
               </Link>

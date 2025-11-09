@@ -27,7 +27,7 @@ export default function ChangeEmailPage() {
 
     try {
       // This would use authClient.changeEmail in a real implementation
-      // await authClient.changeEmail({ newEmail, callbackURL: "/app/profile" });
+      // await authClient.changeEmail({ newEmail, callbackURL: "/profile" });
 
       // Simulating API call
       await new Promise((resolve) => setTimeout(resolve, 1500));
@@ -35,7 +35,7 @@ export default function ChangeEmailPage() {
 
       // In real implementation, redirect after showing success message
       setTimeout(() => {
-        router.push("/app/profile");
+        router.push("/profile");
       }, 3000);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to change email");
@@ -68,7 +68,7 @@ export default function ChangeEmailPage() {
               </AlertDescription>
             </Alert>
             <Button asChild className="w-full mt-4">
-              <Link href="/app/profile">Back to Profile</Link>
+              <Link href="/profile">Back to Profile</Link>
             </Button>
           </CardContent>
         </Card>
@@ -80,7 +80,7 @@ export default function ChangeEmailPage() {
     <div className="container mx-auto max-w-2xl p-6 space-y-6">
       {/* Back Button */}
       <Button asChild variant="ghost" size="sm">
-        <Link href="/app/profile">
+        <Link href="/profile">
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Profile
         </Link>
@@ -170,7 +170,7 @@ export default function ChangeEmailPage() {
                   </>
                 )}
               </Button>
-              <Button type="button" variant="outline" onClick={() => router.push("/app/profile")} disabled={isLoading}>
+              <Button type="button" variant="outline" onClick={() => router.push("/profile")} disabled={isLoading}>
                 Cancel
               </Button>
             </div>

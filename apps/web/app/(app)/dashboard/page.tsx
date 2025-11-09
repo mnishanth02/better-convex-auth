@@ -93,7 +93,7 @@ export default function DashboardPage() {
             </div>
             <Separator />
             <Button asChild variant="outline" className="w-full">
-              <Link href="/app/profile">View Full Profile</Link>
+              <Link href="/profile">View Full Profile</Link>
             </Button>
           </CardContent>
         </Card>
@@ -140,7 +140,7 @@ export default function DashboardPage() {
             </div>
             <Separator />
             <Button asChild variant="outline" className="w-full">
-              <Link href="/app/security">Security Settings</Link>
+              <Link href="/security">Security Settings</Link>
             </Button>
           </CardContent>
         </Card>
@@ -155,25 +155,25 @@ export default function DashboardPage() {
         <CardContent>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             <Button asChild variant="outline" className="justify-start">
-              <Link href="/app/profile/edit">
+              <Link href="/profile/edit">
                 <UserIcon className="mr-2 h-4 w-4" />
                 Edit Profile
               </Link>
             </Button>
             <Button asChild variant="outline" className="justify-start">
-              <Link href="/app/profile/password">
+              <Link href="/profile/password">
                 <Lock className="mr-2 h-4 w-4" />
                 Change Password
               </Link>
             </Button>
             <Button asChild variant="outline" className="justify-start">
-              <Link href="/app/security/sessions">
+              <Link href="/security/sessions">
                 <Activity className="mr-2 h-4 w-4" />
                 Manage Sessions
               </Link>
             </Button>
             <Button asChild variant="outline" className="justify-start">
-              <Link href="/app/examples">
+              <Link href="/examples">
                 <Shield className="mr-2 h-4 w-4" />
                 View Examples
               </Link>

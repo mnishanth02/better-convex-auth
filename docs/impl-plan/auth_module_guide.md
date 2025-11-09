@@ -906,7 +906,7 @@ export default http;
 
 ## Step 5: Setup Next.js Web App
 
-### 5.1 apps/web/app/auth-provider.tsx
+### 5.1 apps/web/auth-provider.tsx
 
 ```typescript
 "use client";
@@ -923,7 +923,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 }
 ```
 
-### 5.2 apps/web/app/layout.tsx
+### 5.2 apps/web/layout.tsx
 
 ```typescript
 import { AuthProvider } from "./auth-provider";
@@ -943,7 +943,7 @@ export default function RootLayout({
 }
 ```
 
-### 5.3 apps/web/app/(auth)/sign-in/page.tsx
+### 5.3 apps/web/(auth)/sign-in/page.tsx
 
 ```typescript
 "use client";
@@ -1248,7 +1248,7 @@ plugins: [
 - [Better Auth Documentation](https://www.better-auth.com)
 - [Convex Documentation](https://docs.convex.dev)
 - [Turborepo Documentation](https://turbo.build)
-- [Next.js Authentication](https://nextjs.org/docs/app/building-your-application/authentication)
+- [Next.js Authentication](https://nextjs.org/docs/building-your-application/authentication)
 - [React Native Auth Best Practices](https://reactnative.dev/docs/security)
 
 ---

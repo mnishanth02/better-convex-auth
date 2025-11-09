@@ -173,7 +173,7 @@ GITHUB_CLIENT_SECRET=<your-client-secret>
 }
 ```
 
-**Proxy Route Setup** (`apps/web/app/api/auth/[...all]/route.ts`):
+**Proxy Route Setup** (`apps/web/api/auth/[...all]/route.ts`):
 ```typescript
 import { nextJsHandler } from "@convex-dev/better-auth/nextjs";
 export const { GET, POST } = nextJsHandler();

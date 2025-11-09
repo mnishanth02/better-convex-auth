@@ -84,7 +84,7 @@ export function ConvexClientProvider({ children }: { children: ReactNode }) {
 }
 ```
 
-Add to your `apps/web/app/layout.tsx`:
+Add to your `apps/web/layout.tsx`:
 
 ```tsx
 import { Providers } from "@/components/providers";
@@ -225,7 +225,7 @@ export default function ProtectedPage() {
 
 ### Login Page
 
-See `apps/web/app/(auth)/login/page.tsx` for a complete example with:
+See `apps/web/(auth)/login/page.tsx` for a complete example with:
 - Email/password form
 - GitHub OAuth button
 - Loading states
@@ -234,7 +234,7 @@ See `apps/web/app/(auth)/login/page.tsx` for a complete example with:
 
 ### Signup Page
 
-See `apps/web/app/(auth)/signup/page.tsx` for a complete example with:
+See `apps/web/(auth)/signup/page.tsx` for a complete example with:
 - Name, email, password fields
 - Password confirmation
 - Password strength validation
@@ -242,7 +242,7 @@ See `apps/web/app/(auth)/signup/page.tsx` for a complete example with:
 
 ### Dashboard Page
 
-See `apps/web/app/(app)/dashboard/page.tsx` for a complete example with:
+See `apps/web/(app)/dashboard/page.tsx` for a complete example with:
 - Protected route logic
 - Session information display
 - Sign out functionality
@@ -352,7 +352,7 @@ All methods have complete type definitions and JSDoc documentation!
 For issues or questions:
 - Check `docs/auth_module_guide.md`
 - Check `docs/implementation_patterns.md`
-- Review example pages in `apps/web/app/(auth)/`
+- Review example pages in `apps/web/(auth)/`
 
 ---
 

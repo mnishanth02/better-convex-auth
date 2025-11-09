@@ -51,26 +51,26 @@ const navigation: NavGroup[] = [
   {
     title: "Main",
     items: [
-      { title: "Dashboard", href: "/app/dashboard", icon: LayoutDashboard },
-      { title: "Profile", href: "/app/profile", icon: User },
-      { title: "Security", href: "/app/security", icon: Shield },
-      { title: "Settings", href: "/app/settings", icon: Settings },
+      { title: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+      { title: "Profile", href: "/profile", icon: User },
+      { title: "Security", href: "/security", icon: Shield },
+      { title: "Settings", href: "/settings", icon: Settings },
     ],
   },
   {
     title: "Examples",
     items: [
-      { title: "Components", href: "/app/examples/components", icon: Code },
-      { title: "Hooks", href: "/app/examples/hooks", icon: Code },
-      { title: "Utilities", href: "/app/examples/utilities", icon: Code },
+      { title: "Components", href: "/examples/components", icon: Code },
+      { title: "Hooks", href: "/examples/hooks", icon: Code },
+      { title: "Utilities", href: "/examples/utilities", icon: Code },
     ],
   },
   {
     title: "Administration",
     requireRole: "admin",
     items: [
-      { title: "Admin Dashboard", href: "/app/admin", icon: UserCog },
-      { title: "Moderator Panel", href: "/app/moderator", icon: Users },
+      { title: "Admin Dashboard", href: "/admin", icon: UserCog },
+      { title: "Moderator Panel", href: "/moderator", icon: Users },
     ],
   },
 ];
@@ -85,7 +85,7 @@ export function AppShell({ children }: AppShellProps) {
   const { user } = useUser();
 
   const isActive = (href: string) => {
-    if (href === "/app/dashboard") {
+    if (href === "/dashboard") {
       return pathname === href;
     }
     return pathname?.startsWith(href);
@@ -95,7 +95,7 @@ export function AppShell({ children }: AppShellProps) {
     <div className="flex h-full flex-col">
       {/* Logo/Brand */}
       <div className="flex h-16 items-center border-b px-6">
-        <Link href="/app/dashboard" className="flex items-center gap-2 font-semibold">
+        <Link href="/dashboard" className="flex items-center gap-2 font-semibold">
           <Shield className="h-6 w-6 text-primary" />
           <span className="text-lg">Better Auth</span>
         </Link>
@@ -165,19 +165,19 @@ export function AppShell({ children }: AppShellProps) {
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem asChild>
-                <Link href="/app/profile">
+                <Link href="/profile">
                   <User className="mr-2 h-4 w-4" />
                   Profile
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link href="/app/security">
+                <Link href="/security">
                   <Shield className="mr-2 h-4 w-4" />
                   Security
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link href="/app/settings">
+                <Link href="/settings">
                   <Settings className="mr-2 h-4 w-4" />
                   Settings
                 </Link>
@@ -229,13 +229,13 @@ export function AppShell({ children }: AppShellProps) {
           {/* Breadcrumbs or Title */}
           <div className="flex-1">
             <h1 className="text-lg font-semibold">
-              {pathname === "/app/dashboard" && "Dashboard"}
-              {pathname?.startsWith("/app/profile") && "Profile"}
-              {pathname?.startsWith("/app/security") && "Security"}
-              {pathname?.startsWith("/app/settings") && "Settings"}
-              {pathname?.startsWith("/app/examples") && "Examples"}
-              {pathname?.startsWith("/app/admin") && "Admin"}
-              {pathname?.startsWith("/app/moderator") && "Moderator"}
+              {pathname === "/dashboard" && "Dashboard"}
+              {pathname?.startsWith("/profile") && "Profile"}
+              {pathname?.startsWith("/security") && "Security"}
+              {pathname?.startsWith("/settings") && "Settings"}
+              {pathname?.startsWith("/examples") && "Examples"}
+              {pathname?.startsWith("/admin") && "Admin"}
+              {pathname?.startsWith("/moderator") && "Moderator"}
             </h1>
           </div>
 
@@ -263,19 +263,19 @@ export function AppShell({ children }: AppShellProps) {
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
                   <DropdownMenuItem asChild>
-                    <Link href="/app/profile">
+                    <Link href="/profile">
                       <User className="mr-2 h-4 w-4" />
                       Profile
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
-                    <Link href="/app/security">
+                    <Link href="/security">
                       <Shield className="mr-2 h-4 w-4" />
                       Security
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
-                    <Link href="/app/settings">
+                    <Link href="/settings">
                       <Settings className="mr-2 h-4 w-4" />
                       Settings
                     </Link>

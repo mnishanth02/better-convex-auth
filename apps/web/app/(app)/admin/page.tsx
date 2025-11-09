@@ -306,7 +306,7 @@ export default function AdminDashboardPage() {
   };
 
   return (
-    <RoleGuard roles={["admin"]} redirectTo="/app/dashboard">
+    <RoleGuard roles={["admin"]} redirectTo="/dashboard">
       <div className="container mx-auto max-w-7xl p-6 space-y-6">
         {/* Page Header */}
         <div>

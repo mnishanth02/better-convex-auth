@@ -283,7 +283,7 @@ export default function CustomSignInForm() {
     e.preventDefault();
     await signIn(
       { email, password },
-      { redirectTo: "/app/dashboard" }
+      { redirectTo: "/dashboard" }
     );
   };
   
@@ -321,7 +321,7 @@ export default function CustomSignUpForm() {
     e.preventDefault();
     await signUp(
       { name, email, password },
-      { redirectTo: "/app/dashboard" }
+      { redirectTo: "/dashboard" }
     );
   };
   
