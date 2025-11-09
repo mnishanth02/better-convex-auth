@@ -62,12 +62,20 @@ export interface SetupAuthResult {
     Forms: {
       SignInForm: typeof import("@auth/ui/forms").SignInForm;
       SignUpForm: typeof import("@auth/ui/forms").SignUpForm;
+      UpdateProfileForm: typeof import("@auth/ui/forms").UpdateProfileForm;
+      ChangePasswordForm: typeof import("@auth/ui/forms").ChangePasswordForm;
+      ForgotPasswordForm: typeof import("@auth/ui/forms").ForgotPasswordForm;
+      ResetPasswordForm: typeof import("@auth/ui/forms").ResetPasswordForm;
     };
     Guards: {
       SessionGuard: typeof import("@auth/ui/guards").SessionGuard;
+      RoleGuard: typeof import("@auth/ui/guards").RoleGuard;
+      EmailVerifiedGuard: typeof import("@auth/ui/guards").EmailVerifiedGuard;
     };
     Display: {
       UserAvatar: typeof import("@auth/ui/display").UserAvatar;
+      UserBadge: typeof import("@auth/ui/display").UserBadge;
+      UserMenu: typeof import("@auth/ui/display").UserMenu;
     };
     Actions: {
       SocialAuthButtons: typeof import("@auth/ui/actions").SocialAuthButtons;

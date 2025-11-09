@@ -2,9 +2,10 @@
  * Session Management Utilities
  *
  * Helper functions for managing user sessions.
+ * These utilities accept both internal Session types and Better Auth session types.
  */
 
-import type { Session } from "@auth/types";
+import type { AnySession, Session } from "@auth/types";
 
 /**
  * Session lifecycle status
@@ -12,39 +13,96 @@ import type { Session } from "@auth/types";
 export type SessionLifecycleStatus = "active" | "expiring" | "expired";
 
 /**
+ * Extract expiry timestamp from any session type
+ */
+function getExpiryTimestamp(session: AnySession): number {
+  // Better Auth session structure
+  if ("session" in session && session.session && "expiresAt" in session.session) {
+    const expiresAt = session.session.expiresAt as Date | number;
+    return expiresAt instanceof Date ? expiresAt.getTime() : expiresAt;
+  }
+
+  // Internal session structure
+  if ("expiresAt" in session) {
+    const expiresAt = session.expiresAt as Date | number;
+    return expiresAt instanceof Date ? expiresAt.getTime() : expiresAt;
+  }
+
+  return 0; // Invalid session
+}
+
+/**
+ * Extract creation timestamp from any session type
+ */
+function getCreatedTimestamp(session: AnySession): number {
+  // Better Auth session structure
+  if ("session" in session && session.session && "createdAt" in session.session) {
+    const createdAt = session.session.createdAt as Date | number;
+    return createdAt instanceof Date ? createdAt.getTime() : createdAt;
+  }
+
+  // Internal session structure
+  if ("createdAt" in session) {
+    const createdAt = session.createdAt as Date | number;
+    return createdAt instanceof Date ? createdAt.getTime() : createdAt;
+  }
+
+  return Date.now();
+}
+
+/**
+ * Extract updated timestamp from any session type
+ */
+function getUpdatedTimestamp(session: AnySession): number {
+  // Better Auth session structure
+  if ("session" in session && session.session && "updatedAt" in session.session) {
+    const updatedAt = session.session.updatedAt as Date | number;
+    return updatedAt instanceof Date ? updatedAt.getTime() : updatedAt;
+  }
+
+  // Internal session structure
+  if ("updatedAt" in session) {
+    const updatedAt = session.updatedAt as Date | number;
+    return updatedAt instanceof Date ? updatedAt.getTime() : updatedAt;
+  }
+
+  return getCreatedTimestamp(session);
+}
+
+/**
  * Check if a session is valid (not expired)
  *
- * @param session - Session to check
+ * @param session - Session to check (internal or Better Auth)
  * @returns true if session is valid
  */
-export function isSessionValid(session: Session): boolean {
-  return session.expiresAt > Date.now();
+export function isSessionValid(session: AnySession): boolean {
+  return getExpiryTimestamp(session) > Date.now();
 }
 
 /**
  * Check if a session is expired
  *
- * @param session - Session to check
+ * @param session - Session to check (internal or Better Auth)
  * @returns true if session is expired
  */
-export function isSessionExpired(session: Session): boolean {
+export function isSessionExpired(session: AnySession): boolean {
   return !isSessionValid(session);
 }
 
 /**
  * Get session lifecycle status
  *
- * @param session - Session to check
+ * @param session - Session to check (internal or Better Auth)
  * @returns Session lifecycle status
  */
-export function getSessionStatus(session: Session): SessionLifecycleStatus {
+export function getSessionStatus(session: AnySession): SessionLifecycleStatus {
   if (isSessionExpired(session)) {
     return "expired";
   }
 
   // Check if session is close to expiring (within 1 hour)
   const oneHour = 60 * 60 * 1000;
-  if (session.expiresAt - Date.now() < oneHour) {
+  if (getExpiryTimestamp(session) - Date.now() < oneHour) {
     return "expiring";
   }
 
@@ -54,12 +112,12 @@ export function getSessionStatus(session: Session): SessionLifecycleStatus {
 /**
  * Check if a session should be refreshed
  *
- * @param session - Session to check
+ * @param session - Session to check (internal or Better Auth)
  * @param updateAge - Update age in seconds (default: 24 hours)
  * @returns true if session should be refreshed
  */
-export function shouldRefreshSession(session: Session, updateAge: number = 60 * 60 * 24): boolean {
-  const lastUpdated = session.updatedAt ?? session.createdAt;
+export function shouldRefreshSession(session: AnySession, updateAge: number = 60 * 60 * 24): boolean {
+  const lastUpdated = getUpdatedTimestamp(session);
   const updateAgeMs = updateAge * 1000;
   return Date.now() - lastUpdated > updateAgeMs;
 }
@@ -78,11 +136,11 @@ export function calculateSessionExpiry(expiresIn: number, fromTimestamp: number 
 /**
  * Get remaining session time in seconds
  *
- * @param session - Session to check
+ * @param session - Session to check (internal or Better Auth)
  * @returns Remaining time in seconds (0 if expired)
  */
-export function getRemainingSessionTime(session: Session): number {
-  const remaining = Math.floor((session.expiresAt - Date.now()) / 1000);
+export function getRemainingSessionTime(session: AnySession): number {
+  const remaining = Math.floor((getExpiryTimestamp(session) - Date.now()) / 1000);
   return Math.max(0, remaining);
 }
 

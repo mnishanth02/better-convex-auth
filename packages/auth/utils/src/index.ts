@@ -14,8 +14,8 @@ export {
   formatZodError,
   getErrorMessage,
   isAuthError,
-} from "./errors.js";
-export * from "./tokens.js";
+} from "./errors";
+export * from "./tokens";
 export type {
   ChangePasswordData,
   CreateOrganizationData,
@@ -26,8 +26,8 @@ export type {
   SignUpData,
   UpdateOrganizationData,
   UpdateProfileData,
-} from "./validators.js";
-export * from "./validators.js";
+} from "./validators";
+export * from "./validators";
 
 /**
  * Version information

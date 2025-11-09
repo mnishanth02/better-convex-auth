@@ -10,13 +10,15 @@
  */
 
 import { setupAuth } from "@auth/quickstart";
+import { env } from "@/lib/config/env";
 
 /**
  * Main auth setup - everything configured in one function call
+ * Uses validated environment variables from @/lib/config/env
  */
 export const auth = setupAuth({
-  convexUrl: process.env.NEXT_PUBLIC_CONVEX_URL as string,
-  baseURL: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
+  convexUrl: env.NEXT_PUBLIC_CONVEX_URL,
+  baseURL: env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
   storagePrefix: "better-auth",
   expectAuth: false,
 });
@@ -36,11 +38,11 @@ export const {
   useSignUp,
   useSignOut,
 
-  // UI Components - Forms
+  // UI Components
   components: {
-    Forms: { SignInForm, SignUpForm },
-    Guards: { SessionGuard },
-    Display: { UserAvatar },
+    Forms: { SignInForm, SignUpForm, UpdateProfileForm, ChangePasswordForm, ForgotPasswordForm, ResetPasswordForm },
+    Guards: { SessionGuard, RoleGuard, EmailVerifiedGuard },
+    Display: { UserAvatar, UserBadge, UserMenu },
     Actions: { SignOutButton, SocialAuthButtons },
     Feedback: { PasswordStrengthIndicator },
   },

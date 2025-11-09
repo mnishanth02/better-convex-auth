@@ -5,7 +5,7 @@
  * These can be overridden by providing custom configuration.
  */
 
-import type { AuthConfig } from "./auth-config.js";
+import type { AuthConfig } from "./auth-config";
 
 /**
  * Time constants in milliseconds

@@ -13,7 +13,7 @@ export {
   type ConvexAuthOptions,
   createConvexAuth,
   getAuthDefaults,
-} from "./convex/index.js";
+} from "./convex/index";
 
 // Re-export session utilities
 export {
@@ -26,7 +26,7 @@ export {
   type SessionLifecycleStatus,
   sanitizeSession,
   shouldRefreshSession,
-} from "./session.js";
+} from "./session";
 
 // Re-export user utilities
 export {
@@ -43,7 +43,7 @@ export {
   isValidEmail,
   maskEmail,
   toPublicUser,
-} from "./user.js";
+} from "./user";
 
 /**
  * Version information

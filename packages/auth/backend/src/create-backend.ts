@@ -1,7 +1,7 @@
 import { createConvexAuth } from "@auth/core";
 import { requireActionCtx } from "@convex-dev/better-auth/utils";
-import { defaultVerificationEmailTemplate } from "./templates.js";
-import type { ConvexAuthBackendConfig } from "./types.js";
+import { defaultVerificationEmailTemplate } from "./templates";
+import type { ConvexAuthBackendConfig } from "./types";
 
 export function createConvexAuthBackend(ctx: unknown, config: ConvexAuthBackendConfig) {
   const {

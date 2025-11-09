@@ -9,6 +9,7 @@ export default defineSchema({
     emailVerified: v.boolean(),
     name: v.optional(v.string()),
     image: v.optional(v.string()),
+    role: v.optional(v.string()),
     createdAt: v.number(),
     updatedAt: v.number(),
   })

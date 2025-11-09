@@ -1,4 +1,4 @@
-import type { EmailTemplateParams, EmailTemplates } from "./types.js";
+import type { EmailTemplateParams, EmailTemplates } from "./types";
 
 /**
  * Default email verification template

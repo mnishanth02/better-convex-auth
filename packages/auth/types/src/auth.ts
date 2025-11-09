@@ -4,7 +4,7 @@
  * Type definitions for configuring the authentication system.
  */
 
-import type { SessionConfig } from "./session.js";
+import type { SessionConfig } from "./session";
 
 /**
  * Email and password authentication configuration.

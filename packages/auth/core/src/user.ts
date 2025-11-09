@@ -2,53 +2,54 @@
  * User Management Utilities
  *
  * Helper functions for user operations and transformations.
+ * These utilities accept both internal User types and Better Auth user types.
  */
 
-import type { PublicUser, User, UserRole } from "@auth/types";
+import type { AnyUser, PublicUser, User, UserRole } from "@auth/types";
 
 /**
  * Convert a full user object to a public user (safe for client)
  *
- * @param user - Full user object
+ * @param user - Full user object (internal or Better Auth)
  * @returns Public user object (no sensitive data)
  */
-export function toPublicUser(user: User): PublicUser {
+export function toPublicUser(user: AnyUser): PublicUser {
   return {
     id: user.id,
     name: user.name,
-    image: user.image,
+    image: typeof user.image === "string" ? user.image : user.image || undefined,
   };
 }
 
 /**
  * Check if a user has verified their email
  *
- * @param user - User to check
+ * @param user - User to check (internal or Better Auth)
  * @returns true if email is verified
  */
-export function hasVerifiedEmail(user: User): boolean {
+export function hasVerifiedEmail(user: { emailVerified: boolean }): boolean {
   return user.emailVerified === true;
 }
 
 /**
  * Check if a user account is complete (has name and email verified)
  *
- * @param user - User to check
+ * @param user - User to check (internal or Better Auth)
  * @returns true if profile is complete
  */
-export function isProfileComplete(user: User): boolean {
+export function isProfileComplete(user: { emailVerified: boolean; name?: string | null }): boolean {
   return hasVerifiedEmail(user) && !!user.name;
 }
 
 /**
  * Get user display name
  *
- * @param user - User object
+ * @param user - User object (internal, Better Auth, or public)
  * @returns Display name (falls back to email if no name, or "User" as last resort)
  */
-export function getUserDisplayName(user: User | PublicUser): string {
+export function getUserDisplayName(user: AnyUser | PublicUser | { name?: string | null; email?: string }): string {
   if ("email" in user) {
-    return user.name || user.email;
+    return user.name || user.email || "User";
   }
   return user.name || "User";
 }
@@ -56,10 +57,10 @@ export function getUserDisplayName(user: User | PublicUser): string {
 /**
  * Get user initials for avatar
  *
- * @param user - User object
+ * @param user - User object (internal, Better Auth, or public)
  * @returns User initials (e.g., "JD" for "John Doe")
  */
-export function getUserInitials(user: User | PublicUser): string {
+export function getUserInitials(user: AnyUser | PublicUser | { name?: string | null; email?: string }): string {
   const name = user.name || ("email" in user ? user.email : undefined);
 
   if (!name) return "?";
@@ -81,11 +82,11 @@ export function getUserInitials(user: User | PublicUser): string {
 /**
  * Format user creation date
  *
- * @param user - User object
+ * @param user - User object with createdAt timestamp
  * @returns Formatted date string
  */
-export function formatUserCreationDate(user: User): string {
-  const date = new Date(user.createdAt);
+export function formatUserCreationDate(user: { createdAt: number | Date }): string {
+  const date = user.createdAt instanceof Date ? user.createdAt : new Date(user.createdAt);
   return date.toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
@@ -96,11 +97,11 @@ export function formatUserCreationDate(user: User): string {
 /**
  * Check if a user has a specific role
  *
- * @param user - User with role
+ * @param user - User with role (internal or Better Auth extended)
  * @param role - Role to check
  * @returns true if user has the role
  */
-export function hasRole(user: { role?: UserRole }, role: UserRole): boolean {
+export function hasRole(user: { role?: UserRole | string }, role: UserRole): boolean {
   return user.role === role;
 }
 

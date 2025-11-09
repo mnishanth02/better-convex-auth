@@ -1,13 +1,13 @@
-export { createConvexAuthBackend } from "./create-backend.js";
+export { createConvexAuthBackend } from "./create-backend";
 export {
   defaultEmailTemplates,
   defaultMagicLinkTemplate,
   defaultPasswordResetTemplate,
   defaultVerificationEmailTemplate,
-} from "./templates.js";
+} from "./templates";
 export type {
   ConvexAuthBackendConfig,
   ConvexAuthBackendResult,
   EmailTemplateParams,
   EmailTemplates,
-} from "./types.js";
+} from "./types";

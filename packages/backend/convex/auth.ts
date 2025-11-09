@@ -6,12 +6,26 @@ import { components } from "./_generated/api";
 import type { DataModel } from "./_generated/dataModel";
 import { query } from "./_generated/server";
 
-const siteUrl = process.env.SITE_URL || "http://localhost:3000";
-const googleClientId = process.env.GOOGLE_CLIENT_ID || "";
-const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET || "";
-const appleClientId = process.env.APPLE_CLIENT_ID || "";
-const appleClientSecret = process.env.APPLE_CLIENT_SECRET || "";
-const isDevelopment = process.env.NODE_ENV !== "production" || siteUrl.includes("localhost");
+/**
+ * SECURITY: Prevent client-side execution
+ * This file contains sensitive backend logic and should NEVER run in the browser.
+ */
+if (typeof window !== "undefined") {
+  throw new Error(
+    "🚨 SECURITY ERROR: Backend authentication configuration cannot run in browser context. " +
+      "This file should only be imported by Convex server functions.",
+  );
+}
+
+// Import and validate environment variables
+import { backendEnv, isDevelopment as isDevEnv } from "./lib/env";
+
+const siteUrl = backendEnv.SITE_URL;
+const googleClientId = backendEnv.GOOGLE_CLIENT_ID || "";
+const googleClientSecret = backendEnv.GOOGLE_CLIENT_SECRET || "";
+const appleClientId = backendEnv.APPLE_CLIENT_ID || "";
+const appleClientSecret = backendEnv.APPLE_CLIENT_SECRET || "";
+const isDevelopment = isDevEnv || siteUrl.includes("localhost");
 
 export const authComponent = createClient<DataModel>(components.betterAuth);
 const resend = new Resend(components.resend, {

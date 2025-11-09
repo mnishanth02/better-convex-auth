@@ -1,11 +1,19 @@
 import {
+  ChangePasswordForm,
+  EmailVerifiedGuard,
+  ForgotPasswordForm,
   PasswordStrengthIndicator,
+  ResetPasswordForm,
+  RoleGuard,
   SessionGuard,
   SignInForm,
   SignOutButton,
   SignUpForm,
   SocialAuthButtons,
+  UpdateProfileForm,
   UserAvatar,
+  UserBadge,
+  UserMenu,
 } from "@auth/ui";
 import {
   createAuthClient,
@@ -85,12 +93,20 @@ export function setupAuth(config: SetupAuthConfig): SetupAuthResult {
       Forms: {
         SignInForm,
         SignUpForm,
+        UpdateProfileForm,
+        ChangePasswordForm,
+        ForgotPasswordForm,
+        ResetPasswordForm,
       },
       Guards: {
         SessionGuard,
+        RoleGuard,
+        EmailVerifiedGuard,
       },
       Display: {
         UserAvatar,
+        UserBadge,
+        UserMenu,
       },
       Actions: {
         SocialAuthButtons,

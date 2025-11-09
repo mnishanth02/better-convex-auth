@@ -14,22 +14,22 @@ export type {
   RateLimitConfig,
   RouteConfig,
   SessionConfig,
-} from "./auth-config.js";
-export { mergeConfig } from "./auth-config.js";
+} from "./auth-config";
+export { mergeConfig } from "./auth-config";
 
-export { DEFAULT_AUTH_CONFIG, DEV_AUTH_CONFIG, STRICT_AUTH_CONFIG } from "./defaults.js";
+export { DEFAULT_AUTH_CONFIG, DEV_AUTH_CONFIG, STRICT_AUTH_CONFIG } from "./defaults";
 
 export {
   authConfigSchema,
   isAuthConfig,
   safeValidateAuthConfig,
   validateAuthConfig,
-} from "./validators.js";
+} from "./validators";
 
-import type { AuthConfig } from "./auth-config.js";
+import type { AuthConfig } from "./auth-config";
 // Re-export getAuthConfig with defaults injected to avoid circular dependency
-import { mergeConfig } from "./auth-config.js";
-import { DEFAULT_AUTH_CONFIG } from "./defaults.js";
+import { mergeConfig } from "./auth-config";
+import { DEFAULT_AUTH_CONFIG } from "./defaults";
 
 /**
  * Gets the complete auth configuration by merging custom values with defaults

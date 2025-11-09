@@ -25,7 +25,7 @@ export type {
   SecurityConfig,
   SocialProvidersConfig,
   TwoFactorConfig,
-} from "./auth.js";
+} from "./auth";
 // Re-export all organization types
 export type {
   AcceptInvitationInput,
@@ -43,9 +43,9 @@ export type {
   RemoveMemberInput,
   UpdateMemberRoleInput,
   UpdateOrganizationInput,
-} from "./organization.js";
+} from "./organization";
 // Export utility functions
-export { getOrganizationPermissions } from "./organization.js";
+export { getOrganizationPermissions } from "./organization";
 // Re-export all session types
 export type {
   ActiveSession,
@@ -54,7 +54,7 @@ export type {
   SessionRefreshResult,
   SessionStatus,
   SessionWithUser,
-} from "./session.js";
+} from "./session";
 // Re-export all user types
 export type {
   PublicUser,
@@ -65,7 +65,25 @@ export type {
   UserProfileUpdate,
   UserRole,
   UserWithRole,
-} from "./user.js";
+} from "./user";
+
+// Re-export Better Auth compatibility types
+export type {
+  AnySession,
+  AnyUser,
+  BetterAuthSession,
+  BetterAuthUser,
+  ExtendedBetterAuthSession,
+  ExtendedBetterAuthUser,
+} from "./better-auth-extensions";
+export {
+  getConvexId,
+  getUserRole,
+  hasConvexId,
+  hasRole,
+  toInternalSession,
+  toInternalUser,
+} from "./better-auth-extensions";
 
 /**
  * Version information

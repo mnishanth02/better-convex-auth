@@ -6,7 +6,7 @@
  */
 
 import { z } from "zod";
-import type { AuthConfig } from "./auth-config.js";
+import type { AuthConfig } from "./auth-config";
 
 /**
  * OAuth Provider Schema
@@ -148,7 +148,7 @@ export function validateAuthConfig(config: unknown): AuthConfig {
  * }
  * ```
  */
-export function safeValidateAuthConfig(config: unknown): z.SafeParseReturnType<unknown, AuthConfig> {
+export function safeValidateAuthConfig(config: unknown): z.ZodSafeParseResult<AuthConfig> {
   return authConfigSchema.safeParse(config);
 }
 

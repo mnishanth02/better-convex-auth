@@ -30,10 +30,10 @@ export interface Session {
   updatedAt: number;
 
   /** IP address of the client (optional, for security) */
-  ipAddress?: string;
+  ipAddress?: string | null;
 
   /** User agent string (optional, for security) */
-  userAgent?: string;
+  userAgent?: string | null;
 
   /** Device information (optional) */
   device?: {
