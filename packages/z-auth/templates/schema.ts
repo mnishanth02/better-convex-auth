@@ -1,84 +1,61 @@
 /**
- * Database Schema Template
+ * Database Schema Template for Better Convex Auth
  *
  * Copy this file to your app's convex/ directory as schema.ts
  *
- * This defines the complete schema for @convex-dev/auth authentication.
- * The schema includes tables for users, sessions, accounts, and verifications.
+ * This defines the complete schema for Better Auth + Convex authentication.
+ * The schema is managed by the @convex-dev/better-auth component.
  *
- * Note: @convex-dev/auth requires specific field names and indexes.
- * Do not modify the core auth tables unless you know what you're doing.
+ * Note: The auth tables (users, sessions, accounts, verifications) are
+ * automatically created by the Better Auth component. You only need to
+ * define your app-specific tables.
  */
 
 import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
 
 /**
- * Database schema with @convex-dev/auth tables
+ * Database schema
+ *
+ * Authentication tables are automatically managed by @convex-dev/better-auth.
+ * Add your app-specific tables below.
  */
 export default defineSchema({
-  // Required: Users table
-  users: defineTable({
-    id: v.string(),
-    email: v.string(),
-    emailVerified: v.boolean(),
-    name: v.optional(v.string()),
-    image: v.optional(v.string()),
-    role: v.optional(v.string()),
-    createdAt: v.number(),
-    updatedAt: v.number(),
-  })
-    .index("byemail", ["email"])
-    .index("byid", ["id"]),
-
-  // Required: Sessions table
-  sessions: defineTable({
-    id: v.string(),
-    expiresAt: v.number(),
-    token: v.string(),
-    createdAt: v.number(),
-    updatedAt: v.number(),
-    userId: v.string(),
-  })
-    .index("byuser", ["userId"])
-    .index("bytoken", ["token"]),
-
-  // Required: Accounts table (for OAuth and password authentication)
-  accounts: defineTable({
-    userId: v.string(),
-    provider: v.string(),
-    providerAccountId: v.string(),
-    accessToken: v.optional(v.string()),
-    refreshToken: v.optional(v.string()),
-    expiresAt: v.optional(v.number()),
-  })
-    .index("byuser", ["userId"])
-    .index("byprovider", ["provider", "providerAccountId"]),
-
-  // Required: Verifications table (for email verification)
-  verifications: defineTable({
-    identifier: v.string(),
-    value: v.string(),
-    expiresAt: v.number(),
-  }).index("by_identifier", ["identifier"]),
-
-  // Optional: Password reset tokens (if implementing password reset)
-  // Uncomment if you need password reset functionality:
-  // passwordResetTokens: defineTable({
-  //   userId: v.string(),
-  //   token: v.string(),
-  //   expiresAt: v.number(),
-  //   used: v.boolean(),
-  // })
-  //   .index("by_token", ["token"])
-  //   .index("by_userId", ["userId"]),
-
+  // Auth tables are handled by @convex-dev/better-auth component
+  // You don't need to define them here!
   // Add your app-specific tables below
   // Example:
   // posts: defineTable({
   //   title: v.string(),
   //   content: v.string(),
-  //   authorId: v.string(),
+  //   authorId: v.string(), // References Better Auth user ID
+  //   published: v.boolean(),
   //   createdAt: v.number(),
-  // }).index("by_author", ["authorId"]),
+  //   updatedAt: v.number(),
+  // })
+  //   .index("by_author", ["authorId"])
+  //   .index("by_published", ["published"]),
+  // comments: defineTable({
+  //   postId: v.id("posts"),
+  //   authorId: v.string(), // References Better Auth user ID
+  //   content: v.string(),
+  //   createdAt: v.number(),
+  // })
+  //   .index("by_post", ["postId"])
+  //   .index("by_author", ["authorId"]),
+  // Example: Organization/team tables
+  // teams: defineTable({
+  //   name: v.string(),
+  //   slug: v.string(),
+  //   ownerId: v.string(), // References Better Auth user ID
+  //   createdAt: v.number(),
+  // }).index("by_slug", ["slug"]),
+  // teamMembers: defineTable({
+  //   teamId: v.id("teams"),
+  //   userId: v.string(), // References Better Auth user ID
+  //   role: v.union(v.literal("owner"), v.literal("admin"), v.literal("member")),
+  //   joinedAt: v.number(),
+  // })
+  //   .index("by_team", ["teamId"])
+  //   .index("by_user", ["userId"]),
 });

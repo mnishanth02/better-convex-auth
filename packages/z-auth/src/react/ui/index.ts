@@ -18,6 +18,8 @@ export {
   UserMenu,
   type UserMenuProps,
 } from "./display";
+// Error Boundary
+export { AuthErrorBoundary, type AuthErrorBoundaryProps } from "./error-boundary";
 // Feedback
 export {
   PasswordStrengthIndicator,

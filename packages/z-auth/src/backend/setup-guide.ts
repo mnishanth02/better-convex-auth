@@ -114,23 +114,40 @@ export default app;
  * This should be created in your app's convex/ directory.
  */
 export const exampleAuthSetup = `
-import { createConvexAuth } from "@auth/core";
-import { createClient } from "@convex-dev/better-auth";
-import { Resend } from "@convex-dev/resend";
+import { betterAuth } from "better-auth";
+import { convexAdapter } from "@convex-dev/better-auth";
 import { components } from "./_generated/api";
-import type { DataModel } from "./_generated/dataModel";
 
-export const authComponent = createClient<DataModel>(components.betterAuth);
-const resend = new Resend(components.resend, { testMode: false });
+export const auth = betterAuth({
+  // Database adapter (Convex)
+  database: convexAdapter(components.betterAuth),
 
-export const createAuth = (ctx: GenericCtx<DataModel>) => {
-  return createConvexAuth(ctx, {
-    adapter: authComponent.adapter(ctx),
-    baseURL: process.env.SITE_URL!,
-    emailPassword: { enabled: true },
-    // Add your configuration here
-  });
-};
+  // Base URL for authentication
+  baseURL: process.env.SITE_URL || process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
+
+  // Secret for signing tokens (required in production)
+  secret: process.env.BETTER_AUTH_SECRET,
+
+  // Email & Password authentication
+  emailAndPassword: {
+    enabled: true,
+    requireEmailVerification: false,
+  },
+
+  // Social OAuth providers
+  socialProviders: {
+    google: {
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    },
+  },
+
+  // Session configuration
+  session: {
+    expiresIn: 60 * 60 * 24 * 7, // 7 days
+    updateAge: 60 * 60 * 24, // 1 day
+  },
+});
 `;
 
 /**

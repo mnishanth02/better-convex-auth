@@ -116,7 +116,7 @@ export function hasConvexId(user: unknown): user is ExtendedBetterAuthUser {
  * @param role - User role (if available)
  * @returns Internal User type
  */
-export function toInternalUser(betterAuthUser: BetterAuthUser, convexId?: string, role?: UserRole): User {
+export function toInternalUser(betterAuthUser: BetterAuthUser, convexId?: string, _role?: UserRole): User {
   return {
     _id: convexId || betterAuthUser.id, // Fallback to Better Auth ID if no Convex ID
     id: betterAuthUser.id,

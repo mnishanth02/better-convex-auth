@@ -1,11 +1,10 @@
 /**
- * HTTP Routes Template
+ * HTTP Routes Template for Better Convex Auth
  *
  * Copy this file to your app's convex/ directory as http.ts
  *
- * This registers HTTP routes for:
- * - Authentication endpoints (/auth/*)
- * - Optional: Resend webhook for email events
+ * This registers HTTP routes for authentication endpoints.
+ * The auth handler responds to all /auth/* routes automatically.
  */
 
 import { httpRouter } from "convex/server";
@@ -13,20 +12,43 @@ import { auth } from "./auth";
 
 const http = httpRouter();
 
-// Register Better Auth routes (handles /auth/* endpoints)
-auth.addHttpRoutes(http);
+/**
+ * Register authentication routes
+ *
+ * This mounts the Better Auth handler which handles:
+ * - POST /auth/sign-in/email
+ * - POST /auth/sign-up/email
+ * - POST /auth/sign-out
+ * - GET /auth/session
+ * - GET /auth/callback/google (OAuth callbacks)
+ * - GET /auth/callback/github
+ * - And more...
+ */
+http.route({
+  path: "/auth",
+  method: "GET",
+  handler: auth.handler,
+});
 
-// Optional: Add Resend webhook for email status updates
-// Uncomment if you're using the Resend component for emails:
-// import { httpAction } from "./_generated/server";
-// import { resend } from "./emailService"; // You'll need to create this
-//
-// http.route({
-//   path: "/resend-webhook",
-//   method: "POST",
-//   handler: httpAction(async (ctx, req) => {
-//     return await resend.handleResendEventWebhook(ctx, req);
-//   }),
-// });
+http.route({
+  path: "/auth",
+  method: "POST",
+  handler: auth.handler,
+});
+
+/**
+ * Optional: Add custom HTTP routes below
+ *
+ * Example:
+ * http.route({
+ *   path: "/api/custom-endpoint",
+ *   method: "GET",
+ *   handler: httpAction(async (ctx) => {
+ *     return new Response(JSON.stringify({ message: "Hello" }), {
+ *       headers: { "Content-Type": "application/json" },
+ *     });
+ *   }),
+ * });
+ */
 
 export default http;

@@ -54,6 +54,9 @@ export interface CreateAuthResult {
     Utils: {
       OAuthRedirectHandler: typeof authUI.OAuthRedirectHandler;
     };
+    ErrorBoundary: {
+      AuthErrorBoundary: typeof authUI.AuthErrorBoundary;
+    };
   };
 }
 
@@ -171,6 +174,9 @@ export function createAuth(config: ClientAuthConfig): CreateAuthResult {
       },
       Utils: {
         OAuthRedirectHandler: authUI.OAuthRedirectHandler,
+      },
+      ErrorBoundary: {
+        AuthErrorBoundary: authUI.AuthErrorBoundary,
       },
     },
   };
