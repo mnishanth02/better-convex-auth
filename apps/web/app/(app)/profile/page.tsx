@@ -1,12 +1,12 @@
 "use client";
 
-import { useUser, UserAvatar } from "@/lib/auth/setup";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@workspace/ui/components/card";
-import { Button } from "@workspace/ui/components/button";
 import { Badge } from "@workspace/ui/components/badge";
+import { Button } from "@workspace/ui/components/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@workspace/ui/components/card";
 import { Separator } from "@workspace/ui/components/separator";
-import { Edit, Mail, Lock, Calendar, Shield, Trash2 } from "lucide-react";
+import { Calendar, Edit, Lock, Mail, Shield, Trash2 } from "lucide-react";
 import Link from "next/link";
+import { UserAvatar, useUser } from "@/lib/auth/setup";
 
 export default function ProfilePage() {
   const { user } = useUser();

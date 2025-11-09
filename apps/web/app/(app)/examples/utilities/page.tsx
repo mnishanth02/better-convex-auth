@@ -1,24 +1,67 @@
 "use client";
 
-import { useState } from "react";
-import { Button } from "@workspace/ui/components/button";
 import { Badge } from "@workspace/ui/components/badge";
+import { Button } from "@workspace/ui/components/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@workspace/ui/components/card";
 import { Input } from "@workspace/ui/components/input";
 import { Label } from "@workspace/ui/components/label";
 import { Separator } from "@workspace/ui/components/separator";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@workspace/ui/components/card";
-import { useSession, useUser } from "@auth/web";
-import {
-  getUserDisplayName,
-  getUserInitials,
-  hasRole,
-  isAdmin,
-  isModerator,
-  hasVerifiedEmail,
-  isSessionExpired,
-} from "@auth/core";
-import { getUserRole } from "@auth/types";
-import { Code, Copy, CheckCircle2, Calculator, Users, Shield, Mail, Clock, Check, X } from "lucide-react";
+import { Calculator, Check, CheckCircle2, Clock, Copy, Mail, Shield, Users, X } from "lucide-react";
+import { useState } from "react";
+import { getUserRole, useSession, useUser } from "@/lib/auth/setup";
+
+// Utility functions (simplified implementations for demo)
+function getUserDisplayName(user: unknown): string {
+  if (user && typeof user === "object" && "name" in user && typeof user.name === "string") {
+    return user.name;
+  }
+  if (user && typeof user === "object" && "email" in user && typeof user.email === "string") {
+    return user.email.split("@")[0] || "User";
+  }
+  return "User";
+}
+
+function getUserInitials(user: unknown): string {
+  const displayName = getUserDisplayName(user);
+  return (
+    displayName
+      .split(" ")
+      .map((n: string) => n[0])
+      .join("")
+      .toUpperCase()
+      .slice(0, 2) || "U"
+  );
+}
+
+function hasRole(user: unknown, role: string): boolean {
+  if (user && typeof user === "object" && "role" in user) {
+    return user.role === role;
+  }
+  return false;
+}
+
+function isAdmin(user: unknown): boolean {
+  return hasRole(user, "admin");
+}
+
+function isModerator(user: unknown): boolean {
+  return hasRole(user, "moderator");
+}
+
+function hasVerifiedEmail(user: unknown): boolean {
+  if (user && typeof user === "object" && "emailVerified" in user) {
+    return user.emailVerified === true;
+  }
+  return false;
+}
+
+function isSessionExpired(session: unknown): boolean {
+  if (!session || typeof session !== "object") return true;
+  if (!("expiresAt" in session)) return true;
+  const expiresAt = session.expiresAt;
+  if (typeof expiresAt !== "number") return true;
+  return Date.now() > expiresAt;
+}
 
 interface UtilityDemo {
   id: string;

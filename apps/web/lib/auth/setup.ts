@@ -1,53 +1,48 @@
 "use client";
 
 /**
- * Better Convex Auth - Quickstart Setup
+ * Better Convex Auth - Unified Package Setup
  *
- * This file demonstrates the new @auth/quickstart package
- * which provides one-function setup for authentication.
- *
- * 5-minute setup instead of 30+ minutes!
+ * Using @workspace/z-auth - one package for everything!
+ * Simple, type-safe, and scalable authentication.
  */
 
-import { setupAuth } from "@auth/quickstart";
-import { env } from "@/lib/config/env";
+import { createAuth } from "@workspace/z-auth/nextjs";
+
+// Get environment variables
+const convexUrl = process.env.NEXT_PUBLIC_CONVEX_URL || "";
+const baseURL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+
+if (!convexUrl) {
+  throw new Error("NEXT_PUBLIC_CONVEX_URL is required");
+}
 
 /**
- * Main auth setup - everything configured in one function call
- * Uses validated environment variables from @/lib/config/env
+ * Main auth setup - single function call
+ * Returns hooks, components, and provider
  */
-export const auth = setupAuth({
-  convexUrl: env.NEXT_PUBLIC_CONVEX_URL,
-  baseURL: env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
-  storagePrefix: "better-auth",
-  expectAuth: false,
+const auth = createAuth({
+  convexUrl,
+  baseURL,
 });
 
-/**
- * Export everything for easy imports throughout the app
- */
+// Export the provider and all hooks
 export const {
-  // Provider to wrap the app
   AuthProvider,
-
-  // Core auth hooks
   useAuth,
   useSession,
   useUser,
   useSignIn,
   useSignUp,
   useSignOut,
-
-  // UI Components
-  components,
-
-  // Higher-order components
+  useAuthClient,
   withAuth,
   withSession,
   withEmailVerified,
+  components,
 } = auth;
 
-// Re-export commonly used components for convenience
+// Re-export components for convenience
 export const {
   Forms: { SignInForm, SignUpForm, UpdateProfileForm, ChangePasswordForm, ForgotPasswordForm, ResetPasswordForm },
   Guards: { SessionGuard, RoleGuard, EmailVerifiedGuard },
@@ -57,12 +52,31 @@ export const {
   Utils: { OAuthRedirectHandler },
 } = auth.components;
 
-/*
+/**
+ * Utility Functions
+ */
+
+// User role type
+export type UserRole = "user" | "moderator" | "admin";
+
+/**
+ * Type-safe helper to access user role.
+ * Returns undefined if role is not present.
+ */
+export function getUserRole(user: unknown): UserRole | undefined {
+  if (user && typeof user === "object" && "role" in user) {
+    return (user as { role: UserRole }).role;
+  }
+  return undefined;
+}
+
+/**
  * That's it! 🎉
  *
  * Compare to the old setup:
- * - No manual createAuthClient() call
- * - No manual createAuthProvider() call
- * - No separate imports from @auth/web and @auth/ui
- * - Everything in one place with full TypeScript support
+ * - 1 package instead of 7+
+ * - 1 file instead of 4+
+ * - Simple imports: import { useAuth, UserAvatar } from "@/lib/auth/setup"
+ * - Full TypeScript support built-in
+ * - All components and hooks in one place
  */

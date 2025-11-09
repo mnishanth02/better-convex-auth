@@ -1,6 +1,5 @@
 "use client";
 
-import { api } from "@workspace/backend/convex/_generated/api";
 import { Alert, AlertDescription } from "@workspace/ui/components/alert";
 import { Button } from "@workspace/ui/components/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@workspace/ui/components/card";
@@ -10,6 +9,7 @@ import { useMutation, useQuery } from "convex/react";
 import { AlertTriangle, CheckCircle, Loader2, Lock } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
+import { api } from "@/convex12/_generated/api";
 
 function ResetPasswordForm() {
   const [password, setPassword] = useState("");

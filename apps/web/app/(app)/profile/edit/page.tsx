@@ -1,11 +1,11 @@
 "use client";
 
-import { UpdateProfileForm } from "@/lib/auth/setup";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@workspace/ui/components/card";
 import { Button } from "@workspace/ui/components/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@workspace/ui/components/card";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { UpdateProfileForm } from "@/lib/auth/setup";
 
 export default function EditProfilePage() {
   const router = useRouter();

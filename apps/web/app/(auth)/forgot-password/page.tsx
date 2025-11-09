@@ -1,6 +1,5 @@
 "use client";
 
-import { api } from "@workspace/backend/convex/_generated/api";
 import { Alert, AlertDescription } from "@workspace/ui/components/alert";
 import { Button } from "@workspace/ui/components/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@workspace/ui/components/card";
@@ -10,6 +9,7 @@ import { useAction } from "convex/react";
 import { CheckCircle, Loader2, Mail } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { api } from "@/convex12/_generated/api";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");

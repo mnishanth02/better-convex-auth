@@ -1,26 +1,26 @@
 "use client";
 
-import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@workspace/ui/components/card";
-import { Button } from "@workspace/ui/components/button";
-import { Badge } from "@workspace/ui/components/badge";
 import { Alert, AlertDescription } from "@workspace/ui/components/alert";
+import { Badge } from "@workspace/ui/components/badge";
+import { Button } from "@workspace/ui/components/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@workspace/ui/components/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@workspace/ui/components/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@workspace/ui/components/table";
 import {
-  ArrowLeft,
   AlertTriangle,
+  ArrowLeft,
   CheckCircle2,
   Clock,
-  MapPin,
-  Monitor,
-  Smartphone,
-  Tablet,
   Download,
   Filter,
+  MapPin,
+  Monitor,
   Shield,
+  Smartphone,
+  Tablet,
 } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
 
 interface LoginActivity {
   id: string;

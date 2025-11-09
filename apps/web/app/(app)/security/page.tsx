@@ -1,12 +1,12 @@
 "use client";
 
-import { useUser } from "@/lib/auth/setup";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@workspace/ui/components/card";
-import { Button } from "@workspace/ui/components/button";
 import { Badge } from "@workspace/ui/components/badge";
+import { Button } from "@workspace/ui/components/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@workspace/ui/components/card";
 import { Separator } from "@workspace/ui/components/separator";
-import { Shield, Lock, Smartphone, Activity, Key, AlertCircle } from "lucide-react";
+import { Activity, AlertCircle, Key, Lock, Shield, Smartphone } from "lucide-react";
 import Link from "next/link";
+import { useUser } from "@/lib/auth/setup";
 
 export default function SecurityPage() {
   const { user } = useUser();

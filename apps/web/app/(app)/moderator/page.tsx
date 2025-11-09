@@ -1,13 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@workspace/ui/components/card";
-import { Button } from "@workspace/ui/components/button";
-import { Badge } from "@workspace/ui/components/badge";
-import { Textarea } from "@workspace/ui/components/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@workspace/ui/components/avatar";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@workspace/ui/components/select";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@workspace/ui/components/table";
+import { Badge } from "@workspace/ui/components/badge";
+import { Button } from "@workspace/ui/components/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@workspace/ui/components/card";
 import {
   Dialog,
   DialogContent,
@@ -16,20 +12,24 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@workspace/ui/components/dialog";
-import { RoleGuard } from "@auth/ui";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@workspace/ui/components/select";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@workspace/ui/components/table";
+import { Textarea } from "@workspace/ui/components/textarea";
 import {
-  Flag,
-  CheckCircle2,
-  XCircle,
-  Clock,
-  MessageSquare,
-  Image,
-  FileText,
   AlertTriangle,
+  CheckCircle2,
+  Clock,
   Eye,
+  FileText,
+  Flag,
+  Image,
+  MessageSquare,
   TrendingUp,
   Users,
+  XCircle,
 } from "lucide-react";
+import { useState } from "react";
+import { RoleGuard } from "@/lib/auth/setup";
 
 interface ContentItem {
   id: string;
@@ -556,7 +556,9 @@ export default function ModeratorPanelPage() {
             <div className="space-y-4 py-4">
               {/* Content Preview */}
               <div className="space-y-2">
-                <label className="text-sm font-medium">Content</label>
+                <label className="text-sm font-medium" htmlFor="">
+                  Content
+                </label>
                 <div className="rounded-lg border p-4 bg-muted">
                   <div className="flex items-start gap-3 mb-3">
                     <Avatar>
@@ -579,7 +581,9 @@ export default function ModeratorPanelPage() {
 
               {/* Report Info */}
               <div className="space-y-2">
-                <label className="text-sm font-medium">Report Details</label>
+                <label className="text-sm font-medium" htmlFor="">
+                  Report Details
+                </label>
                 <div className="rounded-lg border p-3 space-y-1">
                   <div className="flex items-center gap-2">
                     <Flag className="h-4 w-4 text-red-600" />
@@ -595,8 +599,12 @@ export default function ModeratorPanelPage() {
 
               {/* Review Notes */}
               <div className="space-y-2">
-                <label className="text-sm font-medium">Moderation Notes</label>
+                <label className="text-sm font-medium" htmlFor="moderatorNotes">
+                  {" "}
+                  Moderation Notes
+                </label>
                 <Textarea
+                  id="moderatorNotes"
                   placeholder={
                     reviewAction === "approve"
                       ? "Explain why this content is acceptable..."

@@ -1,7 +1,7 @@
 "use client";
 
-import { api } from "@workspace/backend/convex/_generated/api";
-import type { Id } from "@workspace/backend/convex/_generated/dataModel";
+import { api } from "@/convex/_generated/api";
+import { Id } from "@/convex/_generated/dataModel";
 import { Alert, AlertDescription } from "@workspace/ui/components/alert";
 import { Badge } from "@workspace/ui/components/badge";
 import { Button } from "@workspace/ui/components/button";

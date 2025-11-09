@@ -1,14 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { cn } from "@workspace/ui/lib/utils";
 import { Button } from "@workspace/ui/components/button";
-import { ScrollArea } from "@workspace/ui/components/scroll-area";
-import { Separator } from "@workspace/ui/components/separator";
-import { useUser } from "@auth/web";
-import { getUserRole } from "@auth/types";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,21 +10,27 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@workspace/ui/components/dropdown-menu";
+import { ScrollArea } from "@workspace/ui/components/scroll-area";
+import { Separator } from "@workspace/ui/components/separator";
 import { Sheet, SheetContent, SheetTrigger } from "@workspace/ui/components/sheet";
-import { UserAvatar, SignOutButton } from "@auth/ui";
+import { cn } from "@workspace/ui/lib/utils";
 import {
-  LayoutDashboard,
-  User,
-  Shield,
-  Settings,
-  Code,
-  Menu,
+  Bell,
   ChevronRight,
+  Code,
+  LayoutDashboard,
+  LogOut,
+  Menu,
+  Settings,
+  Shield,
+  User,
   UserCog,
   Users,
-  LogOut,
-  Bell,
 } from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
+import { getUserRole, SignOutButton, UserAvatar, useUser } from "@/lib/auth/setup";
 
 interface NavItem {
   title: string;

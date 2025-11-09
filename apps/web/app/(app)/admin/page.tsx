@@ -1,21 +1,5 @@
 "use client";
 
-import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@workspace/ui/components/card";
-import { Button } from "@workspace/ui/components/button";
-import { Input } from "@workspace/ui/components/input";
-import { Badge } from "@workspace/ui/components/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@workspace/ui/components/avatar";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@workspace/ui/components/select";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@workspace/ui/components/table";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@workspace/ui/components/dropdown-menu";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -26,6 +10,10 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@workspace/ui/components/alert-dialog";
+import { Avatar, AvatarFallback, AvatarImage } from "@workspace/ui/components/avatar";
+import { Badge } from "@workspace/ui/components/badge";
+import { Button } from "@workspace/ui/components/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@workspace/ui/components/card";
 import {
   Dialog,
   DialogContent,
@@ -34,24 +22,36 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@workspace/ui/components/dialog";
-import { RoleGuard } from "@auth/ui";
 import {
-  Users,
-  UserCog,
-  Shield,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@workspace/ui/components/dropdown-menu";
+import { Input } from "@workspace/ui/components/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@workspace/ui/components/select";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@workspace/ui/components/table";
+import {
   Activity,
+  Ban,
+  Calendar,
+  CheckCircle2,
+  Clock,
+  Download,
+  Filter,
+  Mail,
   MoreVertical,
   Search,
-  Filter,
-  Download,
+  Shield,
+  UserCog,
   UserPlus,
-  Ban,
-  CheckCircle2,
+  Users,
   XCircle,
-  Clock,
-  Mail,
-  Calendar,
 } from "lucide-react";
+import { useState } from "react";
+import { RoleGuard } from "@/lib/auth/setup";
 
 interface User {
   id: string;
@@ -663,9 +663,11 @@ export default function AdminDashboardPage() {
             </DialogHeader>
             <div className="space-y-4 py-4">
               <div className="space-y-2">
-                <label className="text-sm font-medium">Select New Role</label>
+                <label className="text-sm font-medium" htmlFor="role">
+                  Select New Role
+                </label>
                 <Select value={newRole} onValueChange={(v: any) => setNewRole(v)}>
-                  <SelectTrigger>
+                  <SelectTrigger id="role">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>

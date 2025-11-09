@@ -1,10 +1,5 @@
 "use client";
 
-import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@workspace/ui/components/card";
-import { Button } from "@workspace/ui/components/button";
-import { Badge } from "@workspace/ui/components/badge";
-import { Separator } from "@workspace/ui/components/separator";
 import { Alert, AlertDescription } from "@workspace/ui/components/alert";
 import {
   AlertDialog,
@@ -16,8 +11,13 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@workspace/ui/components/alert-dialog";
-import { Monitor, Smartphone, Tablet, MapPin, Clock, AlertTriangle, ArrowLeft } from "lucide-react";
+import { Badge } from "@workspace/ui/components/badge";
+import { Button } from "@workspace/ui/components/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@workspace/ui/components/card";
+import { Separator } from "@workspace/ui/components/separator";
+import { AlertTriangle, ArrowLeft, Clock, MapPin, Monitor, Smartphone, Tablet } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
 
 // Mock session data - in real app, this would come from Convex query
 const mockSessions = [

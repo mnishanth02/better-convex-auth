@@ -1,12 +1,12 @@
 "use client";
 
-import { useUser, UserAvatar, SignOutButton } from "@/lib/auth/setup";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@workspace/ui/components/card";
 import { Badge } from "@workspace/ui/components/badge";
 import { Button } from "@workspace/ui/components/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@workspace/ui/components/card";
 import { Separator } from "@workspace/ui/components/separator";
-import { Shield, Mail, Calendar, Activity, Lock, User as UserIcon } from "lucide-react";
+import { Activity, Calendar, Lock, Mail, Shield, User as UserIcon } from "lucide-react";
 import Link from "next/link";
+import { SignOutButton, UserAvatar, useUser } from "@/lib/auth/setup";
 
 export default function DashboardPage() {
   const { user } = useUser();

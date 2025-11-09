@@ -1,29 +1,27 @@
 "use client";
 
-import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@workspace/ui/components/card";
-import { Button } from "@workspace/ui/components/button";
 import { Badge } from "@workspace/ui/components/badge";
+import { Button } from "@workspace/ui/components/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@workspace/ui/components/card";
 import { Separator } from "@workspace/ui/components/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@workspace/ui/components/tabs";
+import { CheckCircle2, Code, Component, Copy, Lock, Palette, Shield, User } from "lucide-react";
+import { useState } from "react";
 import {
-  SignInForm,
-  SignUpForm,
-  UpdateProfileForm,
   ChangePasswordForm,
   ForgotPasswordForm,
+  PasswordStrengthIndicator,
   ResetPasswordForm,
+  RoleGuard,
+  SignInForm,
+  SignOutButton,
+  SignUpForm,
+  UpdateProfileForm,
   UserAvatar,
   UserBadge,
   UserMenu,
-  SignOutButton,
-  SessionGuard,
-  RoleGuard,
-  EmailVerifiedGuard,
-  PasswordStrengthIndicator,
-} from "@auth/ui";
-import { useUser } from "@auth/web";
-import { Code, Copy, CheckCircle2, Component, Palette, Shield, User, Lock } from "lucide-react";
+  useUser,
+} from "@/lib/auth/setup";
 
 interface ComponentDemo {
   id: string;

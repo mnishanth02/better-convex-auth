@@ -1,12 +1,12 @@
 "use client";
 
-import { ChangePasswordForm } from "@/lib/auth/setup";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@workspace/ui/components/card";
-import { Button } from "@workspace/ui/components/button";
 import { Alert, AlertDescription } from "@workspace/ui/components/alert";
-import { ArrowLeft, Shield, Info } from "lucide-react";
+import { Button } from "@workspace/ui/components/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@workspace/ui/components/card";
+import { ArrowLeft, Info, Shield } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { ChangePasswordForm } from "@/lib/auth/setup";
 
 export default function ChangePasswordPage() {
   const router = useRouter();

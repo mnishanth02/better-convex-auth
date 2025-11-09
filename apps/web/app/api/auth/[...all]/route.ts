@@ -1,3 +1,10 @@
-import { nextJsHandler } from "@convex-dev/better-auth/nextjs";
+/**
+ * Auth API Route Handler
+ *
+ * Pre-built handlers from @workspace/z-auth/nextjs/handler
+ * Automatically handles all auth endpoints
+ */
 
-export const { GET, POST } = nextJsHandler();
+import { GET, POST } from "@workspace/z-auth/nextjs/handler";
+
+export { GET, POST };

@@ -5,23 +5,8 @@
     "paths": {
       "@/*": ["./*"],
       "@workspace/ui/*": ["../../packages/ui/src/*"],
-      "@workspace/backend/*": ["../../packages/backend/*"],
-      "@auth/backend": ["../../packages/auth/backend/src/index.ts"],
-      "@auth/backend/*": ["../../packages/auth/backend/src/*"],
-      "@auth/config": ["../../packages/auth/config/src/index.ts"],
-      "@auth/config/*": ["../../packages/auth/config/src/*"],
-      "@auth/core": ["../../packages/auth/core/src/index.ts"],
-      "@auth/core/*": ["../../packages/auth/core/src/*"],
-      "@auth/quickstart": ["../../packages/auth/quickstart/src/index.ts"],
-      "@auth/quickstart/*": ["../../packages/auth/quickstart/src/*"],
-      "@auth/types": ["../../packages/auth/types/src/index.ts"],
-      "@auth/types/*": ["../../packages/auth/types/src/*"],
-      "@auth/ui": ["../../packages/auth/ui/src/index.ts"],
-      "@auth/ui/*": ["../../packages/auth/ui/src/*"],
-      "@auth/utils": ["../../packages/auth/utils/src/index.ts"],
-      "@auth/utils/*": ["../../packages/auth/utils/src/*"],
-      "@auth/web": ["../../packages/auth/web/src/index.ts"],
-      "@auth/web/*": ["../../packages/auth/web/src/*"]
+      "@workspace/z-auth": ["../../packages/z-auth/src/index.ts"],
+      "@workspace/z-auth/*": ["../../packages/z-auth/src/*"]
     },
     "plugins": [
       {

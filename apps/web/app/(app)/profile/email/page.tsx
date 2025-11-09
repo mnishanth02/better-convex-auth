@@ -1,15 +1,15 @@
 "use client";
 
-import { useState } from "react";
-import { useUser } from "@/lib/auth/setup";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@workspace/ui/components/card";
+import { Alert, AlertDescription } from "@workspace/ui/components/alert";
 import { Button } from "@workspace/ui/components/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@workspace/ui/components/card";
 import { Input } from "@workspace/ui/components/input";
 import { Label } from "@workspace/ui/components/label";
-import { Alert, AlertDescription } from "@workspace/ui/components/alert";
-import { ArrowLeft, Mail, AlertTriangle, CheckCircle2, Loader2 } from "lucide-react";
+import { AlertTriangle, ArrowLeft, CheckCircle2, Loader2, Mail } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useUser } from "@/lib/auth/setup";
 
 export default function ChangeEmailPage() {
   const { user } = useUser();

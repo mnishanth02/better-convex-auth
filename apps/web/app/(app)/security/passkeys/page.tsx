@@ -1,12 +1,5 @@
 "use client";
 
-import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@workspace/ui/components/card";
-import { Button } from "@workspace/ui/components/button";
-import { Input } from "@workspace/ui/components/input";
-import { Label } from "@workspace/ui/components/label";
-import { Badge } from "@workspace/ui/components/badge";
-import { Separator } from "@workspace/ui/components/separator";
 import { Alert, AlertDescription } from "@workspace/ui/components/alert";
 import {
   AlertDialog,
@@ -18,6 +11,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@workspace/ui/components/alert-dialog";
+import { Badge } from "@workspace/ui/components/badge";
+import { Button } from "@workspace/ui/components/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@workspace/ui/components/card";
 import {
   Dialog,
   DialogContent,
@@ -26,8 +22,12 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@workspace/ui/components/dialog";
-import { ArrowLeft, Key, Fingerprint, Smartphone, Laptop, Trash2, Plus, CheckCircle2, Info } from "lucide-react";
+import { Input } from "@workspace/ui/components/input";
+import { Label } from "@workspace/ui/components/label";
+import { Separator } from "@workspace/ui/components/separator";
+import { ArrowLeft, CheckCircle2, Fingerprint, Info, Key, Laptop, Plus, Smartphone, Trash2 } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
 
 interface Passkey {
   id: string;

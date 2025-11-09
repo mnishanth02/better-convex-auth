@@ -1,13 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@workspace/ui/components/card";
-import { Button } from "@workspace/ui/components/button";
-import { Input } from "@workspace/ui/components/input";
-import { Label } from "@workspace/ui/components/label";
 import { Alert, AlertDescription } from "@workspace/ui/components/alert";
-import { Badge } from "@workspace/ui/components/badge";
-import { Separator } from "@workspace/ui/components/separator";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -18,8 +11,15 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@workspace/ui/components/alert-dialog";
-import { ArrowLeft, Smartphone, Shield, Key, CheckCircle2, Copy, Download, AlertTriangle, Loader2 } from "lucide-react";
+import { Badge } from "@workspace/ui/components/badge";
+import { Button } from "@workspace/ui/components/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@workspace/ui/components/card";
+import { Input } from "@workspace/ui/components/input";
+import { Label } from "@workspace/ui/components/label";
+import { Separator } from "@workspace/ui/components/separator";
+import { AlertTriangle, ArrowLeft, CheckCircle2, Copy, Download, Key, Loader2, Shield, Smartphone } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
 
 // Mock backup codes
 const generateBackupCodes = () => {

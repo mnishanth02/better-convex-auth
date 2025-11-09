@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/suspicious/noCommentText: <false positive> */
 "use client";
 
 import { useState } from "react";
@@ -7,9 +8,7 @@ import { Badge } from "@workspace/ui/components/badge";
 import { Input } from "@workspace/ui/components/input";
 import { Label } from "@workspace/ui/components/label";
 import { Separator } from "@workspace/ui/components/separator";
-import { useSession, useUser, useSignOut } from "@auth/web";
-import { UserAvatar } from "@auth/ui";
-import { getUserRole } from "@auth/types";
+import { useSession, useUser, useSignOut, UserAvatar, getUserRole } from "@/lib/auth/setup";
 import {
   Code,
   Copy,

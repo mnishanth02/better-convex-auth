@@ -1,10 +1,11 @@
 "use client";
 
-import Link from "next/link";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@workspace/ui/components/card";
-import { Button } from "@workspace/ui/components/button";
+import { generateUniqueId } from "@/lib/utils";
 import { Badge } from "@workspace/ui/components/badge";
-import { Code, Palette, Zap, Calculator, ArrowRight, BookOpen, CheckCircle2 } from "lucide-react";
+import { Button } from "@workspace/ui/components/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@workspace/ui/components/card";
+import { ArrowRight, BookOpen, Calculator, CheckCircle2, Code, Palette, Zap } from "lucide-react";
+import Link from "next/link";
 
 export default function ExamplesPage() {
   const examples = [
@@ -128,9 +129,9 @@ export default function ExamplesPage() {
                     What You'll Find:
                   </h3>
                   <ul className="space-y-2">
-                    {example.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-start gap-2 text-sm">
-                        <CheckCircle2 className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
+                    {example.features.map((feature) => (
+                      <li key={generateUniqueId()} className="flex items-start gap-2 text-sm">
+                        <CheckCircle2 className="h-4 w-4 text-green-600 mt-0.5 shrink-0" />
                         <span>{feature}</span>
                       </li>
                     ))}

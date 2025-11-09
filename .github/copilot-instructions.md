@@ -13,40 +13,54 @@ This is a **pnpm monorepo** for building a reusable **Better Auth + Convex authe
 ```
 better-convex-auth/
 ├── apps/
-│   └── web/                       # Next.js web application
+│   └── web/                       # Next.js web application (with app-specific backend)
 ├── packages/
-│   ├── auth/                      # Better Auth modules
+│   ├── z-auth/                    # ⭐ Unified auth package (single install)
+│   │   ├── src/
+│   │   │   ├── core/              # Client factory & configuration
+│   │   │   ├── nextjs/            # Next.js adapter & API handlers
+│   │   │   ├── utils/             # Env validation & utilities
+│   │   │   └── backend/           # Backend setup guides
+│   │   └── templates/             # Convex backend templates
+│   ├── auth/                      # Legacy modular packages (being phased out)
 │   │   ├── core/                  # Better Auth + Convex integration
-│   │   ├── ui/                    # Auth UI components (SignIn/SignUp forms)
-│   │   ├── hooks/                 # React hooks (useAuth, useSignIn, etc.)
+│   │   ├── ui/                    # Auth UI components
+│   │   ├── quickstart/            # Quick setup utilities
 │   │   ├── types/                 # Shared TypeScript types
-│   │   └── utils/                 # Validators, encryption, rate-limit
-│   ├── backend/                   # Convex backend (database, functions)
+│   │   └── utils/                 # Validators, encryption
 │   ├── ui/                        # Shared shadcn/ui components
 │   └── typescript-config/         # Shared TypeScript configurations
 ```
 
 ### Key Design Decisions
 
-1. **Auth Package Structure**: Modular auth packages under `packages/auth/`
-   - `@auth/core`: Better Auth + Convex adapter, email providers (Resend)
-   - `@auth/ui`: Reusable auth components (forms, providers)
-   - `@auth/hooks`: React hooks for auth operations
-   - `@auth/types`: Shared types (User, Session, Organization)
-   - `@auth/utils`: Validation, encryption, token generation
+1. **⭐ Unified Auth Package**: Single `@workspace/z-auth` package (NEW APPROACH)
+   - **One install**: `pnpm add @workspace/z-auth` (replaces 7+ packages)
+   - **One file setup**: Configure auth in single `lib/auth.ts` file
+   - **Built-in validation**: Zod schemas for environment variables
+   - **Subpath exports**: `/nextjs`, `/nextjs/handler` for tree-shaking
+   - **App-specific backends**: Each app creates own Convex backend using templates
+   - **85% fewer dependencies**: 1 package vs 7 modular packages
 
-2. **Workspace Package Imports**: Use `@workspace/*` and `@auth/*` namespaces
+2. **App-Specific Backend Strategy** (NEW): 
+   - Each app has its own `convex/` directory with independent database
+   - Template files provided in `packages/z-auth/templates/`
+   - Apps copy templates: `auth.ts`, `schema.ts`, `http.ts`, `convex.config.ts`
+   - No shared backend dependency - full isolation and customization
+   - See: `docs/BACKEND_SETUP_GUIDE.md` for 7-step setup process
+
+3. **Workspace Package Imports**: Use `@workspace/*` namespace
    - UI: `import { Button } from "@workspace/ui/components/button"`
-   - Auth: `import { useAuth } from "@auth/hooks"`
-   - Core: `import { createAuthInstance } from "@auth/core"`
+   - Auth: `import { createAuth } from "@workspace/z-auth/nextjs"`
+   - Handlers: `import { GET, POST } from "@workspace/z-auth/nextjs/handler"`
 
-3. **Better Auth + Convex Integration**: 
+4. **Better Auth + Convex Integration**: 
    - Better Auth handles authentication logic and providers
    - Convex provides database adapter and serverless functions
-   - Auth config in `packages/backend/convex/auth.config.ts`
-   - HTTP routes mounted in `packages/backend/convex/http.ts`
+   - Each app configures in `convex/auth.ts` (from template)
+   - HTTP routes in `convex/http.ts` (from template)
 
-4. **Monorepo Strategy**: 
+5. **Monorepo Strategy**: 
    - Each package is independently buildable with its own `package.json`
    - Turborepo orchestrates task execution (build, dev, lint) with dependency graph
    - `pnpm-workspace.yaml` defines workspace structure: `apps/*` and `packages/**`
@@ -65,7 +79,67 @@ pnpm format        # Format code (Biome)
 pnpm check         # Lint & auto-fix
 ```
 
-### Adding Auth Packages
+### Setting Up Auth (New Unified Approach)
+
+**Step 1: Install the unified package**
+```bash
+pnpm add @workspace/z-auth
+```
+
+**Step 2: Create auth configuration** (`lib/auth.ts`):
+```typescript
+import { createAuth } from "@workspace/z-auth/nextjs";
+
+export const { auth, signIn, signOut, useAuth, AuthProvider } = createAuth({
+  baseURL: "/api/auth",
+});
+```
+
+**Step 3: Create API route** (`app/api/auth/[...all]/route.ts`):
+```typescript
+import { GET, POST } from "@workspace/z-auth/nextjs/handler";
+export { GET, POST };
+```
+
+**Step 4: Setup app-specific backend**
+See `docs/BACKEND_SETUP_GUIDE.md` for complete 7-step guide to create your own Convex backend using templates.
+
+### Setting Up App-Specific Backend
+
+Each app should have its own Convex backend for isolation and customization:
+
+**Quick Setup**:
+```bash
+# 1. Initialize Convex
+npx convex dev
+
+# 2. Copy templates from @workspace/z-auth
+cp node_modules/@workspace/z-auth/templates/* convex/
+
+# 3. Install dependencies
+pnpm add @auth/core @convex-dev/better-auth @convex-dev/resend convex-helpers
+
+# 4. Configure .env.local (auto-generated by convex dev)
+# NEXT_PUBLIC_CONVEX_URL, NEXT_PUBLIC_SITE_URL, etc.
+
+# 5. Start development
+pnpm convex dev && pnpm dev
+```
+
+**Template Files** (in `convex/`):
+- `convex.config.ts` - Convex app configuration
+- `auth.ts` - Better Auth setup with email/OAuth
+- `http.ts` - HTTP routes for auth endpoints
+- `schema.ts` - Complete database schema (9 tables)
+
+**Full Guide**: `docs/BACKEND_SETUP_GUIDE.md`
+
+### Legacy: Adding Auth Packages (Old Modular Approach)
+
+⚠️ **Deprecated**: The modular approach is being phased out. Use unified `@workspace/z-auth` instead.
+
+<details>
+<summary>Old approach (for reference only)</summary>
 
 When creating new auth packages:
 ```
@@ -77,6 +151,7 @@ packages/auth/<package-name>/
 ```
 
 Use workspace protocol: `"@auth/types": "workspace:*"`
+</details>
 
 ### Adding shadcn/ui Components
 
@@ -86,23 +161,67 @@ This places components in `packages/ui/src/components/` for workspace-wide reuse
 
 ### Convex + Better Auth Setup
 
-**Backend Configuration** (`packages/backend/convex/auth.config.ts`):
+**Backend Configuration** (`convex/auth.ts` - copied from templates):
 ```typescript
-import { betterAuth } from "better-auth";
-import { organization, twoFactor, passkey } from "better-auth/plugins";
+import { createConvexAuth } from "@auth/core";
+import { authComponent } from "@convex-dev/better-auth";
+import { resend } from "@convex-dev/resend";
 
-export const auth = betterAuth({
-  database: new ConvexAdapter({ url, apiKey }),
-  plugins: [organization(), twoFactor(), passkey()],
-  emailAndPassword: { enabled: true },
-  socialProviders: { google, github, apple },
-});
+export const createAuth = (ctx: GenericCtx<DataModel>) => {
+  return createConvexAuth(ctx, {
+    adapter: authComponent.adapter(ctx),
+    baseURL: process.env.SITE_URL!,
+    emailPassword: { 
+      enabled: true,
+      requireEmailVerification: true,
+    },
+    socialProviders: {
+      google: process.env.GOOGLE_CLIENT_ID ? {
+        clientId: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      } : undefined,
+    },
+  });
+};
 ```
 
-**HTTP Routes** (`packages/backend/convex/http.ts`):
+**HTTP Routes** (`convex/http.ts` - copied from templates):
 ```typescript
-http.route({ path: "/auth", method: "GET", handler: auth.handler });
-http.route({ path: "/auth", method: "POST", handler: auth.handler });
+import { httpRouter } from "convex/server";
+import { httpAction } from "./_generated/server";
+import { createAuth } from "./auth";
+
+const http = httpRouter();
+http.route({
+  pathPrefix: "/auth/",
+  handler: httpAction(async (ctx, req) => {
+    return await createAuth(ctx).handler(req);
+  }),
+});
+
+export default http;
+```
+
+**Schema** (`convex/schema.ts` - copied from templates):
+```typescript
+import { defineSchema, defineTable } from "convex/server";
+import { v } from "convex/values";
+
+export default defineSchema({
+  users: defineTable({
+    email: v.string(),
+    emailVerified: v.boolean(),
+    name: v.optional(v.string()),
+  }).index("by_email", ["email"]),
+  
+  sessions: defineTable({
+    token: v.string(),
+    userId: v.string(),
+    expiresAt: v.number(),
+  }).index("by_token", ["token"]),
+  
+  // ... 7 more auth tables
+});
 ```
 
 ## Code Conventions
@@ -117,25 +236,51 @@ http.route({ path: "/auth", method: "POST", handler: auth.handler });
 
 ## Integration Points
 
-### Next.js ↔ Auth Packages
+### Next.js ↔ Unified Auth Package
 
-**Client Setup** (`apps/web/lib/auth/auth-client.ts`):
+**Setup** (`lib/auth.ts`):
 ```typescript
-import { createClientAuthInstance } from "@auth/core/client";
+import { createAuth } from "@workspace/z-auth/nextjs";
 
-export const authClient = createClientAuthInstance("/api/auth", {
-  organization: true, twoFactor: true, passkey: true,
+export const { 
+  auth,           // Server-side auth helper
+  signIn,         // Sign in function
+  signOut,        // Sign out function
+  useAuth,        // React hook for client components
+  AuthProvider    // Context provider
+} = createAuth({
+  baseURL: "/api/auth",
 });
 ```
 
-**Provider** (`apps/web/components/providers/index.tsx`):
+**API Routes** (`app/api/auth/[...all]/route.ts`):
 ```typescript
+import { GET, POST } from "@workspace/z-auth/nextjs/handler";
+export { GET, POST };
+```
+
+**Provider** (`app/layout.tsx` or `components/providers/index.tsx`):
+```typescript
+import { AuthProvider } from "@/lib/auth";
+
 export function Providers({ children }) {
   return (
     <ConvexProvider client={convex}>
       <AuthProvider>{children}</AuthProvider>
     </ConvexProvider>
   );
+}
+```
+
+**Usage in Components**:
+```typescript
+"use client";
+import { useAuth } from "@/lib/auth";
+
+export function UserProfile() {
+  const { user, isLoading } = useAuth();
+  if (isLoading) return <div>Loading...</div>;
+  return <div>Welcome, {user?.name}</div>;
 }
 ```
 
@@ -172,7 +317,8 @@ export default defineSchema({
 5. **Better Auth environment variables**: `BETTER_AUTH_SECRET`, `BETTER_AUTH_URL` required
 6. **OAuth setup**: Each provider needs client ID/secret in environment variables
 7. **Email service**: Configure Resend with `RESEND_API_KEY` for verification emails
-8. **Auth packages use workspace protocol**: `"@auth/types": "workspace:*"`
+8. **Unified package use**: Use `@workspace/z-auth` not old `@auth/*` packages
+9. **App-specific backends**: Each app should have its own `convex/` directory
 
 ## Active Technologies
 - TypeScript 5.9.3 with strict mode enabled
@@ -183,4 +329,6 @@ export default defineSchema({
 - Tailwind CSS v4
 
 ## Recent Changes
-- 001-auth-packages: Added auth package structure with Better Auth + Convex integration
+- 001-auth-packages: Unified auth package structure with Better Auth + Convex integration
+- Migrated from modular packages to single `@workspace/z-auth` package
+- Added app-specific backend templates for Convex
