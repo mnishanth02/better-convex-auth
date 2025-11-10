@@ -68,10 +68,28 @@ export const createAuth = (
       },
     },
 
-    // Session configuration
+    // Session configuration with proper cookie settings
     session: {
       expiresIn: 60 * 60 * 24 * 7, // 7 days in seconds
       updateAge: 60 * 60 * 24, // 1 day - how often to update session expiry
+      cookieCache: {
+        enabled: true,
+        maxAge: 60 * 5, // 5 minutes client-side cache
+      },
+    },
+
+    // Cookie configuration for proper session persistence
+    cookies: {
+      sessionToken: {
+        name: "better-auth.session_token",
+        options: {
+          httpOnly: false, // Allow client-side access for Better Auth
+          secure: process.env.NODE_ENV === "production",
+          sameSite: "lax",
+          path: "/",
+          maxAge: 60 * 60 * 24 * 7, // 7 days
+        },
+      },
     },
 
     // Convex plugin is required for Convex compatibility

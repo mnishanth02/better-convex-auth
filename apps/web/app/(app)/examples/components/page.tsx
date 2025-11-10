@@ -56,10 +56,10 @@ export default function ComponentsShowcasePage() {
           <SignInForm redirectTo="/dashboard" />
         </div>
       ),
-      code: `import { SignInForm } from "@auth/ui";
+      code: `import { SignInForm } from "@/lib/auth/setup";
           export default function SignInPage() {
             return (
-              <SignInForm 
+              <SignInForm
                 redirectTo="/dashboard"
                 showSocialProviders={true}
               />
@@ -85,10 +85,10 @@ export default function ComponentsShowcasePage() {
           <SignUpForm redirectTo="/dashboard" />
         </div>
       ),
-      code: `import { SignUpForm } from "@auth/ui";
+      code: `import { SignUpForm } from "@/lib/auth/setup";
         export default function SignUpPage() {
           return (
-            <SignUpForm 
+            <SignUpForm
               redirectTo="/dashboard"
               requireEmailVerification={true}
             />
@@ -114,14 +114,14 @@ export default function ComponentsShowcasePage() {
           <UpdateProfileForm />
         </div>
       ),
-      code: `import { UpdateProfileForm } from "@auth/ui";
+      code: `import { UpdateProfileForm } from "@/lib/auth/setup";
 import { useRouter } from "next/navigation";
 
 export default function EditProfilePage() {
   const router = useRouter();
-  
+
   return (
-    <UpdateProfileForm 
+    <UpdateProfileForm
       onSuccess={() => router.push("/profile")}
       allowImageUpload={true}
     />
@@ -142,14 +142,14 @@ export default function EditProfilePage() {
           <ChangePasswordForm />
         </div>
       ),
-      code: `import { ChangePasswordForm } from "@auth/ui";
+      code: `import { ChangePasswordForm } from "@/lib/auth/setup";
 import { useRouter } from "next/navigation";
 
 export default function SecurityPage() {
   const router = useRouter();
-  
+
   return (
-    <ChangePasswordForm 
+    <ChangePasswordForm
       onSuccess={() => router.push("/security")}
       showRevokeSessionsOption={true}
     />
@@ -170,7 +170,7 @@ export default function SecurityPage() {
           <ForgotPasswordForm />
         </div>
       ),
-      code: `import { ForgotPasswordForm } from "@auth/ui";
+      code: `import { ForgotPasswordForm } from "@/lib/auth/setup";
 
 export default function ForgotPasswordPage() {
   return <ForgotPasswordForm />;
@@ -187,11 +187,11 @@ export default function ForgotPasswordPage() {
           <ResetPasswordForm token="demo-token" />
         </div>
       ),
-      code: `import { ResetPasswordForm } from "@auth/ui";
+      code: `import { ResetPasswordForm } from "@/lib/auth/setup";
 
 export default function ResetPasswordPage({ token }: { token: string }) {
   return (
-    <ResetPasswordForm 
+    <ResetPasswordForm
       token={token}
       redirectTo="/auth/login"
     />
@@ -227,7 +227,7 @@ export default function ResetPasswordPage({ token }: { token: string }) {
           </div>
         </div>
       ),
-      code: `import { UserAvatar } from "@auth/ui";
+      code: `import { UserAvatar } from "@/lib/auth/setup";
 
 export default function ProfilePage() {
   return (
@@ -264,7 +264,7 @@ export default function ProfilePage() {
           <UserBadge type="status" status="premium" />
         </div>
       ),
-      code: `import { UserBadge } from "@auth/ui";
+      code: `import { UserBadge } from "@/lib/auth/setup";
 
 export default function ProfilePage() {
   return (
@@ -293,7 +293,7 @@ export default function ProfilePage() {
           <UserMenu />
         </div>
       ),
-      code: `import { UserMenu } from "@auth/ui";
+      code: `import { UserMenu } from "@/lib/auth/setup";
 
 export default function AppLayout() {
   return (
@@ -316,7 +316,7 @@ export default function AppLayout() {
           <SignOutButton variant="ghost">Sign Out</SignOutButton>
         </div>
       ),
-      code: `import { SignOutButton } from "@auth/ui";
+      code: `import { SignOutButton } from "@/lib/auth/setup";
 
 export default function Header() {
   return (
@@ -352,7 +352,7 @@ export default function Header() {
           <p className="text-sm mt-2">Current user: {user?.name || "Unknown"}</p>
         </div>
       ),
-      code: `import { SessionGuard } from "@auth/ui";
+      code: `import { SessionGuard } from "@/lib/auth/setup";
 
 export default function DashboardLayout({ children }) {
   return (
@@ -398,7 +398,7 @@ export default function DashboardLayout({ children }) {
           </RoleGuard>
         </div>
       ),
-      code: `import { RoleGuard } from "@auth/ui";
+      code: `import { RoleGuard } from "@/lib/auth/setup";
 
 export default function AdminPage() {
   return (
@@ -435,7 +435,7 @@ export default function AdminPage() {
           </p>
         </div>
       ),
-      code: `import { EmailVerifiedGuard } from "@auth/ui";
+      code: `import { EmailVerifiedGuard } from "@/lib/auth/setup";
 
 export default function PremiumContent() {
   return (
@@ -476,16 +476,16 @@ export default function PremiumContent() {
           </div>
         </div>
       ),
-      code: `import { PasswordStrengthIndicator } from "@auth/ui";
+      code: `import { PasswordStrengthIndicator } from "@/lib/auth/setup";
 import { useState } from "react";
 
 export default function PasswordForm() {
   const [password, setPassword] = useState("");
-  
+
   return (
     <div>
-      <input 
-        type="password" 
+      <input
+        type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
@@ -537,7 +537,7 @@ export default function PasswordForm() {
       <div>
         <h1 className="text-3xl font-bold">Component Showcase</h1>
         <p className="text-muted-foreground mt-1">
-          Explore all authentication components from @auth/ui with live examples and code
+          Explore all authentication components from @workspace/z-auth with live examples and code
         </p>
       </div>
 
@@ -661,7 +661,7 @@ export default function PasswordForm() {
           <div>
             <h3 className="font-semibold mb-2">Import Components</h3>
             <pre className="rounded-lg border bg-muted p-3 text-sm overflow-x-auto">
-              <code>{`import { SignInForm, UserAvatar, SessionGuard } from "@auth/ui";`}</code>
+              <code>{`import { SignInForm, UserAvatar, SessionGuard } from "@/lib/auth/setup";`}</code>
             </pre>
           </div>
           <Separator />

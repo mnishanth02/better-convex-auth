@@ -18,6 +18,7 @@ import {
   Bell,
   ChevronRight,
   Code,
+  Layers,
   LayoutDashboard,
   LogOut,
   Menu,
@@ -26,6 +27,10 @@ import {
   User,
   UserCog,
   Users,
+  FileText,
+  AlertTriangle,
+  Gauge,
+  ShieldCheck,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -58,8 +63,18 @@ const navigation: NavGroup[] = [
   {
     title: "Examples",
     items: [
+      { title: "Empty States", href: "/examples/empty-states", icon: Code },
+      { title: "Accessibility", href: "/examples/accessibility", icon: ShieldCheck },
+      { title: "Mobile UX", href: "/examples/mobile", icon: Code },
+      { title: "UI Polish", href: "/examples/ui-polish", icon: Code },
+      { title: "Performance", href: "/examples/performance", icon: Gauge },
       { title: "Components", href: "/examples/components", icon: Code },
       { title: "Hooks", href: "/examples/hooks", icon: Code },
+      { title: "Guards", href: "/examples/guards", icon: Shield },
+      { title: "HOCs", href: "/examples/hocs", icon: Layers },
+      { title: "Forms", href: "/examples/forms", icon: FileText },
+      { title: "Error Handling", href: "/examples/error-handling", icon: AlertTriangle },
+      { title: "Security", href: "/examples/security", icon: ShieldCheck },
       { title: "Utilities", href: "/examples/utilities", icon: Code },
     ],
   },
@@ -224,14 +239,26 @@ export function AppShell({ children }: AppShellProps) {
             </SheetTrigger>
           </Sheet>
 
-          {/* Breadcrumbs or Title */}
           <div className="flex-1">
             <h1 className="text-lg font-semibold">
               {pathname === "/dashboard" && "Dashboard"}
               {pathname?.startsWith("/profile") && "Profile"}
               {pathname?.startsWith("/security") && "Security"}
               {pathname?.startsWith("/settings") && "Settings"}
-              {pathname?.startsWith("/examples") && "Examples"}
+              {pathname?.startsWith("/examples/empty-states") && "Examples - Empty States"}
+              {pathname?.startsWith("/examples/accessibility") && "Examples - Accessibility"}
+              {pathname?.startsWith("/examples/mobile") && "Examples - Mobile UX"}
+              {pathname?.startsWith("/examples/ui-polish") && "Examples - UI Polish"}
+              {pathname?.startsWith("/examples/components") && "Examples - Components"}
+              {pathname?.startsWith("/examples/hooks") && "Examples - Hooks"}
+              {pathname?.startsWith("/examples/guards") && "Examples - Guards"}
+              {pathname?.startsWith("/examples/hocs") && "Examples - HOCs"}
+              {pathname?.startsWith("/examples/forms") && "Examples - Forms"}
+              {pathname?.startsWith("/examples/error-handling") && "Examples - Error Handling"}
+              {pathname?.startsWith("/examples/performance") && "Examples - Performance"}
+              {pathname?.startsWith("/examples/security") && "Examples - Security"}
+              {pathname?.startsWith("/examples/utilities") && "Examples - Utilities"}
+              {pathname?.startsWith("/examples") && !pathname.includes("/examples/") && "Examples"}
               {pathname?.startsWith("/admin") && "Admin"}
               {pathname?.startsWith("/moderator") && "Moderator"}
             </h1>

@@ -6,22 +6,52 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@work
 import { Separator } from "@workspace/ui/components/separator";
 import { Activity, Calendar, Lock, Mail, Shield, User as UserIcon } from "lucide-react";
 import Link from "next/link";
+import { memo, useMemo } from "react";
 import { SignOutButton, UserAvatar, useUser } from "@/lib/auth/setup";
+
+// Memoized stat card component
+const StatCard = memo(function StatCard({ stat }: { stat: StatType }) {
+  const Icon = stat.icon;
+  return (
+    <Card>
+      <CardContent className="pt-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-sm font-medium text-muted-foreground">{stat.label}</p>
+            <p className={`text-2xl font-bold ${stat.color}`}>{stat.value}</p>
+          </div>
+          <Icon className={`h-8 w-8 ${stat.color} opacity-60`} />
+        </div>
+      </CardContent>
+    </Card>
+  );
+});
+
+type StatType = {
+  label: string;
+  value: string;
+  icon: React.ComponentType<{ className?: string }>;
+  color: string;
+};
 
 export default function DashboardPage() {
   const { user } = useUser();
 
-  const stats = [
-    { label: "Account Status", value: "Active", icon: Activity, color: "text-green-600" },
-    {
-      label: "Email Status",
-      value: user?.emailVerified ? "Verified" : "Unverified",
-      icon: Mail,
-      color: user?.emailVerified ? "text-green-600" : "text-yellow-600",
-    },
-    { label: "2FA Status", value: "Disabled", icon: Shield, color: "text-gray-600" },
-    { label: "Active Sessions", value: "1", icon: Lock, color: "text-blue-600" },
-  ];
+  // Memoize stats calculation to prevent recalculation on every render
+  const stats = useMemo(
+    (): StatType[] => [
+      { label: "Account Status", value: "Active", icon: Activity, color: "text-green-600" },
+      {
+        label: "Email Status",
+        value: user?.emailVerified ? "Verified" : "Unverified",
+        icon: Mail,
+        color: user?.emailVerified ? "text-green-600" : "text-yellow-600",
+      },
+      { label: "2FA Status", value: "Disabled", icon: Shield, color: "text-gray-600" },
+      { label: "Active Sessions", value: "1", icon: Lock, color: "text-blue-600" },
+    ],
+    [user?.emailVerified],
+  );
 
   return (
     <div className="container mx-auto p-6 space-y-8">
@@ -36,22 +66,9 @@ export default function DashboardPage() {
 
       {/* Quick Stats */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        {stats.map((stat) => {
-          const Icon = stat.icon;
-          return (
-            <Card key={stat.label}>
-              <CardContent className="pt-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground">{stat.label}</p>
-                    <p className={`text-2xl font-bold ${stat.color}`}>{stat.value}</p>
-                  </div>
-                  <Icon className={`h-8 w-8 ${stat.color} opacity-60`} />
-                </div>
-              </CardContent>
-            </Card>
-          );
-        })}
+        {stats.map((stat) => (
+          <StatCard key={stat.label} stat={stat} />
+        ))}
       </div>
 
       {/* User Information */}

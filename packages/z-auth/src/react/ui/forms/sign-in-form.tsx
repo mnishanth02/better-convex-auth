@@ -160,9 +160,10 @@ export function SignInForm({
 }: SignInFormProps) {
   const router = useRouter();
   const { signInEmail, isLoading, error: signInError } = useSignIn();
-  const { data: sessionData, isPending: isSessionLoading } = useSession();
+  const { data: sessionData, isPending: isSessionLoading, refetch: refetchSession } = useSession();
   const [error, setError] = useState<string | null>(null);
   const [pendingOAuthRedirect, setPendingOAuthRedirect] = useState(false);
+  const [pendingEmailRedirect, setPendingEmailRedirect] = useState(false);
 
   const {
     register,
@@ -172,7 +173,7 @@ export function SignInForm({
     resolver: zodResolver(SignInSchema),
   });
 
-  // Monitor session for redirect after successful OAuth sign-in only
+  // Monitor session for redirect after successful OAuth sign-in
   useEffect(() => {
     if (pendingOAuthRedirect && sessionData && !isSessionLoading) {
       setPendingOAuthRedirect(false);
@@ -180,6 +181,15 @@ export function SignInForm({
       router.push(redirectTo);
     }
   }, [sessionData, isSessionLoading, redirectTo, onSuccess, pendingOAuthRedirect, router]);
+
+  // Monitor session for redirect after successful email sign-in
+  useEffect(() => {
+    if (pendingEmailRedirect && sessionData && !isSessionLoading) {
+      setPendingEmailRedirect(false);
+      onSuccess?.();
+      router.push(redirectTo);
+    }
+  }, [sessionData, isSessionLoading, redirectTo, onSuccess, pendingEmailRedirect, router]);
 
   const onSubmit = async (data: SignInFormData) => {
     try {
@@ -189,16 +199,22 @@ export function SignInForm({
         password: data.password,
         callbackURL: redirectTo,
       });
-      // Call success callback - Better Auth will handle redirect
+
+      // Call success callback
       onSuccess?.();
+
+      // Force page reload to ensure session is properly established
+      window.location.href = redirectTo;
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : "Sign in failed";
       setError(errorMessage);
       onError?.(err instanceof Error ? err : new Error(errorMessage));
+      setPendingEmailRedirect(false);
     }
   };
 
   const displayError = error || signInError?.message;
+  const isFormDisabled = isLoading || pendingEmailRedirect || pendingOAuthRedirect;
 
   return (
     <Card className={className}>
@@ -237,7 +253,7 @@ export function SignInForm({
               type="email"
               placeholder="thezealerzone@gmail.com"
               {...register("email")}
-              disabled={isLoading}
+              disabled={isFormDisabled}
               className="h-11"
             />
             {errors.email && <p className="text-sm text-destructive mt-1.5">{errors.email.message}</p>}
@@ -262,14 +278,14 @@ export function SignInForm({
               type="password"
               placeholder="••••••••••••"
               {...register("password")}
-              disabled={isLoading}
+              disabled={isFormDisabled}
               className="h-11"
             />
             {errors.password && <p className="text-sm text-destructive mt-1.5">{errors.password.message}</p>}
           </div>
 
-          <Button type="submit" className="w-full h-11 text-base font-medium" disabled={isLoading}>
-            {isLoading ? "Signing in..." : "Sign In"}
+          <Button type="submit" className="w-full h-11 text-base font-medium" disabled={isFormDisabled}>
+            {isLoading ? "Signing in..." : pendingEmailRedirect ? "Redirecting..." : "Sign In"}
           </Button>
         </form>
       </CardContent>

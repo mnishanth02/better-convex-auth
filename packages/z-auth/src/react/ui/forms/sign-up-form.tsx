@@ -162,9 +162,10 @@ export function SignUpForm({
 }: SignUpFormProps) {
   const router = useRouter();
   const { signUpEmail, isLoading, error: signUpError } = useSignUp();
-  const { data: sessionData, isPending: isSessionLoading } = useSession();
+  const { data: sessionData, isPending: isSessionLoading, refetch: refetchSession } = useSession();
   const [error, setError] = useState<string | null>(null);
   const [pendingOAuthRedirect, setPendingOAuthRedirect] = useState(false);
+  const [pendingEmailRedirect, setPendingEmailRedirect] = useState(false);
 
   const {
     register,
@@ -177,7 +178,7 @@ export function SignUpForm({
 
   const password = watch("password");
 
-  // Monitor session for redirect after successful OAuth sign-up only
+  // Monitor session for redirect after successful OAuth sign-up
   useEffect(() => {
     if (pendingOAuthRedirect && sessionData && !isSessionLoading) {
       setPendingOAuthRedirect(false);
@@ -185,6 +186,15 @@ export function SignUpForm({
       router.push(redirectTo);
     }
   }, [sessionData, isSessionLoading, redirectTo, onSuccess, pendingOAuthRedirect, router]);
+
+  // Monitor session for redirect after successful email sign-up
+  useEffect(() => {
+    if (pendingEmailRedirect && sessionData && !isSessionLoading) {
+      setPendingEmailRedirect(false);
+      onSuccess?.();
+      router.push(redirectTo);
+    }
+  }, [sessionData, isSessionLoading, redirectTo, onSuccess, pendingEmailRedirect, router]);
 
   const onSubmit = async (data: SignUpFormData) => {
     try {
@@ -195,13 +205,18 @@ export function SignUpForm({
         name: data.name,
         callbackURL: redirectTo,
       });
-      // Call success callback - Better Auth will handle redirect
+
+      // Call success callback
       onSuccess?.();
+
+      // Force page reload to ensure session is properly established
+      window.location.href = redirectTo;
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : "Sign up failed";
       const userFriendlyMessage = formatSignUpError(errorMessage);
       setError(userFriendlyMessage);
       onError?.(err instanceof Error ? err : new Error(errorMessage));
+      setPendingEmailRedirect(false);
     }
   };
 
@@ -241,6 +256,7 @@ export function SignUpForm({
   }
 
   const displayError = error || signUpError?.message;
+  const isFormDisabled = isLoading || pendingEmailRedirect || pendingOAuthRedirect;
 
   return (
     <Card className={className}>
@@ -279,7 +295,7 @@ export function SignUpForm({
               type="text"
               placeholder="John Doe"
               {...register("name")}
-              disabled={isLoading}
+              disabled={isFormDisabled}
               className="h-11"
             />
             {errors.name && <p className="text-sm text-destructive mt-1.5">{errors.name.message}</p>}
@@ -294,7 +310,7 @@ export function SignUpForm({
               type="email"
               placeholder="thezealerzone@gmail.com"
               {...register("email")}
-              disabled={isLoading}
+              disabled={isFormDisabled}
               className="h-11"
             />
             {errors.email && <p className="text-sm text-destructive mt-1.5">{errors.email.message}</p>}
@@ -309,7 +325,7 @@ export function SignUpForm({
               type="password"
               placeholder="••••••••••••"
               {...register("password")}
-              disabled={isLoading}
+              disabled={isFormDisabled}
               className="h-11"
             />
             {showPasswordStrength && password && (
@@ -329,7 +345,7 @@ export function SignUpForm({
               type="password"
               placeholder="••••••••••••"
               {...register("confirmPassword")}
-              disabled={isLoading}
+              disabled={isFormDisabled}
               className="h-11"
             />
             {errors.confirmPassword && (
@@ -337,8 +353,8 @@ export function SignUpForm({
             )}
           </div>
 
-          <Button type="submit" className="w-full h-11 text-base font-medium" disabled={isLoading}>
-            {isLoading ? "Creating account..." : "Create Account"}
+          <Button type="submit" className="w-full h-11 text-base font-medium" disabled={isFormDisabled}>
+            {isLoading ? "Creating account..." : pendingEmailRedirect ? "Redirecting..." : "Create Account"}
           </Button>
         </form>
       </CardContent>

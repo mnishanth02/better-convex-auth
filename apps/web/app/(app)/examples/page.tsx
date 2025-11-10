@@ -4,7 +4,22 @@ import { generateUniqueId } from "@/lib/utils";
 import { Badge } from "@workspace/ui/components/badge";
 import { Button } from "@workspace/ui/components/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@workspace/ui/components/card";
-import { ArrowRight, BookOpen, Calculator, CheckCircle2, Code, Palette, Zap } from "lucide-react";
+import {
+  ArrowRight,
+  BookOpen,
+  Calculator,
+  CheckCircle2,
+  Code,
+  Layers,
+  Palette,
+  Shield,
+  Zap,
+  FileText,
+  AlertTriangle,
+  ShieldCheck,
+  Users,
+  Gauge,
+} from "lucide-react";
 import Link from "next/link";
 
 export default function ExamplesPage() {
@@ -24,6 +39,104 @@ export default function ExamplesPage() {
         "Tabbed interface (Preview / Code / Props)",
         "Category filtering and search",
         "Copy-to-clipboard code examples",
+      ],
+    },
+    {
+      title: "Guards Showcase",
+      description: "Interactive demonstrations of authentication guards with live status checking and nested examples",
+      href: "/examples/guards",
+      icon: Shield,
+      badge: "3 Guards",
+      features: [
+        "SessionGuard - Require authentication",
+        "RoleGuard - Role-based access control",
+        "EmailVerifiedGuard - Email verification requirement",
+        "Live status checking with current user state",
+        "Nested guard examples for complex scenarios",
+        "Custom fallback components and redirects",
+        "Implementation best practices and pitfalls",
+      ],
+    },
+    {
+      title: "HOCs (Higher-Order Components)",
+      description: "Component-level authentication wrappers with automatic redirects and prop injection patterns",
+      href: "/examples/hocs",
+      icon: Layers,
+      badge: "3 HOCs",
+      features: [
+        "withAuth - Protect components with authentication",
+        "withSession - Inject session props into components",
+        "withEmailVerified - Require email verification",
+        "Automatic redirect handling for better UX",
+        "Chainable HOC patterns for complex requirements",
+        "Loading state management and customization",
+        "Comparison with Guards and best practice guide",
+      ],
+    },
+    {
+      title: "Authentication Forms",
+      description:
+        "Comprehensive showcase of all authentication forms with live demos, validation rules, and accessibility features",
+      href: "/examples/forms",
+      icon: FileText,
+      badge: "6 Forms",
+      features: [
+        "SignInForm - Email/password authentication with social options",
+        "SignUpForm - Registration with validation and verification",
+        "ForgotPasswordForm - Password reset request workflow",
+        "ResetPasswordForm - Password reset with token validation",
+        "ChangePasswordForm - Password change for authenticated users",
+        "UpdateProfileForm - Profile updates with real-time validation",
+        "Interactive documentation with code examples and validation rules",
+      ],
+    },
+    {
+      title: "Error Handling",
+      description:
+        "Comprehensive error handling patterns with error boundaries, auth errors, network errors, and recovery strategies",
+      href: "/examples/error-handling",
+      icon: AlertTriangle,
+      badge: "Error Patterns",
+      features: [
+        "Error Boundaries - Component error catching and fallbacks",
+        "Network Error Handling - Connection failures and retry logic",
+        "Authentication Errors - Session expiry and permission issues",
+        "User-friendly error messages with recovery options",
+        "Automatic retry mechanisms and manual recovery",
+        "Error logging and monitoring integration",
+        "Best practices for error handling in production",
+      ],
+    },
+    {
+      title: "Performance Examples",
+      description: "Authentication performance optimization with caching, monitoring, and measurement tools",
+      href: "/examples/performance",
+      icon: Gauge,
+      badge: "Performance",
+      features: [
+        "Auth hooks optimization and caching strategies",
+        "Convex query performance and real-time monitoring",
+        "Component rendering performance analysis",
+        "Memory usage tracking and leak detection",
+        "Network request optimization and batching",
+        "Performance metrics dashboard with live updates",
+        "Optimization recommendations and implementation guides",
+      ],
+    },
+    {
+      title: "Security Examples",
+      description: "Security showcase with role-based access control, permission management, and attack prevention",
+      href: "/examples/security",
+      icon: ShieldCheck,
+      badge: "Security",
+      features: [
+        "Role-Based Access Control (RBAC) implementation",
+        "Permission management and validation systems",
+        "Security monitoring and threat detection",
+        "Attack prevention (CSRF, XSS, injection protection)",
+        "Session security and token management",
+        "Security audit logs and compliance tracking",
+        "Best practices for secure authentication flows",
       ],
     },
     {
@@ -75,7 +188,15 @@ export default function ExamplesPage() {
       </div>
 
       {/* Stats */}
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid gap-4 md:grid-cols-4">
+        <Card>
+          <CardContent className="pt-6">
+            <div className="text-center">
+              <div className="text-3xl font-bold">9</div>
+              <p className="text-sm text-muted-foreground">Example Categories</p>
+            </div>
+          </CardContent>
+        </Card>
         <Card>
           <CardContent className="pt-6">
             <div className="text-center">
@@ -170,8 +291,7 @@ export default function ExamplesPage() {
                 <h3 className="font-semibold">Import Components</h3>
               </div>
               <pre className="rounded-lg border bg-muted p-3 text-xs overflow-x-auto">
-                <code>{`import { useAuth } from "@/lib/auth/setup";
-import { SignInForm } from "@workspace/ui/components/sign-in-form";`}</code>
+                <code>{`import { useAuth, SignInForm } from "@/lib/auth/setup";`}</code>
               </pre>
             </div>
             <div className="space-y-2">
@@ -208,30 +328,37 @@ import { SignInForm } from "@workspace/ui/components/sign-in-form";`}</code>
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
+            <div className="flex items-center justify-between p-3 rounded-lg border bg-primary/10">
+              <div>
+                <code className="font-mono text-sm font-semibold">@workspace/z-auth</code>
+                <p className="text-xs text-muted-foreground mt-1">Unified package - all components, hooks, and utilities</p>
+              </div>
+              <Badge variant="default">All-in-One</Badge>
+            </div>
             <div className="flex items-center justify-between p-3 rounded-lg border bg-muted/30">
               <div>
-                <code className="font-mono text-sm font-semibold">@auth/ui</code>
+                <code className="font-mono text-sm font-semibold">@workspace/z-auth/react/ui</code>
                 <p className="text-xs text-muted-foreground mt-1">Pre-built UI components for auth flows</p>
               </div>
               <Badge variant="secondary">14 Components</Badge>
             </div>
             <div className="flex items-center justify-between p-3 rounded-lg border bg-muted/30">
               <div>
-                <code className="font-mono text-sm font-semibold">@auth/web</code>
+                <code className="font-mono text-sm font-semibold">@workspace/z-auth/react/hooks</code>
                 <p className="text-xs text-muted-foreground mt-1">React hooks for authentication state</p>
               </div>
-              <Badge variant="secondary">5 Hooks</Badge>
+              <Badge variant="secondary">6 Hooks</Badge>
             </div>
             <div className="flex items-center justify-between p-3 rounded-lg border bg-muted/30">
               <div>
-                <code className="font-mono text-sm font-semibold">@auth/core</code>
+                <code className="font-mono text-sm font-semibold">@workspace/z-auth/utils</code>
                 <p className="text-xs text-muted-foreground mt-1">Utility functions for common auth tasks</p>
               </div>
               <Badge variant="secondary">7 Utilities</Badge>
             </div>
             <div className="flex items-center justify-between p-3 rounded-lg border bg-muted/30">
               <div>
-                <code className="font-mono text-sm font-semibold">@auth/types</code>
+                <code className="font-mono text-sm font-semibold">@workspace/z-auth/types</code>
                 <p className="text-xs text-muted-foreground mt-1">TypeScript types and interfaces</p>
               </div>
               <Badge variant="secondary">Types</Badge>

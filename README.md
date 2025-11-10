@@ -1,19 +1,35 @@
 # Better Convex Auth
 
-A modern, type-safe authentication system built with Better Auth and Convex, featuring a unified package architecture and comprehensive documentation.
+A comprehensive authentication solution for Next.js applications using **Better Auth + Convex** with a focus on developer experience, accessibility, and production-ready features.
 
-## 🚀 Features
+## ✨ Key Features
 
-- ✅ **Single Package Install** - One dependency instead of 7+
-- ✅ **App-Specific Backends** - Independent Convex backends per app
-- ✅ **Email/Password Authentication** - Secure credential-based auth
-- ✅ **Social OAuth** - Google, GitHub, Apple, Discord
-- ✅ **Email Verification** - Customizable email templates with Resend
-- ✅ **Session Management** - Real-time session sync with Convex
-- ✅ **Pre-built UI** - Professional React forms ready to use
-- ✅ **Type-Safe** - Full TypeScript with built-in validation
-- ✅ **Monorepo** - Scalable for all turborepo app types
-- ✅ **Production Ready** - 85% fewer dependencies, comprehensive docs
+### 🔐 **Authentication & Security**
+- **Email/Password** with verification and password reset
+- **Social OAuth**: Google, GitHub, Apple, Discord
+- **Magic Links** for passwordless authentication  
+- **Email OTP** verification
+- **2FA/MFA** support with TOTP
+- **Passkeys** (WebAuthn) support
+- **Organizations** and role-based access control
+- **Rate limiting** and security headers
+- **Session management** with automatic refresh
+
+### 🎨 **User Experience & Accessibility**
+- **Empty States**: Welcome screens, profile completion tracking
+- **Accessibility**: WCAG 2.1 AA compliant components with full keyboard navigation
+- **Responsive Design**: Mobile-first approach with touch optimization
+- **Real-time Updates**: Live session state and user data synchronization
+- **Error Handling**: Graceful error states with recovery actions
+- **Loading States**: Skeleton screens and progress indicators
+
+### 🛠 **Developer Experience**
+- **Single Package Install**: One `@workspace/z-auth` package replaces 7+ dependencies
+- **App-Specific Backends**: Independent Convex backends using templates
+- **TypeScript First**: Comprehensive type safety with built-in validation
+- **Zero Config**: Works out of the box with sensible defaults
+- **Flexible**: Highly customizable components and hooks
+- **Modern Stack**: Next.js 16, React 19, Tailwind CSS v4
 
 ## 📦 Unified Package
 
@@ -38,19 +54,98 @@ A modern, type-safe authentication system built with Better Auth and Convex, fea
 Use `@workspace/z-auth` instead for new projects.
 </details>
 
-## 🚀 Quick Start (3 Steps)
+## 🚀 Quick Start
 
-### 1. Install the Unified Package
+### 1. Installation
 
 ```bash
 pnpm add @workspace/z-auth
 ```
 
-### 2. Configure Auth (One File)
+### 2. Setup Authentication
+
+Create `lib/auth.ts`:
 
 ```typescript
-// lib/auth.ts
 import { createAuth } from "@workspace/z-auth/nextjs";
+
+export const { auth, signIn, signOut, useAuth, AuthProvider } = createAuth({
+  baseURL: "/api/auth",
+});
+```
+
+### 3. Create API Route
+
+Create `app/api/auth/[...all]/route.ts`:
+
+```typescript
+import { GET, POST } from "@workspace/z-auth/nextjs/handler";
+export { GET, POST };
+```
+
+### 4. Setup Convex Backend
+
+Initialize Convex and copy templates:
+
+```bash
+# Initialize Convex
+npx convex dev
+
+# Copy auth templates  
+cp node_modules/@workspace/z-auth/templates/* convex/
+
+# Install backend dependencies
+pnpm add @auth/core @convex-dev/better-auth @convex-dev/resend convex-helpers
+```
+
+### 5. Configure Environment Variables
+
+```bash
+# .env.local
+NEXT_PUBLIC_CONVEX_URL=https://your-app.convex.cloud
+CONVEX_DEPLOY_KEY=your-deploy-key
+
+# Auth configuration
+BETTER_AUTH_SECRET=your-secret-key
+BETTER_AUTH_URL=http://localhost:3000
+
+# OAuth providers (optional)
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+
+# Email service (optional)
+RESEND_API_KEY=your-resend-api-key
+```
+
+### 6. Add Provider
+
+Wrap your app with `AuthProvider`:
+
+```typescript
+// app/layout.tsx
+import { AuthProvider } from "@/lib/auth";
+
+export default function RootLayout({ children }) {
+  return (
+    <html>
+      <body>
+        <ConvexProvider client={convex}>
+          <AuthProvider>
+            {children}
+          </AuthProvider>
+        </ConvexProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+### 7. Start Development
+
+```bash
+pnpm dev        # Start Next.js
+pnpm convex dev # Start Convex (separate terminal)
+```
 
 export const { 
   auth,           // Server-side auth
